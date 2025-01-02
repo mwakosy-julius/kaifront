@@ -1,11 +1,22 @@
-function App() {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-4xl text-center text-blue-500 dark:text-red-500">
-        Kai Frontend
-      </h1>
-    </div>
-  );
-}
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+// Local imports
+import SignIn from "./pages/authentication/sign-in.tsx";
+import LandingPage from "./pages/website/landing-page.tsx";
+
+const unanuthenticatedRouter = createBrowserRouter([
+  {
+    path: "*",
+    element: <LandingPage />,
+  },
+  {
+    path: "/sign-in",
+    element: <SignIn />,
+  },
+]);
+
+const App = () => {
+  return <RouterProvider router={unanuthenticatedRouter} />;
+};
 
 export default App;
