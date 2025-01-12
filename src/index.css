@@ -14,101 +14,61 @@
 
 @layer base {
   :root {
-    /* Main Theme Colors - Inspired by DNA/RNA visualization and molecular structures */
-    --primary: 230 65% 30%;
-      /* Deep Blue - representing stability */
+    --background: 220 60% 98%;
+    --foreground: 220 74% 4%;
+    --muted: 220 24% 88%;
+    --muted-foreground: 220 14% 35%;
+    --popover: 220 60% 98%;
+    --popover-foreground: 220 74% 4%;
+    --card: 220 60% 97%;
+    --card-foreground: 220 74% 3%;
+    --border: 220 7% 93%;
+    --input: 220 7% 93%;
+    --primary: 220 80% 43%;
     --primary-foreground: 0 0% 100%;
-    --accent: 142 76% 36%;
-       /* Vibrant Green - DNA helix */
-    --accent-foreground: 0 0% 100%;
-    --background: 220 33% 98%;
-   /* Soft cool background */
-    --foreground: 230 25% 18%;
-    --card: 0 0% 100%;
-    --card-foreground: 230 25% 18%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 230 25% 18%;
-    --secondary: 142 30% 95%;
-    /* Subtle green tint */
-    --secondary-foreground: 230 25% 18%;
-    --muted: 220 14% 95%;
-    --muted-foreground: 230 25% 45%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 230 65% 30%;
-    /* Chart Colors - Biological visualization palette */
-    --chart-1: 230 65% 30%;
-     /* Deep Blue */
-    --chart-2: 142 76% 36%;
-     /* Green */
-    --chart-3: 32 95% 44%;
-      /* Orange */
-    --chart-4: 170 76% 36%;
-     /* Teal */
-    --chart-5: 280 65% 46%;
-     /* Purple */
-    /* Sidebar Specific Colors - Modern lab aesthetic */
-    --sidebar-background: 230 65% 30%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 142 76% 36%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 230 65% 35%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 230 65% 25%;
-    --sidebar-ring: 142 76% 36%;
-    /* Radius */
-    --radius: 0.75rem;
-          /* Slightly more rounded for a modern look */;
+    --secondary: 220 6% 86%;
+    --secondary-foreground: 220 6% 26%;
+    --accent: 220 6% 86%;
+    --accent-foreground: 220 6% 26%;
+    --destructive: 16 93% 30%;
+    --destructive-foreground: 16 93% 90%;
+    --ring: 220 80% 43%;
+    --chart-1: 220 80% 43%;
+    --chart-2: 220 6% 86%;
+    --chart-3: 220 6% 86%;
+    --chart-4: 220 6% 89%;
+    --chart-5: 220 83% 43%;
+    --radius: 0.5rem;
   }
 
   .dark {
-    /* Main Theme Colors - Dark mode inspired by fluorescence microscopy */
-    --primary: 230 65% 50%;
-     /* Brighter blue for dark mode */
+    --background: 220 58% 4%;
+    --foreground: 220 30% 100%;
+    --muted: 220 24% 12%;
+    --muted-foreground: 220 14% 65%;
+    --popover: 220 58% 4%;
+    --popover-foreground: 220 30% 100%;
+    --card: 220 58% 5%;
+    --card-foreground: 0 0% 100%;
+    --border: 220 7% 12%;
+    --input: 220 7% 12%;
+    --primary: 220 80% 43%;
     --primary-foreground: 0 0% 100%;
-    --accent: 142 76% 46%;
-      /* Brighter green */
-    --accent-foreground: 0 0% 100%;
-    --background: 230 25% 8%;
-   /* Deep blue-tinted dark */
-    --foreground: 220 33% 98%;
-    --card: 230 25% 12%;
-    --card-foreground: 220 33% 98%;
-    --popover: 230 25% 12%;
-    --popover-foreground: 220 33% 98%;
-    --secondary: 142 30% 15%;
-    --secondary-foreground: 220 33% 98%;
-    --muted: 230 25% 15%;
-    --muted-foreground: 220 33% 75%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 230 25% 15%;
-    --input: 230 25% 15%;
-    --ring: 230 65% 50%;
-    /* Chart Colors - Fluorescent visualization inspired */
-    --chart-1: 230 65% 50%;
-     /* Bright Blue */
-    --chart-2: 142 76% 46%;
-     /* Bright Green */
-    --chart-3: 32 95% 54%;
-      /* Bright Orange */
-    --chart-4: 170 76% 46%;
-     /* Bright Teal */
-    --chart-5: 280 65% 56%;
-     /* Bright Purple */
-    /* Sidebar Specific Colors - Dark lab aesthetic */
-    --sidebar-background: 230 25% 12%;
-    --sidebar-foreground: 220 33% 98%;
-    --sidebar-primary: 142 76% 46%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 230 25% 18%;
-    --sidebar-accent-foreground: 220 33% 98%;
-    --sidebar-border: 230 25% 20%;
-    --sidebar-ring: 142 76% 46%;
+    --secondary: 220 20% 20%;
+    --secondary-foreground: 220 20% 80%;
+    --accent: 220 20% 20%;
+    --accent-foreground: 220 20% 80%;
+    --destructive: 16 93% 53%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 220 80% 43%;
+    --chart-1: 220 80% 43%;
+    --chart-2: 220 20% 20%;
+    --chart-3: 220 20% 20%;
+    --chart-4: 220 20% 23%;
+    --chart-5: 220 83% 43%;
   }
 }
+
 
 @layer base {
   * {

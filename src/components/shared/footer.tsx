@@ -23,7 +23,7 @@ export const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-white border-t border-gray-200 relative mt-auto">
+        <footer className="bg-background border-t border-border relative mt-auto">
             <div className="mx-auto py-12">
                 <div className="grid px-6 grid-cols-2 gap-8 md:grid-cols-4">
                     {/* Logo and description */}
@@ -33,20 +33,20 @@ export const Footer = () => {
                             alt="Kaidoku"
                             className="h-8 w-auto"
                         />
-                        <p className="mt-4 text-sm text-gray-600">
+                        <p className="mt-4 text-sm text-muted-foreground">
                             Advanced bioinformatics tools for sequence analysis and data interpretation.
                         </p>
                     </div>
 
                     {/* Navigation */}
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-900">Product</h3>
+                        <h3 className="text-sm font-semibold text-foreground">Product</h3>
                         <ul className="mt-4 space-y-2">
                             {links.product.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         to={link.href}
-                                        className="text-sm text-gray-600 hover:text-gray-900"
+                                        className="text-sm text-muted-foreground hover:text-primary-foreground"
                                     >
                                         {link.name}
                                     </Link>
@@ -56,13 +56,13 @@ export const Footer = () => {
                     </div>
 
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-900">Company</h3>
+                        <h3 className="text-sm font-semibold text-foreground">Company</h3>
                         <ul className="mt-4 space-y-2">
                             {links.company.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         to={link.href}
-                                        className="text-sm text-gray-600 hover:text-gray-900"
+                                        className="text-sm text-muted-foreground hover:text-primary-foreground"
                                     >
                                         {link.name}
                                     </Link>
@@ -72,13 +72,13 @@ export const Footer = () => {
                     </div>
 
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-900">Legal</h3>
+                        <h3 className="text-sm font-semibold text-foreground">Legal</h3>
                         <ul className="mt-4 space-y-2">
                             {links.legal.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         to={link.href}
-                                        className="text-sm text-gray-600 hover:text-gray-900"
+                                        className="text-sm text-muted-foreground hover:text-primary-foreground"
                                     >
                                         {link.name}
                                     </Link>
@@ -89,9 +89,9 @@ export const Footer = () => {
                 </div>
 
                 {/* Bottom section */}
-                <div className="mt-12 px-6 border-t border-gray-200 pt-8">
+                <div className="mt-12 px-6 border-t border-border pt-8">
                     <div className="flex items-center justify-between">
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-muted-foreground">
                             © {currentYear} Kaidoku. All rights reserved.
                         </p>
                         <div className="flex space-x-6">
@@ -99,7 +99,7 @@ export const Footer = () => {
                                 href="https://github.com/kaidoku"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-gray-600 hover:text-gray-900"
+                                className="text-muted-foreground hover:text-primary-foreground"
                             >
                                 <Github className="h-5 w-5" />
                                 <span className="sr-only">GitHub</span>
@@ -108,7 +108,7 @@ export const Footer = () => {
                                 href="https://twitter.com/kaidoku"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-gray-600 hover:text-gray-900"
+                                className="text-muted-foreground hover:text-primary-foreground"
                             >
                                 <Twitter className="h-5 w-5" />
                                 <span className="sr-only">Twitter</span>

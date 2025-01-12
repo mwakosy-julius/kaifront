@@ -33,8 +33,8 @@ const ProtectedLayoutContent = () => {
         <DashboardNavbar />
         <div className="flex-1 overflow-auto relative">
           <main className={cn(
-            "min-h-full px-6 py-6",
-            "bg-background/50"
+            "min-h-full ",
+            "bg-background"
           )}>
             <Outlet />
           </main>

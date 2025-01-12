@@ -45,7 +45,8 @@ export const AlignmentForm: React.FC<AlignmentFormProps> = ({ onSubmit, loading 
                                     <FormControl>
                                         <Textarea
                                             placeholder="Enter your first DNA sequence (e.g., ATCG)"
-                                            className="font-mono h-24 !outline-none !ring-0 !shadow-none"
+                                            className="font-mono h-24 rounded-sm !outline-none !ring-0 !shadow-none"
+                                            autoFocus
                                             {...field}
                                         />
                                     </FormControl>
@@ -63,7 +64,7 @@ export const AlignmentForm: React.FC<AlignmentFormProps> = ({ onSubmit, loading 
                                     <FormControl>
                                         <Textarea
                                             placeholder="Enter your second DNA sequence (e.g., GCTA)"
-                                            className="font-mono h-24 !outline-none !ring-0 !shadow-none"
+                                            className="font-mono h-24 rounded-sm !outline-none !ring-0 !shadow-none"
                                             {...field}
                                         />
                                     </FormControl>
@@ -107,7 +108,7 @@ export const AlignmentForm: React.FC<AlignmentFormProps> = ({ onSubmit, loading 
 
                 <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full rounded shadow-none"
                     disabled={loading}
                 >
                     {loading ? (

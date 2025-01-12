@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle, Dna } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+    AlertCircle,
+    Dna,
+    Calculator,
+    Settings2,
+    Info,
+    Binary,
+    BookOpen,
+    Share2
+} from 'lucide-react';
 import { AlignmentForm } from './form';
 import { AlignmentResults } from './results';
 import { alignSequences } from './api';
@@ -11,6 +22,24 @@ const PairwiseAlignment = () => {
     const [results, setResults] = useState<AlignmentResponse | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const stats = [
+        {
+            label: "Max Sequence Length",
+            value: "100,000 bp",
+            icon: Calculator
+        },
+        {
+            label: "Supported Bases",
+            value: "A, T, C, G",
+            icon: Binary
+        },
+        {
+            label: "Parameters",
+            value: "Configurable",
+            icon: Settings2
+        }
+    ];
 
     const handleSubmit = async (data: AlignmentRequest) => {
         setLoading(true);
@@ -34,24 +63,49 @@ const PairwiseAlignment = () => {
         <div className="mx-auto max-w-4xl">
             <Card className="bg-background/60 backdrop-blur-sm border-none shadow-none">
                 <CardHeader>
-                    <div className='flex w-full items-center gap-1 justify-between'>
+                    <div className='flex w-full items-start gap-1 justify-between'>
                         <div className='flex flex-col gap-2'>
-                            <CardTitle className="flex items-center gap-2 text-3xl font-bold text-primary">
-                                <Dna className="h-8 w-8" />
-                                DNA Sequence Alignment Tool
-                            </CardTitle>
+                            <div className="flex items-center gap-2">
+                                <CardTitle className="flex items-center gap-2 text-3xl font-bold text-primary">
+                                    <Dna className="h-8 w-8" />
+                                    DNA Sequence Alignment Tool
+                                </CardTitle>
+                            </div>
                             <CardDescription className="text-base text-muted-foreground">
-                                Compare and analyze DNA sequences using global or local alignment algorithms
+                                High-performance pairwise sequence alignment using dynamic programming algorithms
                             </CardDescription>
-                        </div>
-
-                        <div>
-                            {results && <AlignmentResults results={results} />}
+                            <div className="flex gap-2 mt-2">
+                                <Badge variant="outline" className="text-xs">
+                                    <BookOpen className="h-3 w-3 mr-1" />
+                                    Documentation
+                                </Badge>
+                                <Badge variant="outline" className="text-xs">
+                                    <Share2 className="h-3 w-3 mr-1" />
+                                    Share Results
+                                </Badge>
+                            </div>
                         </div>
                     </div>
                 </CardHeader>
 
-                <CardContent>
+                <CardContent className="space-y-6">
+                    {/* Tool Statistics */}
+                    <div className="grid grid-cols-3 gap-4 p-4 bg-muted/50 rounded">
+                        {stats.map((stat, index) => (
+                            <div key={index} className="flex items-center gap-2">
+                                <div className="p-3 bg-primary/10 rounded">
+                                    <stat.icon className="h-4 w-4 text-primary" />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">{stat.label}</p>
+                                    <p className="text-sm text-muted-foreground">{stat.value}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <Separator />
+
                     <AlignmentForm onSubmit={handleSubmit} loading={loading} />
 
                     {error && (
@@ -61,16 +115,27 @@ const PairwiseAlignment = () => {
                             <AlertDescription>{error}</AlertDescription>
                         </Alert>
                     )}
-
                 </CardContent>
 
-                <CardFooter className="text-sm text-muted-foreground">
-                    <p className='text-sm'>
-                        This tool supports DNA sequence alignment using both global and local alignment algorithms.
-                        Enter your sequences using A, T, C, and G nucleotides.
-                    </p>
+                <CardFooter className="flex flex-col gap-2">
+                    <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <Info className="h-4 w-4 mt-0.5" />
+                        <div className="space-y-1">
+                            <p>
+                                This tool implements industry-standard alignment algorithms for DNA sequence analysis.
+                                Supports both global alignment (Needleman-Wunsch) and local alignment (Smith-Waterman)
+                                with configurable scoring parameters.
+                            </p>
+                            <p>
+                                Input sequences must contain only valid nucleotide bases (A, T, C, G).
+                                Max sequence length: 100,000 base pairs.
+                            </p>
+                        </div>
+                    </div>
                 </CardFooter>
             </Card>
+
+            {results && <AlignmentResults results={results} />}
         </div>
     );
 };
