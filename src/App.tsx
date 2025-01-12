@@ -1,36 +1,27 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Navigate, RouterProvider, createBrowserRouter, RouteObject } from "react-router-dom";
+import { publicRoutes } from "./routes/public-routes/public";
+import { protectedRoutes } from "./routes/protected-routes/protected";
+import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from "./components/ui/toaster";
 
-// Local imports
-import SignIn from "./pages/authentication/sign-in.tsx";
-import LandingPage from "./pages/website/landing-page.tsx";
-import Dashboard from "./pages/protected/dashboard/index.tsx";
-
-const unanuthenticatedRouter = createBrowserRouter([
-  {
-    path: "*",
-    element: <LandingPage />,
-  },
-  {
-    path: "/sign-in",
-    element: <SignIn />,
-  },
-]);
-
-const authenticatedRouter = createBrowserRouter([
+const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Dashboard />,
+    element: <Navigate to="/sign-in" replace />,
   },
-]);
+  ...publicRoutes,
+  ...protectedRoutes,
+];
 
-const App = () => {
-  const authenticated = true;
+const router = createBrowserRouter(routes);
 
+function App() {
   return (
-    <RouterProvider
-      router={authenticated ? authenticatedRouter : unanuthenticatedRouter}
-    />
+    <AuthProvider>
+      <RouterProvider router={router} />
+      <Toaster />
+    </AuthProvider>
   );
-};
+}
 
 export default App;

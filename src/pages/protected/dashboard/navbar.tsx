@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Home, Search } from "lucide-react";
 
 // Local imports
-import viteLogo from "/vite.svg";
+import viteLogo from "/kaidoku-logo.svg";
 import { Input } from "@/components/ui/input";
 
 const DashboardNavbar = () => {
