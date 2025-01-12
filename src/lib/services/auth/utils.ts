@@ -93,9 +93,3 @@ export const getAccessToken = (): string | null => {
 export const getRefreshToken = (): string | null => {
     return Cookies.get(REFRESH_TOKEN_COOKIE) || null;
 };
-
-export const getCurrentUser = (): User | null => {
-    const accessToken = getAccessToken();
-    if (!accessToken) return null;
-    return getUserFromToken(accessToken);
-};

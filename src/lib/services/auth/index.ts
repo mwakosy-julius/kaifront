@@ -12,7 +12,6 @@ import {
     storeAuthData,
     clearAuthData,
     isTokenExpired,
-    getUserFromToken,
     getStoredAuthData
 } from './utils';
 import { apiLogger } from '@/lib/api/logger';
@@ -54,9 +53,14 @@ export const register = async (credentials: RegisterCredentials): Promise<AuthRe
 export const logout = async (): Promise<void> => {
     try {
         const authData = getStoredAuthData();
+
+        const data = {
+            refreshToken: authData?.refreshToken,
+        };
+
         if (authData?.refreshToken) {
             await api.client.post(api.endpoints.auth.logout, {
-                refreshToken: authData.refreshToken
+                data,
             });
         }
     } catch (error) {
@@ -123,12 +127,14 @@ export const refreshToken = async (): Promise<TokenResponse> => {
 //     }
 // };
 
-export const getCurrentUser = (): User | null => {
-    const authData = getStoredAuthData();
-    if (authData?.accessToken && !isTokenExpired(authData.accessToken)) {
-        return getUserFromToken(authData.accessToken);
+export const getCurrentUser = async (): Promise<User | null> => {
+    try {
+        const response = await api.client.get(api.endpoints.users.profile);
+        return response as User;
+    } catch (error) {
+        apiLogger.error('GET', api.endpoints.users.profile, error as { response?: { status: number; data: unknown }; message: string; stack?: string });
+        return null;
     }
-    return null;
 };
 
 export const isAuthenticated = (): boolean => {

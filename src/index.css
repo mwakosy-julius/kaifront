@@ -97,6 +97,5 @@
   * {
     box-sizing: border-box;
     @apply border-border;
-    @apply !rounded-md;
   }
 }

@@ -1,7 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { Page } from "../core/page";
+import { Sidebar } from "../dashboard/sidebar";
+import { DashboardNavbar } from "../dashboard/navbar";
+import { SidebarProvider } from "@/context/SidebarContext";
+import { Footer } from "../shared/footer";
 
-const ProtectedLayout = () => {
+const ProtectedLayoutContent = () => {
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
@@ -9,14 +14,32 @@ const ProtectedLayout = () => {
   }
 
   return (
-    <div>
-      <nav className="bg-white shadow">
-        {/* Add your navigation header here */}
-      </nav>
-      <main className="container mx-auto px-4 py-8">
-        <Outlet />
-      </main>
-    </div>
+    <Page
+      overflowHidden
+      className="flex !flex-row"
+    >
+      <Sidebar />
+      <Page
+        overflowHidden
+        className="flex-1 flex flex-col"
+      >
+        <DashboardNavbar />
+        <div className="flex-1 overflow-auto relative">
+          <main className="min-h-full px-6 py-6">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+      </Page>
+    </Page>
+  );
+};
+
+const ProtectedLayout = () => {
+  return (
+    <SidebarProvider>
+      <ProtectedLayoutContent />
+    </SidebarProvider>
   );
 };
 

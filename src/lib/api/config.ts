@@ -7,6 +7,9 @@ export const API_ENDPOINTS = {
         refreshToken: '/auth/refresh-token/',
         logout: '/auth/logout/',
     },
+    tools: {
+        list: '/api/tools/',
+    },
     users: {
         profile: '/users/profile/',
         update: '/users/update/',

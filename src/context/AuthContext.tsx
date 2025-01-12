@@ -2,11 +2,12 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import {
   storeAuthData,
   clearAuthData,
-  getCurrentUser,
   hasValidAuth,
   getAccessToken,
 } from '@/lib/services/auth/utils';
 import { User } from '@/lib/api/types';
+import { getCurrentUser } from '@/lib/services/auth';
+import { PageLoader } from '@/components/ui/LoadingFallback';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -25,13 +26,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check authentication status on mount
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
       const isValid = hasValidAuth();
       setIsAuthenticated(isValid);
 
       if (isValid) {
-        const currentUser = getCurrentUser();
+        const currentUser = await getCurrentUser();
         setUser(currentUser);
       }
 
@@ -41,11 +41,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     initializeAuth();
   }, []);
 
-  const login = (accessToken: string, refreshToken: string) => {
+  const login = async (accessToken: string, refreshToken: string) => {
     storeAuthData(accessToken, refreshToken);
     setIsAuthenticated(true);
 
-    const currentUser = getCurrentUser();
+    const currentUser = await getCurrentUser();
     setUser(currentUser);
   };
 
@@ -54,7 +54,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
     setUser(null);
 
-    // Optionally redirect to login page
     window.location.href = '/sign-in';
   };
 
@@ -62,9 +61,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return getAccessToken();
   };
 
-  // Don't render children until initial auth check is complete
   if (loading) {
-    return null; // Or return a loading spinner/placeholder
+    return <PageLoader />;
   }
 
   return (
