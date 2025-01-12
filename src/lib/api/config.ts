@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
     },
     tools: {
         list: '/api/tools/',
+        pairwise_alignment: '/pairwise_alignment/',
     },
     users: {
         profile: '/users/profile/',

@@ -13,3 +13,4 @@ export const ProtectedRoot = () => (
 
 export const LazyDashboard = () => <Dashboard />;
 export const ProtectedNotFound = () => <Navigate to="/" replace />;
+export const LazyPairwiseAlignment = lazy(() => import('@/pages/protected/tools/pairwise-alignment'));

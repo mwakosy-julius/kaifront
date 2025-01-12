@@ -24,8 +24,8 @@ export const Footer = () => {
 
     return (
         <footer className="bg-white border-t border-gray-200 relative mt-auto">
-            <div className="mx-auto px-6 py-12">
-                <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            <div className="mx-auto py-12">
+                <div className="grid px-6 grid-cols-2 gap-8 md:grid-cols-4">
                     {/* Logo and description */}
                     <div className="col-span-2 md:col-span-1">
                         <img
@@ -89,7 +89,7 @@ export const Footer = () => {
                 </div>
 
                 {/* Bottom section */}
-                <div className="mt-12 border-t border-gray-200 pt-8">
+                <div className="mt-12 px-6 border-t border-gray-200 pt-8">
                     <div className="flex items-center justify-between">
                         <p className="text-sm text-gray-600">
                             © {currentYear} Kaidoku. All rights reserved.

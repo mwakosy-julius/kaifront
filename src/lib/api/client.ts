@@ -104,7 +104,7 @@ axiosInstance.interceptors.response.use(
 
                 const refreshToken = Cookies.get(REFRESH_TOKEN_COOKIE);
                 if (refreshToken) {
-                    const response = await axiosInstance.post('/auth/refresh-token', {
+                    const response = await axiosInstance.post('/auth/refresh-token/', {
                         refreshToken,
                     });
 
@@ -122,7 +122,7 @@ axiosInstance.interceptors.response.use(
                     return axiosInstance(originalRequest);
                 }
             } catch (refreshError) {
-                apiLogger.error('REFRESH', '/auth/refresh-token', refreshError as AxiosError<{ message?: string; code?: string }>);
+                apiLogger.error('REFRESH', '/auth/refresh-token/', refreshError as AxiosError<{ message?: string; code?: string }>);
                 handleAuthError();
             }
         }

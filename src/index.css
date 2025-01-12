@@ -6,7 +6,6 @@
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  /* color-scheme: light dark; */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,81 +14,99 @@
 
 @layer base {
   :root {
-    /* Main Theme Colors */
-    --primary: 197 64% 24%;
+    /* Main Theme Colors - Inspired by DNA/RNA visualization and molecular structures */
+    --primary: 230 65% 30%;
+      /* Deep Blue - representing stability */
     --primary-foreground: 0 0% 100%;
-    --accent: 199 89% 48%;
+    --accent: 142 76% 36%;
+       /* Vibrant Green - DNA helix */
     --accent-foreground: 0 0% 100%;
-    --background: 0 0% 100%;
-    --foreground: 200 14% 20%;
+    --background: 220 33% 98%;
+   /* Soft cool background */
+    --foreground: 230 25% 18%;
     --card: 0 0% 100%;
-    --card-foreground: 200 14% 20%;
+    --card-foreground: 230 25% 18%;
     --popover: 0 0% 100%;
-    --popover-foreground: 200 14% 20%;
-    --secondary: 200 13% 95%;
-    --secondary-foreground: 200 14% 20%;
-    --muted: 200 13% 95%;
-    --muted-foreground: 200 14% 45%;
+    --popover-foreground: 230 25% 18%;
+    --secondary: 142 30% 95%;
+    /* Subtle green tint */
+    --secondary-foreground: 230 25% 18%;
+    --muted: 220 14% 95%;
+    --muted-foreground: 230 25% 45%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 200 13% 90%;
-    --input: 200 13% 90%;
-    --ring: 197 64% 24%;
-    /* Chart Colors */
-    --chart-1: 197 64% 24%;
-    --chart-2: 199 89% 48%;
-    --chart-3: 200 14% 45%;
-    --chart-4: 199 89% 38%;
-    --chart-5: 197 64% 34%;
-    /* Sidebar Specific Colors */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 230 65% 30%;
+    /* Chart Colors - Biological visualization palette */
+    --chart-1: 230 65% 30%;
+     /* Deep Blue */
+    --chart-2: 142 76% 36%;
+     /* Green */
+    --chart-3: 32 95% 44%;
+      /* Orange */
+    --chart-4: 170 76% 36%;
+     /* Teal */
+    --chart-5: 280 65% 46%;
+     /* Purple */
+    /* Sidebar Specific Colors - Modern lab aesthetic */
+    --sidebar-background: 230 65% 30%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 230 65% 35%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 230 65% 25%;
+    --sidebar-ring: 142 76% 36%;
     /* Radius */
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+          /* Slightly more rounded for a modern look */;
   }
 
   .dark {
-    /* Main Theme Colors - Dark */
-    --primary: 197 64% 34%;
+    /* Main Theme Colors - Dark mode inspired by fluorescence microscopy */
+    --primary: 230 65% 50%;
+     /* Brighter blue for dark mode */
     --primary-foreground: 0 0% 100%;
-    --accent: 199 89% 38%;
+    --accent: 142 76% 46%;
+      /* Brighter green */
     --accent-foreground: 0 0% 100%;
-    --background: 200 14% 10%;
-    --foreground: 0 0% 98%;
-    --card: 200 14% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 200 14% 12%;
-    --popover-foreground: 0 0% 98%;
-    --secondary: 200 13% 18%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 200 13% 18%;
-    --muted-foreground: 200 14% 65%;
+    --background: 230 25% 8%;
+   /* Deep blue-tinted dark */
+    --foreground: 220 33% 98%;
+    --card: 230 25% 12%;
+    --card-foreground: 220 33% 98%;
+    --popover: 230 25% 12%;
+    --popover-foreground: 220 33% 98%;
+    --secondary: 142 30% 15%;
+    --secondary-foreground: 220 33% 98%;
+    --muted: 230 25% 15%;
+    --muted-foreground: 220 33% 75%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
-    --border: 200 13% 18%;
-    --input: 200 13% 18%;
-    --ring: 197 64% 34%;
-    /* Chart Colors - Dark */
-    --chart-1: 197 64% 44%;
-    --chart-2: 199 89% 58%;
-    --chart-3: 200 14% 65%;
-    --chart-4: 199 89% 48%;
-    --chart-5: 197 64% 54%;
-    /* Sidebar Specific Colors - Dark */
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --border: 230 25% 15%;
+    --input: 230 25% 15%;
+    --ring: 230 65% 50%;
+    /* Chart Colors - Fluorescent visualization inspired */
+    --chart-1: 230 65% 50%;
+     /* Bright Blue */
+    --chart-2: 142 76% 46%;
+     /* Bright Green */
+    --chart-3: 32 95% 54%;
+      /* Bright Orange */
+    --chart-4: 170 76% 46%;
+     /* Bright Teal */
+    --chart-5: 280 65% 56%;
+     /* Bright Purple */
+    /* Sidebar Specific Colors - Dark lab aesthetic */
+    --sidebar-background: 230 25% 12%;
+    --sidebar-foreground: 220 33% 98%;
+    --sidebar-primary: 142 76% 46%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 230 25% 18%;
+    --sidebar-accent-foreground: 220 33% 98%;
+    --sidebar-border: 230 25% 20%;
+    --sidebar-ring: 142 76% 46%;
   }
 }
 

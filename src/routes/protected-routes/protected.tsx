@@ -1,7 +1,8 @@
 import {
   ProtectedRoot,
   LazyDashboard,
-  ProtectedNotFound
+  ProtectedNotFound,
+  LazyPairwiseAlignment
 } from './protected-route-elements';
 
 export const protectedRoutes = [
@@ -14,9 +15,13 @@ export const protectedRoutes = [
         element: <LazyDashboard />,
       },
       {
+        path: '/dashboard/tools/pairwise-alignment',
+        element: <LazyPairwiseAlignment />,
+      },
+      {
         path: '*',
         element: <ProtectedNotFound />,
-      },
+      }
     ],
   },
 ];
