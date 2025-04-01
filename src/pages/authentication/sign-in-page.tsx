@@ -9,9 +9,11 @@ const SignIn = () => {
   const handleSignIn = async (data: SignInFormValues) => {
     try {
       setError(null);
-      await login(data).then(() => {{
-        window.location.href = "/";
-      }});
+      await login(data).then(() => {
+        {
+          window.location.href = "/";
+        }
+      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setError(error.message);
