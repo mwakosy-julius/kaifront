@@ -1,6 +1,7 @@
 export interface ApiError {
     message: string;
     code?: string;
+    detail?: string;
     status?: number;
 }
 

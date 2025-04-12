@@ -19,23 +19,17 @@ export const login = async (
   credentials: LoginCredentials
 ): Promise<AuthResponse> => {
   try {
-    // Create FormData object
-    const formData = new FormData();
-    formData.append("username", credentials.email);
-    formData.append("password", credentials.password);
-
     const response = await api.client.post<AuthResponse>(
       api.endpoints.auth.login,
-      formData,
+      credentials,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       }
     );
 
     const { access_token, token_type } = response as AuthResponse;
-    console.log("Login response:", response);
     storeAuthData(access_token, token_type);
 
     apiLogger.info("User logged in successfully", { email: credentials.email });

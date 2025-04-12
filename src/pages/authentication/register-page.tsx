@@ -18,11 +18,7 @@ const Register = () => {
       await register({
         email: data.email,
         password: data.password,
-<<<<<<< HEAD
         username: data.name
-=======
-        username: data.name,
->>>>>>> refs/remotes/origin/main
       }).then(() =>
         toast({
           title: "Your account has been created successfully!",

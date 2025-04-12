@@ -34,16 +34,17 @@ const handleAuthError = () => {
 };
 
 const handleError = (
-  error: AxiosError<{ message?: string; error?: string; code?: string }>
+  error: AxiosError<{
+    message?: string;
+    error?: string;
+    code?: string;
+    detail: string;
+  }>
 ): ApiError => {
   const apiError = {
-    message:
-      error.response?.data.error ||
-      error.response?.data?.message ||
-      error.message ||
-      "An error occurred",
+    message: error.response?.data.detail as string,
     status: error.response?.status || 500,
-    code: error.response?.data?.code,
+    code: error.response?.data?.error,
   };
   console.error(error.response?.data?.error);
   apiLogger.debug("Formatted API Error", apiError);
@@ -98,7 +99,9 @@ axiosInstance.interceptors.response.use(
 
     return response;
   },
-  async (error: AxiosError<{ message?: string; code?: string }>) => {
+  async (
+    error: AxiosError<{ message?: string; code?: string; detail: string }>
+  ) => {
     const originalRequest = error.config;
 
     apiLogger.error(
@@ -114,7 +117,7 @@ axiosInstance.interceptors.response.use(
 
         const refreshToken = Cookies.get(REFRESH_TOKEN_COOKIE);
         if (refreshToken) {
-          const response = await axiosInstance.post("/auth/refresh-token/", {
+          const response = await axiosInstance.post("/auth/refresh/", {
             refreshToken,
           });
 
@@ -136,8 +139,12 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         apiLogger.error(
           "REFRESH",
-          "/auth/refresh-token/",
-          refreshError as AxiosError<{ message?: string; code?: string }>
+          "/auth/refresh/",
+          refreshError as AxiosError<{
+            message?: string;
+            code?: string;
+            detail: string;
+          }>
         );
         handleAuthError();
       }
