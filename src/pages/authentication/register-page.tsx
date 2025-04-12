@@ -19,7 +19,7 @@ const Register = () => {
       await register({
         email: data.email,
         password: data.password,
-        name: data.name
+        username: data.name
       }).then(() =>
         toast({
           title: "Your account has been created successfully!",
