@@ -76,3 +76,11 @@
     @apply border-border;
   }
 }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
+}
+.animate-pulse {
+  animation: pulse 4s ease-in-out infinite;
+}
