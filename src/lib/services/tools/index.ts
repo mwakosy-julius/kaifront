@@ -20,3 +20,18 @@ export const tools = async () => {
     throw error;
   }
 };
+
+// Export all tool services
+export * from "./variant_calling";
+export * from "./pairwise_alignment";
+export * from "./gc_content";
+export * from "./dna_visualization";
+export * from "./data_compression";
+export * from "./consensus_maker";
+export * from "./codon_usage";
+export * from "./motif_finder";
+export * from "./multiple_alignment";
+export * from "./musicdna";
+export * from "./metagenomics";
+export * from "./phylogenetic_tree";
+export * from "./types";

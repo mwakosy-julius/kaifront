@@ -1,47 +1,96 @@
-import React, { useEffect } from 'react';
-import Plotly from 'plotly.js';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
+import { NucleotideDataPoint } from "@/lib/services/tools/dna_visualization";
 
 interface NucleotideBarChartProps {
-  counts: { [key: string]: number };
+  data: NucleotideDataPoint[];
 }
 
-const NucleotideBarChart: React.FC<NucleotideBarChartProps> = ({ counts }) => {
-  useEffect(() => {
-    const nucleotides = ['A', 'T', 'G', 'C'];
-    const values = nucleotides.map(nuc => counts[nuc] || 0);
+const NUCLEOTIDE_COLORS = {
+  A: "#4ade80", // green
+  T: "#f87171", // red
+  G: "#60a5fa", // blue
+  C: "#facc15", // yellow
+};
 
-    Plotly.newPlot('nucleotide-bar-chart', [
-      {
-        x: nucleotides,
-        y: values,
-        type: 'bar',
-        marker: { color: '#06B6D4' },
-        text: values.map(v => v.toString()),
-        textposition: 'auto',
-      },
-    ], {
-      title: { text: 'Nucleotide Counts', font: { color: 'white' } },
-      xaxis: { title: 'Nucleotide', color: 'white' },
-      yaxis: { title: 'Count', color: 'white' },
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: 'white' },
-    });
-  }, [counts]);
+const NucleotideBarChart: React.FC<NucleotideBarChartProps> = ({ data }) => {
+  // Function to save chart as SVG
+  const downloadChart = () => {
+    const svgElement = document.querySelector("#nucleotide-chart svg");
+    if (!svgElement) return;
+
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const blob = new Blob([svgData], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "nucleotide_distribution.svg";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="p-2 text-sm border rounded shadow-md bg-background">
+          <p className="font-medium">{`${payload[0].payload.name}: ${payload[0].value}`}</p>
+          <p className="text-xs text-muted-foreground">{`${payload[0].payload.percentage.toFixed(
+            1
+          )}%`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
-    <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg backdrop-blur-md mt-6">
-      <h2 className="text-2xl font-bold mb-4 text-cyan-300">Nucleotide Distribution</h2>
-      <div id="nucleotide-bar-chart" />
-      <button
-        className="mt-4 px-6 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg shadow-lg hover:shadow-cyan-500/50 transition"
-        onClick={() => {
-          Plotly.downloadImage('nucleotide-bar-chart', { format: 'png', filename: 'nucleotide_distribution' });
-        }}
-      >
-        Download PNG
-      </button>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Nucleotide Distribution</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div id="nucleotide-chart" className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data}
+              margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+            >
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="count" key="name">
+                {data.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={NUCLEOTIDE_COLORS[entry.name] || "#999"}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={downloadChart}
+          className="w-full"
+        >
+          <Download className="w-4 h-4 mr-2" />
+          Download SVG
+        </Button>
+      </CardContent>
+    </Card>
   );
 };
 

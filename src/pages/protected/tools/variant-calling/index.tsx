@@ -1,37 +1,53 @@
-import React, { useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import { motion, AnimatePresence } from 'framer-motion';
-
-// TypeScript interfaces matching FastAPI models
-interface VariantCallRequest {
-  ref_fasta: string;
-  sample_fasta: string;
-}
-
-interface Variant {
-  position: number;
-  reference: string;
-  variant: string;
-  type: string;
-}
-
-interface VariantCallResponse {
-  variants: Variant[];
-}
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { AxiosError } from "axios";
+import {
+  Variant,
+  callVariants,
+  VariantCallRequest,
+} from "@/lib/services/tools/variant_calling";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  AlertCircle,
+  Dna,
+  Zap,
+  Info,
+  BookOpen,
+  Share2,
+  RefreshCcw,
+} from "lucide-react";
 
 const VariantCaller: React.FC = () => {
-  const [refFasta, setRefFasta] = useState<string>(
-    '>ref\nATCGATCGATCGATCG'
-  );
+  const [refFasta, setRefFasta] = useState<string>(">ref\nATCGATCGATCGATCG");
   const [sampleFasta, setSampleFasta] = useState<string>(
-    '>sample\nATGGATCGATCGATCG'
+    ">sample\nATGGATCGATCGATCG"
   );
   const [variants, setVariants] = useState<Variant[]>([]);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleCallVariants = async () => {
-    setError('');
+    setError("");
     setVariants([]);
     setLoading(true);
 
@@ -41,17 +57,11 @@ const VariantCaller: React.FC = () => {
     };
 
     try {
-      const response = await axios.post<VariantCallResponse>(
-        'http://localhost:8000/variant-call',
-        request,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      setVariants(response.data.variants);
+      const response = await callVariants(request);
+      setVariants(response.variants);
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ detail: string }>;
-      setError(
-        axiosError.response?.data?.detail || 'Failed to call variants'
-      );
+      setError(axiosError.response?.data?.detail || "Failed to call variants");
     } finally {
       setLoading(false);
     }
@@ -60,135 +70,293 @@ const VariantCaller: React.FC = () => {
   // Nucleotide color mapping
   const getNucleotideColor = (base: string): string => {
     switch (base.toUpperCase()) {
-      case 'A': return 'text-green-500';
-      case 'T': return 'text-red-500';
-      case 'C': return 'text-blue-500';
-      case 'G': return 'text-yellow-500';
-      default: return 'text-gray-500';
+      case "A":
+        return "text-green-500";
+      case "T":
+        return "text-red-500";
+      case "G":
+        return "text-blue-500";
+      case "C":
+        return "text-yellow-500";
+      default:
+        return "text-neutral-500";
     }
   };
 
+  const stats = [
+    {
+      label: "Detects",
+      value: "SNPs, Indels",
+      icon: Zap,
+    },
+    {
+      label: "Input Format",
+      value: "FASTA",
+      icon: Dna,
+    },
+    {
+      label: "Accuracy",
+      value: "High Precision",
+      icon: RefreshCcw,
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 text-white flex flex-col items-center p-4">
-      {/* DNA Helix Background Animation */}
-      <div className="fixed inset-0 opacity-20 pointer-events-none">
-        <div className="animate-spin-slow w-full h-full bg-[url('https://www.svgrepo.com/show/305146/dna.svg')] bg-center bg-no-repeat bg-contain"></div>
-      </div>
+    <div className="max-w-4xl mx-auto">
+      <Card className="border-none shadow-none bg-background/60 backdrop-blur-sm">
+        <CardHeader>
+          <div className="flex items-start justify-between w-full gap-1">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-3xl font-bold text-primary">
+                  <Dna className="w-8 h-8" />
+                  Genomic Variant Caller
+                </CardTitle>
+              </div>
+              <CardDescription className="text-base text-muted-foreground">
+                Quickly identify SNPs, insertions, and deletions between
+                reference and sample sequences
+              </CardDescription>
+              <div className="flex gap-2 mt-2">
+                <Badge variant="outline" className="text-xs">
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  Documentation
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Share Results
+                </Badge>
+              </div>
+            </div>
+          </div>
+        </CardHeader>
 
-      <motion.h1
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500"
-      >
-        Genomic Variant Caller
-      </motion.h1>
+        <CardContent className="space-y-6">
+          {/* Tool Statistics */}
+          <div className="grid grid-cols-3 gap-4 p-4 rounded bg-muted/50">
+            {stats.map((stat, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <div className="p-3 rounded bg-primary/10">
+                  <stat.icon className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium">{stat.label}</p>
+                  <p className="text-sm text-muted-foreground">{stat.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {/* Reference FASTA Input */}
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-lg backdrop-blur-sm"
-        >
-          <label className="block text-lg font-semibold mb-2">Reference FASTA</label>
-          <textarea
-            className="w-full h-40 p-3 bg-gray-900 border border-gray-700 rounded-md text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={refFasta}
-            onChange={(e) => setRefFasta(e.target.value)}
-            placeholder="Enter reference FASTA"
-          />
-        </motion.div>
+          <Separator />
 
-        {/* Sample FASTA Input */}
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-lg backdrop-blur-sm"
-        >
-          <label className="block text-lg font-semibold mb-2">Sample FASTA</label>
-          <textarea
-            className="w-full h-40 p-3 bg-gray-900 border border-gray-700 rounded-md text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={sampleFasta}
-            onChange={(e) => setSampleFasta(e.target.value)}
-            placeholder="Enter sample FASTA"
-          />
-        </motion.div>
-      </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {/* Reference FASTA Input */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="mb-2 text-sm font-medium">Reference FASTA</p>
+              <Textarea
+                className="h-40 font-mono"
+                value={refFasta}
+                onChange={(e) => setRefFasta(e.target.value)}
+                placeholder="Enter reference FASTA"
+              />
+            </motion.div>
 
-      <motion.button
-        whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(0, 255, 0, 0.5)' }}
-        whileTap={{ scale: 0.95 }}
-        disabled={loading}
-        onClick={handleCallVariants}
-        className={`px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
-          loading ? 'bg-gray-600 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
-        }`}
-      >
-        {loading ? 'Calling Variants...' : 'Call Variants'}
-      </motion.button>
+            {/* Sample FASTA Input */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="mb-2 text-sm font-medium">Sample FASTA</p>
+              <Textarea
+                className="h-40 font-mono"
+                value={sampleFasta}
+                onChange={(e) => setSampleFasta(e.target.value)}
+                placeholder="Enter sample FASTA"
+              />
+            </motion.div>
+          </div>
 
-      {error && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mt-6 p-4 bg-red-600 bg-opacity-80 rounded-lg"
-        >
-          <strong>Error:</strong> {error}
-        </motion.div>
-      )}
+          <div className="flex justify-center">
+            <Button
+              onClick={handleCallVariants}
+              disabled={loading}
+              size="lg"
+              variant="primary"
+              className="mt-2"
+            >
+              {loading ? (
+                <>
+                  <RefreshCcw className="w-4 h-4 mr-2 animate-spin" />
+                  Calling Variants...
+                </>
+              ) : (
+                <>
+                  <Zap className="w-4 h-4 mr-2" />
+                  Call Variants
+                </>
+              )}
+            </Button>
+          </div>
+
+          {error && (
+            <Alert variant="destructive" className="mt-4">
+              <AlertCircle className="w-4 h-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
+
+        <CardFooter className="flex flex-col gap-2">
+          <div className="flex items-start gap-2 text-sm text-muted-foreground">
+            <Info className="h-4 w-4 mt-0.5" />
+            <div className="space-y-1">
+              <p>
+                This tool compares a sample sequence against a reference to
+                identify genetic variants. Input sequences must be in FASTA
+                format with valid nucleotide bases (A, T, C, G).
+              </p>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
 
       <AnimatePresence>
-        {variants.length > 0 && (
+        {variants.length > 0 ? (
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mt-8 w-full max-w-4xl"
+            transition={{ duration: 0.5 }}
+            className="mt-8"
           >
-            <h2 className="text-3xl font-semibold mb-4 text-center">Variants Detected</h2>
-            <div className="bg-gray-800 bg-opacity-80 rounded-lg shadow-lg p-6 backdrop-blur-sm">
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="border-b border-gray-600">
-                    <th className="py-3 px-4">Position</th>
-                    <th className="py-3 px-4">Reference</th>
-                    <th className="py-3 px-4">Variant</th>
-                    <th className="py-3 px-4">Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {variants.map((v, idx) => (
-                    <motion.tr
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="border-b border-gray-700 hover:bg-gray-700 hover:bg-opacity-50 transition-colors"
-                    >
-                      <td className="py-3 px-4">{v.position}</td>
-                      <td className={`py-3 px-4 font-mono ${getNucleotideColor(v.reference)}`}>
-                        {v.reference || '-'}
-                      </td>
-                      <td className={`py-3 px-4 font-mono ${getNucleotideColor(v.variant)}`}>
-                        {v.variant || '-'}
-                      </td>
-                      <td className="py-3 px-4">{v.type}</td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Variants Detected</CardTitle>
+                <CardDescription>
+                  {variants.length} variant{variants.length !== 1 ? "s" : ""}{" "}
+                  found between reference and sample
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Position</TableHead>
+                      <TableHead>Reference</TableHead>
+                      <TableHead>Variant</TableHead>
+                      <TableHead>Type</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {variants.map((v, idx) => (
+                      <TableRow key={idx}>
+                        <TableCell>{v.position}</TableCell>
+                        <TableCell
+                          className={`font-mono ${getNucleotideColor(
+                            v.reference
+                          )}`}
+                        >
+                          {v.reference || "-"}
+                        </TableCell>
+                        <TableCell
+                          className={`font-mono ${getNucleotideColor(
+                            v.variant
+                          )}`}
+                        >
+                          {v.variant || "-"}
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              v.type === "SNP"
+                                ? "secondary"
+                                : v.type === "INSERTION"
+                                ? "outline"
+                                : "default"
+                            }
+                          >
+                            {v.type}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mt-8"
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Variants Detected</CardTitle>
+                <CardDescription>
+                  {variants.length} variant{variants.length !== 1 ? "s" : ""}{" "}
+                  found between reference and sample
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Position</TableHead>
+                      <TableHead>Reference</TableHead>
+                      <TableHead>Variant</TableHead>
+                      <TableHead>Type</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {variants.map((v, idx) => (
+                      <TableRow key={idx}>
+                        <TableCell>{v.position}</TableCell>
+                        <TableCell
+                          className={`font-mono ${getNucleotideColor(
+                            v.reference
+                          )}`}
+                        >
+                          {v.reference || "-"}
+                        </TableCell>
+                        <TableCell
+                          className={`font-mono ${getNucleotideColor(
+                            v.variant
+                          )}`}
+                        >
+                          {v.variant || "-"}
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              v.type === "SNP"
+                                ? "secondary"
+                                : v.type === "INSERTION"
+                                ? "outline"
+                                : "default"
+                            }
+                          >
+                            {v.type}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {variants.length === 0 && !error && !loading && (
-        <p className="mt-6 text-gray-400">Enter sequences and click to detect variants.</p>
-      )}
     </div>
   );
 };

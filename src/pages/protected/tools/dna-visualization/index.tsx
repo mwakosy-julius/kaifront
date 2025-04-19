@@ -1,39 +1,71 @@
-import React, { useState } from 'react';
-import SequenceInput from './components/SequenceInput';
-import NucleotideTable from './components/NucleotideTable';
-import NucleotideBarChart from './components/NucleotideBarChart';
-import AminoAcidTable from './components/AminoAcidTable';
-import AminoAcidPieChart from './components/AminoAcidPieChart';
-import './App.css';
+import { useState } from "react";
+import {
+  AlertCircle,
+  Dna,
+  BarChart,
+  Dices,
+  Info,
+  BookOpen,
+  Share2,
+  RefreshCcw,
+} from "lucide-react";
 
-interface ApiResponse {
-  transcript: string;
-  amino_acids: string;
-  gc_content: number;
-  dna_counts: { [key: string]: number };
-  dna_table: string;
-  dna_chart: string;
-  amino_acid_counts: { [key: string]: number };
-  amino_acid_chart: string;
-}
+// local imports
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import SequenceInput from "./components/SequenceInput";
+import NucleotideTable from "./components/NucleotideTable";
+import AminoAcidPieChart from "./components/AminoAcidPieChart";
+import NucleotideBarChart from "./components/NucleotideBarChart";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  visualizeDNA,
+  DNAVisualizationResponse,
+  NucleotideDataPoint,
+  AminoAcidDataPoint,
+  AminoAcids,
+} from "@/lib/services/tools/dna_visualization";
 
-const App: React.FC = () => {
-  const [sequence, setSequence] = useState('');
-  const [data, setData] = useState<ApiResponse | null>(null);
-  const [error, setError] = useState('');
+const DNAVisualization = () => {
+  const [sequence, setSequence] = useState("");
+  const [data, setData] = useState<DNAVisualizationResponse | null>(null);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Convert API response to Recharts-friendly format
+  function formatNucleotideData(
+    response: DNAVisualizationResponse
+  ): NucleotideDataPoint[] {
+    return Object.entries(response.dna_counts).map(([name, count]) => ({
+      name: name as "A" | "T" | "G" | "C",
+      count,
+      percentage: response.dna_percentages[name as "A" | "T" | "G" | "C"],
+    }));
+  }
+
+  function formatAminoAcidData(
+    response: DNAVisualizationResponse
+  ): AminoAcidDataPoint[] {
+    return Object.entries(response.amino_acid_counts).map(([name, count]) => ({
+      name,
+      count,
+      percentage: response.amino_acid_percentages[name as AminoAcids],
+    }));
+  }
 
   const handleSubmit = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
-      const response = await fetch('http://localhost:8000/dna_visualization/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sequence }),
-      });
-      if (!response.ok) throw new Error('Failed to fetch DNA visualization');
-      const result: ApiResponse = await response.json();
+      const result = await visualizeDNA(sequence);
       setData(result);
     } catch (err) {
       setError((err as Error).message);
@@ -42,100 +74,157 @@ const App: React.FC = () => {
     }
   };
 
+  const stats = [
+    {
+      label: "Visualization",
+      value: "Charts & Tables",
+      icon: BarChart,
+    },
+    {
+      label: "Nucleotides",
+      value: "A, T, C, G",
+      icon: Dna,
+    },
+    {
+      label: "Protein Coding",
+      value: "Amino Acid Analysis",
+      icon: Dices,
+    },
+  ];
+
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-5xl font-bold text-center bg-gradient-to-r from-cyan-400 to-pink-500 bg-clip-text text-transparent mb-8">
-        DNAVision
-      </h1>
-      <SequenceInput sequence={sequence} setSequence={setSequence} onSubmit={handleSubmit} />
-      {loading && <p className="text-center text-cyan-300 mt-4">Analyzing...</p>}
-      {error && <p className="text-center text-red-400 mt-4">{error}</p>}
-      {data && (
-        <div className="space-y-6">
-          <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg backdrop-blur-md">
-            <h2 className="text-2xl font-bold mb-4 text-cyan-300">Results</h2>
-            <p><strong>RNA Transcript:</strong> {data.transcript}</p>
-            <p><strong>Amino Acids:</strong> {data.amino_acids}</p>
-            <p><strong>GC Content:</strong> {(data.gc_content * 100).toFixed(1)}%</p>
+    <div className="max-w-4xl mx-auto">
+      <Card className="border-none shadow-none bg-background/60 backdrop-blur-sm">
+        <CardHeader>
+          <div className="flex items-start justify-between w-full gap-1">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-3xl font-bold text-primary">
+                  <Dna className="w-8 h-8" />
+                  DNAVision
+                </CardTitle>
+              </div>
+              <CardDescription className="text-base text-muted-foreground">
+                Comprehensive DNA sequence analysis and visualization tool
+              </CardDescription>
+              <div className="flex gap-2 mt-2">
+                <Badge variant="outline" className="text-xs">
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  Documentation
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Share Results
+                </Badge>
+              </div>
+            </div>
           </div>
-          <NucleotideTable tableHtml={data.dna_table} counts={data.dna_counts} />
-          <NucleotideBarChart counts={data.dna_counts} />
-          <AminoAcidTable tableHtml={data.amino_acid_chart} counts={data.amino_acid_counts} />
-          <AminoAcidPieChart counts={data.amino_acid_counts} />
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          {/* Tool Statistics */}
+          <div className="grid grid-cols-3 gap-4 p-4 rounded bg-muted/50">
+            {stats.map((stat, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <div className="p-3 rounded bg-primary/10">
+                  <stat.icon className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium">{stat.label}</p>
+                  <p className="text-sm text-muted-foreground">{stat.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <Separator />
+
+          <SequenceInput
+            sequence={sequence}
+            setSequence={setSequence}
+            onSubmit={handleSubmit}
+            isLoading={loading}
+          />
+
+          {loading && (
+            <div className="flex items-center justify-center space-x-2">
+              <RefreshCcw className="w-5 h-5 animate-spin text-primary" />
+              <p className="text-muted-foreground">Analyzing sequence...</p>
+            </div>
+          )}
+
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="w-4 h-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
+
+        <CardFooter className="flex flex-col gap-2">
+          <div className="flex items-start gap-2 text-sm text-muted-foreground">
+            <Info className="h-4 w-4 mt-0.5" />
+            <div className="space-y-1">
+              <p>
+                This tool analyses DNA sequences to provide nucleotide
+                composition, transcription to RNA, translation to amino acids,
+                and comprehensive visualizations of sequence data.
+              </p>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
+
+      {data && (
+        <div className="mt-8 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Analysis Results</CardTitle>
+              <CardDescription>
+                DNA composition, transcription and translation data
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 p-4 rounded md:grid-cols-3 bg-muted/30">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">RNA Transcript</p>
+                  <p className="p-2 font-mono text-xs rounded bg-muted">
+                    {data.transcript}
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Amino Acids</p>
+                  <p className="p-2 font-mono text-xs rounded bg-muted">
+                    {data.amino_acids}
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">GC Content</p>
+                  <p className="flex items-center justify-center h-full text-lg font-bold text-primary">
+                    {data.gc_content}
+                  </p>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <NucleotideTable counts={data.dna_counts} />
+                <NucleotideBarChart data={formatNucleotideData(data)} />
+              </div>
+
+              <Separator />
+
+              <AminoAcidPieChart data={formatAminoAcidData(data)} />
+            </CardContent>
+          </Card>
         </div>
       )}
     </div>
   );
 };
 
-export default App;import React, { useState } from 'react';
-import SequenceInput from './components/SequenceInput';
-import NucleotideTable from './components/NucleotideTable';
-import NucleotideBarChart from './components/NucleotideBarChart';
-import AminoAcidTable from './components/AminoAcidTable';
-import AminoAcidPieChart from './components/AminoAcidPieChart';
-import './App.css';
-
-interface ApiResponse {
-  transcript: string;
-  amino_acids: string;
-  gc_content: number;
-  dna_counts: { [key: string]: number };
-  dna_table: string;
-  dna_chart: string;
-  amino_acid_counts: { [key: string]: number };
-  amino_acid_chart: string;
-}
-
-const App: React.FC = () => {
-  const [sequence, setSequence] = useState('');
-  const [data, setData] = useState<ApiResponse | null>(null);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const response = await fetch('http://localhost:8000/dna_visualization/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sequence }),
-      });
-      if (!response.ok) throw new Error('Failed to fetch DNA visualization');
-      const result: ApiResponse = await response.json();
-      setData(result);
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-5xl font-bold text-center bg-gradient-to-r from-cyan-400 to-pink-500 bg-clip-text text-transparent mb-8">
-        DNAVision
-      </h1>
-      <SequenceInput sequence={sequence} setSequence={setSequence} onSubmit={handleSubmit} />
-      {loading && <p className="text-center text-cyan-300 mt-4">Analyzing...</p>}
-      {error && <p className="text-center text-red-400 mt-4">{error}</p>}
-      {data && (
-        <div className="space-y-6">
-          <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg backdrop-blur-md">
-            <h2 className="text-2xl font-bold mb-4 text-cyan-300">Results</h2>
-            <p><strong>RNA Transcript:</strong> {data.transcript}</p>
-            <p><strong>Amino Acids:</strong> {data.amino_acids}</p>
-            <p><strong>GC Content:</strong> {(data.gc_content * 100).toFixed(1)}%</p>
-          </div>
-          <NucleotideTable tableHtml={data.dna_table} counts={data.dna_counts} />
-          <NucleotideBarChart counts={data.dna_counts} />
-          <AminoAcidTable tableHtml={data.amino_acid_chart} counts={data.amino_acid_counts} />
-          <AminoAcidPieChart counts={data.amino_acid_counts} />
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default App;
+export default DNAVisualization;

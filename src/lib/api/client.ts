@@ -1,4 +1,5 @@
-import axios, {
+import axios from "axios";
+import type {
   AxiosError,
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
@@ -154,8 +155,11 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export const get = async <T>(url: string): Promise<ApiResponse<T>> => {
-  const response = await axiosInstance.get<ApiResponse<T>>(url);
+export const get = async <T>(
+  url: string,
+  config?: AxiosRequestConfig
+): Promise<ApiResponse<T>> => {
+  const response = await axiosInstance.get<ApiResponse<T>>(url, config);
   return response.data;
 };
 

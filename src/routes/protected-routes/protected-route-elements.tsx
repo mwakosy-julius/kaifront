@@ -17,3 +17,27 @@ export const LazyPairwiseAlignment = lazy(
 export const LazyGCContent = lazy(
   () => import("@/pages/protected/tools/gc-content")
 );
+export const LazyVariantCalling = lazy(
+  () => import("@/pages/protected/tools/variant-calling")
+);
+export const LazyDNAVisualization = lazy(
+  () => import("@/pages/protected/tools/dna-visualization")
+);
+export const LazyDataCompression = lazy(
+  () => import("@/pages/protected/tools/data-compression")
+);
+export const LazyConsensusMaker = lazy(
+  () => import("@/pages/protected/tools/consensus-maker")
+);
+export const LazyCodonUsage = lazy(
+  () => import("@/pages/protected/tools/codon-usage")
+);
+export const LazyMotifFinder = lazy(
+  () => import("@/pages/protected/tools/motif-finder")
+);
+export const LazyMultipleAlignment = lazy(
+  () => import("@/pages/protected/tools/multiple-alignment")
+);
+export const LazyMusicDNA = lazy(
+  () => import("@/pages/protected/tools/musicdna")
+);
