@@ -10,8 +10,8 @@ export const API_ENDPOINTS = {
   },
   tools: {
     list: "/auth/users/tools/",
-    pairwise_alignment: "/pairwise_alignment/",
-    gc_content: "/gc_content/",
+    pairwise_alignment: "tools/pairwise_alignment/",
+    gc_content: "tools/gc_content/",
   },
   users: {
     profile: "/users/profile/",

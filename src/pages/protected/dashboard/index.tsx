@@ -1,11 +1,17 @@
-import { tools } from "@/lib/services/tools";
-import { KaiToolsInterface } from "@/lib/services/tools/types";
-import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+
+// local imports
+import { tools } from "@/lib/services/tools";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { KaiToolsInterface } from "@/lib/services/tools/types";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 const Dashboard = () => {
   const [toolsData, setToolsData] = useState<KaiToolsInterface[]>([]);
@@ -15,14 +21,14 @@ const Dashboard = () => {
       try {
         await tools().then((res) => setToolsData(res as KaiToolsInterface[]));
       } catch (error) {
-        console.error('Error fetching tools:', error);
+        console.error("Error fetching tools:", error);
       }
     };
     fetchTools();
   }, []);
 
   return (
-    <div className="md:px-8 px-2 py-8 max-w-6xl mx-auto w-full">
+    <div className="w-full max-w-6xl px-2 py-8 mx-auto md:px-8">
       <div className="mb-8">
         <h1 className="text-3xl font-semibold text-foreground">
           Bioinformatics Tools
@@ -32,7 +38,7 @@ const Dashboard = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {toolsData.map((tool) => (
           <ToolCard key={tool.name} tool={tool} />
         ))}
@@ -43,34 +49,26 @@ const Dashboard = () => {
 
 const ToolCard = ({ tool }: { tool: KaiToolsInterface }) => {
   return (
-    <Card className={cn(
-      "border transition-all duration-200",
-      "hover:border-border hover:bg-primary/5 cursor-default"
-    )}>
+    <Card>
       <CardHeader>
         <CardTitle className="text-lg font-semibold text-foreground">
           {tool.name}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground line-clamp-4 h-24">
+        <p className="h-24 text-sm text-muted-foreground line-clamp-4">
           {tool.description}
         </p>
       </CardContent>
       <CardFooter>
         <Button
-          variant="outline"
-          className={cn(
-            "w-full justify-between border-none",
-            "hover:bg-primary/10 hover:text-primary",
-            "transition-colors duration-200"
-          )}
+          variant="ghost"
+          href={"tools" + tool.frontend_url}
+          className="justify-between w-full"
           asChild
         >
-          <Link to={'tools' + tool.frontend_url}>
-            Open Tool
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Link>
+          Open Tool
+          <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </CardFooter>
     </Card>
