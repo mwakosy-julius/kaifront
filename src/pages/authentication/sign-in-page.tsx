@@ -11,7 +11,7 @@ const SignIn = () => {
       setError(null);
       await login(data).then(() => {
         {
-          window.location.href = "/";
+          window.location.href = "/dashboard";
         }
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

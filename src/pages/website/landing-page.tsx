@@ -1,27 +1,16 @@
 import { Page } from "@/components/core/page";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
-
-  const navigate = useNavigate();
-
   return (
-    <Page
-      container
-      overflowHidden
-    >
-      <div className="flex container items-center justify-between py-5">
+    <Page container>
+      <div className="container flex items-center justify-between py-5">
         <div>
           <img src="/kaidoku-logo.svg" alt="Logo" className="w-1/2" />
         </div>
         <div>
-          <Button
-            variant={"ghost"}
-            size={"lg"}
-            onClick={() => navigate("/sign-in")}
-          >
+          <Button variant="ghost" size="lg" href="/sign-in">
             Sign In
           </Button>
 
@@ -29,12 +18,16 @@ const LandingPage = () => {
             variant={"default"}
             className="ml-4"
             size={"lg"}
-            onClick={() => navigate("/register")}
+            href="/sign-up"
           >
             Get Started
             <ArrowRight className="w-6 h-6" />
           </Button>
         </div>
+      </div>
+
+      <div className="flex flex-col items-center justify-center h-full text-center">
+        <h1 className="mb-4 text-4xl font-bold">The Beautiful Landing Page</h1>
       </div>
     </Page>
   );

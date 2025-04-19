@@ -1,32 +1,27 @@
 import {
   ProtectedRoot,
   LazyDashboard,
-  ProtectedNotFound,
   LazyPairwiseAlignment,
-  LazyGCContent
-} from './protected-route-elements';
+  LazyGCContent,
+} from "./protected-route-elements";
 
 export const protectedRoutes = [
   {
-    path: '/',
+    path: "/dashboard",
     element: <ProtectedRoot />,
     children: [
       {
-        path: '/dashboard',
+        index: true,
         element: <LazyDashboard />,
       },
       {
-        path: '/dashboard/tools/pairwise-alignment',
+        path: "tools/pairwise_alignment",
         element: <LazyPairwiseAlignment />,
       },
       {
-        path: '/dashboard/tools/gc-content',
+        path: "tools/gc_content",
         element: <LazyGCContent />,
       },
-      {
-        path: '*',
-        element: <ProtectedNotFound />,
-      }
     ],
   },
 ];

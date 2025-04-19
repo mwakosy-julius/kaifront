@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+
+// local imports
+import { cn } from "@/lib/utils";
 import { Page } from "../core/page";
 import { Sidebar } from "../dashboard/sidebar";
+import { useAuth } from "../../context/AuthContext";
 import { DashboardNavbar } from "../dashboard/navbar";
 import { SidebarProvider } from "@/context/SidebarContext";
-import { Footer } from "../shared/footer";
-import { cn } from "@/lib/utils";
 
 const ProtectedLayoutContent = () => {
   const { isAuthenticated } = useAuth();
@@ -17,10 +18,7 @@ const ProtectedLayoutContent = () => {
   return (
     <Page
       overflowHidden
-      className={cn(
-        "flex !flex-row",
-        "bg-background text-foreground"
-      )}
+      className={cn("flex !flex-row", "bg-background text-foreground")}
     >
       <Sidebar />
       <Page
@@ -31,14 +29,10 @@ const ProtectedLayoutContent = () => {
         )}
       >
         <DashboardNavbar />
-        <div className="flex-1 overflow-auto relative">
-          <main className={cn(
-            "min-h-full ",
-            "bg-background"
-          )}>
+        <div className="relative flex-1 overflow-auto">
+          <main className={cn("min-h-full ", "bg-background")}>
             <Outlet />
           </main>
-          <Footer />
         </div>
       </Page>
     </Page>
