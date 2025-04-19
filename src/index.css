@@ -69,7 +69,6 @@
   }
 }
 
-
 @layer base {
   * {
     box-sizing: border-box;
@@ -77,9 +76,18 @@
   }
 }
 
+body {
+  @apply bg-background text-foreground;
+}
+
 @keyframes pulse {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.2; }
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.2;
+  }
 }
 .animate-pulse {
   animation: pulse 4s ease-in-out infinite;
