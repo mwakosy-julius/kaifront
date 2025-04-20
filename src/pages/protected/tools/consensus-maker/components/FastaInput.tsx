@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Upload, FileText, RotateCw, Search } from "lucide-react";
+import { Upload, FileText, RefreshCcw, Dna } from "lucide-react";
 
 interface FastaInputProps {
   fasta: string;
@@ -46,10 +46,10 @@ const FastaInput: React.FC<FastaInputProps> = ({
 
   const loadSampleData = () => {
     setFasta(
-      ">seq1\nATCGATGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAG\n" +
-        ">seq2\nGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGC\n" +
-        ">seq3\nTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA\n" +
-        ">seq4\nCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCT"
+      ">seq1\nATCGATCGATCGATCGATCGATCGATCG\n" +
+        ">seq2\nATGGATCGATCGATCGATCGATCGATCG\n" +
+        ">seq3\nATCGATCGATCGATCGATCGATCGATCG\n" +
+        ">seq4\nATCGATGGATCGATCGATCGATCGATCG"
     );
     setFile(null);
   };
@@ -61,7 +61,10 @@ const FastaInput: React.FC<FastaInputProps> = ({
         <Textarea
           id="fasta-input"
           value={fasta}
-          onChange={(e) => setFasta(e.target.value)}
+          onChange={(e) => {
+            setFasta(e.target.value);
+            setFile(null); // Clear file if textarea is edited
+          }}
           placeholder=">sequence1&#10;ATCGATCGTAGCTAGCTAGTCGA&#10;>sequence2&#10;AGTCGATCGTAGCTAGCTAGTCGA"
           className="min-h-[200px] font-mono text-sm"
         />
@@ -71,13 +74,13 @@ const FastaInput: React.FC<FastaInputProps> = ({
         <Button onClick={onSubmit} disabled={loading || !fasta.trim()}>
           {loading ? (
             <>
-              <RotateCw className="w-4 h-4 mr-2 animate-spin" />
-              Searching...
+              <RefreshCcw className="w-4 h-4 mr-2 animate-spin" />
+              Generating...
             </>
           ) : (
             <>
-              <Search className="w-4 h-4 mr-2" />
-              Find Motifs
+              <Dna className="w-4 h-4 mr-2" />
+              Generate Consensus
             </>
           )}
         </Button>
@@ -108,7 +111,7 @@ const FastaInput: React.FC<FastaInputProps> = ({
       {!fasta.trim() && (
         <p className="text-sm text-muted-foreground">
           Input multiple sequences in FASTA format with header lines (starting
-          with &gt;) to find common sequence motifs.
+          with &gt;) to generate a consensus sequence.
         </p>
       )}
     </div>

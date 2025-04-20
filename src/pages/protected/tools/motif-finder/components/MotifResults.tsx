@@ -1,5 +1,23 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileText } from "lucide-react";
 
 interface MotifPosition {
   sequence: string;
@@ -19,157 +37,233 @@ interface MotifResultsProps {
   fastaInput: string;
 }
 
-const MotifResults: React.FC<MotifResultsProps> = ({ response, fastaInput }) => {
+const MotifResults: React.FC<MotifResultsProps> = ({
+  response,
+  fastaInput,
+}) => {
   // Parse FASTA for sequence display
-  const parseFasta = (fasta: string): string[] => {
-    const sequences: string[] = [];
-    let currentSeq: string[] = [];
-    const lines = fasta.trim().split('\n');
+  const parseFasta = (fasta: string): Record<string, string> => {
+    const sequences: Record<string, string> = {};
+    let currentHeader = "";
+    const lines = fasta.trim().split("\n");
+
     for (const line of lines) {
-      if (line.startsWith('>')) {
-        if (currentSeq.length) {
-          sequences.push(currentSeq.join(''));
-          currentSeq = [];
-        }
-      } else {
-        currentSeq.push(line.trim());
+      if (line.startsWith(">")) {
+        currentHeader = line.substring(1).trim();
+      } else if (currentHeader) {
+        sequences[currentHeader] =
+          (sequences[currentHeader] || "") + line.trim();
       }
     }
-    if (currentSeq.length) {
-      sequences.push(currentSeq.join(''));
-    }
-    return sequences.filter(seq => seq);
+
+    return sequences;
   };
 
   // Nucleotide color mapping
   const getNucleotideColor = (base: string): string => {
     switch (base.toUpperCase()) {
-      case 'A': return 'text-green-400';
-      case 'T': return 'text-red-400';
-      case 'C': return 'text-blue-400';
-      case 'G': return 'text-yellow-400';
-      default: return 'text-gray-400';
+      case "A":
+        return "text-red-500";
+      case "T":
+        return "text-green-500";
+      case "C":
+        return "text-blue-500";
+      case "G":
+        return "text-yellow-500";
+      default:
+        return "text-gray-400";
     }
-  };
-
-  // Highlight sequences
-  const highlightSequence = (seq: string, motif: string, seqId: string): JSX.Element[] => {
-    const parts: JSX.Element[] = [];
-    let pos = 0;
-    const motifLength = motif.length;
-
-    while (pos < seq.length) {
-      if (response.positions.some(p => p.sequence === seqId && p.position === pos + 1)) {
-        const motifPart = seq.slice(pos, pos + motifLength);
-        parts.push(
-          <span key={`${seqId}-${pos}-motif`} className="font-bold bg-gray-700 px-1 rounded">
-            {motifPart.split('').map((base, i) => (
-              <span key={`${seqId}-${pos}-base-${i}`} className={getNucleotideColor(base)}>
-                {base}
-              </span>
-            ))}
-          </span>
-        );
-        pos += motifLength;
-      } else {
-        parts.push(
-          <span key={`${seqId}-${pos}-base`} className={getNucleotideColor(seq[pos])}>
-            {seq[pos]}
-          </span>
-        );
-        pos += 1;
-      }
-    }
-    return parts;
   };
 
   const sequences = parseFasta(fastaInput);
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="w-full max-w-3xl mt-8"
-    >
-      <h2 className="text-3xl font-semibold mb-4 text-center text-cyan-300">
-        Motif Results
-      </h2>
-      <div className="bg-gray-800 bg-opacity-70 p-6 rounded-xl shadow-lg backdrop-blur-md">
-        <div className="mb-6">
-          <strong className="text-lg">Consensus Motif:</strong>
-          <div className="font-mono text-lg flex flex-wrap gap-1 mt-2">
-            {response.consensus.split('').map((base, idx) => (
-              <motion.span
-                key={idx}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.05 }}
-                className={`${getNucleotideColor(base)} px-1 hover:scale-125 transition-transform`}
+  // Function to export results as CSV
+  const exportAsCSV = () => {
+    const headers = ["Sequence", "Position", "Motif"];
+    const rows = response.positions.map(
+      (p) => `${p.sequence},${p.position},${p.motif}`
+    );
+    const csv = [headers.join(","), ...rows].join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "motif_results.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // Function to render sequence with highlighted motifs
+  const renderSequence = (seqId: string, sequence: string) => {
+    const positions = response.positions
+      .filter((p) => p.sequence === seqId)
+      .map((p) => ({
+        start: p.position - 1,
+        end: p.position - 1 + p.motif.length,
+      }));
+
+    const result: JSX.Element[] = [];
+    let lastEnd = 0;
+
+    // Sort positions to handle overlaps
+    positions.sort((a, b) => a.start - b.start);
+
+    positions.forEach(({ start, end }) => {
+      if (start > lastEnd) {
+        // Add non-highlighted segment
+        result.push(
+          <span key={`${seqId}-normal-${lastEnd}`}>
+            {sequence
+              .substring(lastEnd, start)
+              .split("")
+              .map((char, i) => (
+                <span
+                  key={`${seqId}-${lastEnd + i}`}
+                  className={getNucleotideColor(char)}
+                >
+                  {char}
+                </span>
+              ))}
+          </span>
+        );
+      }
+
+      // Add highlighted segment
+      result.push(
+        <span
+          key={`${seqId}-motif-${start}`}
+          className="bg-primary/15 font-bold rounded px-0.5"
+        >
+          {sequence
+            .substring(start, end)
+            .split("")
+            .map((char, i) => (
+              <span
+                key={`${seqId}-h-${start + i}`}
+                className={getNucleotideColor(char)}
               >
-                {base}
-              </motion.span>
+                {char}
+              </span>
             ))}
+        </span>
+      );
+
+      lastEnd = end;
+    });
+
+    // Add remaining sequence
+    if (lastEnd < sequence.length) {
+      result.push(
+        <span key={`${seqId}-normal-end`}>
+          {sequence
+            .substring(lastEnd)
+            .split("")
+            .map((char, i) => (
+              <span
+                key={`${seqId}-${lastEnd + i}`}
+                className={getNucleotideColor(char)}
+              >
+                {char}
+              </span>
+            ))}
+        </span>
+      );
+    }
+
+    return result;
+  };
+
+  return (
+    <Card className="mt-6">
+      <CardHeader>
+        <CardTitle>Motif Analysis Results</CardTitle>
+        <CardDescription>
+          Discovered sequence motifs and their positions
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="p-4 border rounded bg-muted/20">
+          <h3 className="mb-2 text-lg font-semibold">Consensus Motif</h3>
+          <div className="flex items-center gap-2">
+            <div className="flex p-2 overflow-x-auto font-mono text-lg border rounded bg-muted/30">
+              {response.consensus.split("").map((base, idx) => (
+                <span
+                  key={idx}
+                  className={`${getNucleotideColor(base)} px-0.5`}
+                >
+                  {base}
+                </span>
+              ))}
+            </div>
+            <Badge variant="outline">Score: {response.score.toFixed(2)}</Badge>
+            <Badge variant="outline">Length: {response.motif_length}</Badge>
           </div>
-          <p className="mt-2 text-gray-300">
-            Score: {response.score.toFixed(2)} | Motif Length: {response.motif_length}
-          </p>
         </div>
 
-        <AnimatePresence>
-          {response.positions.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <h3 className="text-xl font-semibold mb-3 text-gray-200">Motif Instances</h3>
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-gray-600">
-                    <th className="py-2 px-4">Sequence</th>
-                    <th className="py-2 px-4">Position</th>
-                    <th className="py-2 px-4">Motif</th>
-                  </tr>
-                </thead>
-                <tbody>
+        <Tabs defaultValue="motifs">
+          <TabsList>
+            <TabsTrigger value="motifs">Motif Positions</TabsTrigger>
+            <TabsTrigger value="sequences">Sequences</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="motifs" className="space-y-4">
+            <div className="border rounded">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Sequence</TableHead>
+                    <TableHead>Position</TableHead>
+                    <TableHead>Motif</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                   {response.positions.map((p, idx) => (
-                    <motion.tr
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="border-b border-gray-700 hover:bg-gray-700 hover:bg-opacity-50"
-                    >
-                      <td className="py-2 px-4">{p.sequence}</td>
-                      <td className="py-2 px-4">{p.position}</td>
-                      <td className="py-2 px-4 font-mono">
-                        {p.motif.split('').map((base, i) => (
+                    <TableRow key={idx}>
+                      <TableCell>{p.sequence}</TableCell>
+                      <TableCell>{p.position}</TableCell>
+                      <TableCell className="font-mono">
+                        {p.motif.split("").map((base, i) => (
                           <span key={i} className={getNucleotideColor(base)}>
                             {base}
                           </span>
                         ))}
-                      </td>
-                    </motion.tr>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <h3 className="text-xl font-semibold mt-6 mb-3 text-gray-200">Input Sequences</h3>
-        <div className="font-mono text-sm">
-          {sequences.map((seq, idx) => (
-            <div key={idx} className="mb-3 break-all">
-              <strong>{`seq${idx + 1}`}: </strong>
-              {highlightSequence(seq, response.consensus, `seq${idx + 1}`)}
+                </TableBody>
+              </Table>
             </div>
-          ))}
+
+            <div className="flex justify-end">
+              <Button variant="outline" size="sm" onClick={exportAsCSV}>
+                <FileText className="w-4 h-4 mr-2" />
+                Export CSV
+              </Button>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="sequences" className="space-y-4">
+            <div className="p-4 overflow-x-auto font-mono text-sm border rounded bg-muted/20">
+              {Object.entries(sequences).map(([id, seq]) => (
+                <div key={id} className="mb-4">
+                  <div className="mb-1 font-semibold">{`>${id}`}</div>
+                  <div className="break-all">{renderSequence(id, seq)}</div>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        <div className="text-sm text-muted-foreground">
+          <p>
+            Motifs are shown highlighted in the sequences. The consensus
+            sequence represents the most conserved pattern across all identified
+            motif instances.
+          </p>
         </div>
-      </div>
-    </motion.div>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -102,7 +102,7 @@ const VariantCaller: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="container mx-auto">
       <Card className="border-none shadow-none bg-background/60 backdrop-blur-sm">
         <CardHeader>
           <div className="flex items-start justify-between w-full gap-1">
