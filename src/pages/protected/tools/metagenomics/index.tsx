@@ -1,19 +1,58 @@
 import React, { useState } from "react";
 import { AxiosError } from "axios";
-import { motion } from "framer-motion";
-// import SequenceInput from "./components/SequenceInput";
-// import TaxonomyTable from "./components/TaxonomyTable";
-// import TaxonomyChart from "./components/TaxonomyChart";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  AlertCircle,
+  Dna,
+  Bug,
+  Database,
+  Info,
+  BookOpen,
+  Share2,
+} from "lucide-react";
+import StatsGrid from "./components/StatsGrid";
 import {
   analyzeMetagenomics,
   MetagenomicsResponse,
 } from "@/lib/services/tools/metagenomics";
+import { AnalysisResult } from "./types";
+import TaxonomyChart from "./components/TaxonomyChart";
+import TaxonomyTable from "./components/TaxonomyTable";
+import SequenceInput from "./components/SequenceInput";
 
 const Metagenomics: React.FC = () => {
   const [sequence, setSequence] = useState("");
-  const [results, setResults] = useState<MetagenomicsResponse | null>(null);
+  const [results, setResults] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const stats = [
+    {
+      label: "Algorithm",
+      value: "k-mer Analysis",
+      icon: Dna,
+    },
+    {
+      label: "Data Type",
+      value: "Metagenomic Reads",
+      icon: Bug,
+    },
+    {
+      label: "Database",
+      value: "RefSeq & GTDB",
+      icon: Database,
+    },
+  ];
 
   const handleAnalyze = async () => {
     setError("");
@@ -35,57 +74,91 @@ const Metagenomics: React.FC = () => {
   };
 
   return (
-    <div className="container p-6 mx-auto">
-      <h1 className="mb-8 text-5xl font-bold text-center text-transparent bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text">
-        MetaGenome Explorer
-      </h1>
-      {/* <SequenceInput
-        sequence={sequence}
-        setSequence={setSequence}
-        onSubmit={handleAnalyze}
-        loading={loading}
-      /> */}
-      {loading && (
-        <p className="mt-4 text-center text-blue-400">
-          Analyzing metagenomics data...
-        </p>
-      )}
-      {error && <p className="mt-4 text-center text-red-500">{error}</p>}
-      {results && (
-        <div className="space-y-8">
-          <div className="p-6 bg-gray-800 rounded-lg shadow-lg">
-            <h2 className="mb-4 text-2xl font-bold text-green-400">
-              Analysis Summary
-            </h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              <div className="p-4 text-center bg-gray-700 rounded-lg">
-                <h3 className="text-lg font-medium text-gray-300">
-                  Total Reads
-                </h3>
-                <p className="text-3xl font-bold text-white">
-                  {results.stats.total_reads}
-                </p>
-              </div>
-              <div className="p-4 text-center bg-gray-700 rounded-lg">
-                <h3 className="text-lg font-medium text-gray-300">
-                  Classified
-                </h3>
-                <p className="text-3xl font-bold text-green-400">
-                  {results.stats.classified_reads}
-                </p>
-              </div>
-              <div className="p-4 text-center bg-gray-700 rounded-lg">
-                <h3 className="text-lg font-medium text-gray-300">
-                  Unclassified
-                </h3>
-                <p className="text-3xl font-bold text-red-400">
-                  {results.stats.unclassified_reads}
-                </p>
+    <div className="container mx-auto">
+      <Card className="border-none shadow-none bg-background/60 backdrop-blur-sm">
+        <CardHeader>
+          <div className="flex items-start justify-between w-full gap-1">
+            <div className="flex flex-col gap-2">
+              <CardTitle className="flex items-center gap-2 text-3xl font-bold text-primary">
+                <Bug className="w-8 h-8" />
+                MetaGenome Explorer
+              </CardTitle>
+              <CardDescription className="text-base text-muted-foreground">
+                Analyze metagenomic sequence data to identify microbial
+                community composition
+              </CardDescription>
+              <div className="flex gap-2 mt-2">
+                <Badge variant="outline" className="text-xs">
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  Documentation
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Share Results
+                </Badge>
               </div>
             </div>
           </div>
-          {/* <TaxonomyChart data={results.visualization_data} />
-          <TaxonomyTable matches={results.matches} /> */}
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          {/* Tool Statistics */}
+          <div className="grid grid-cols-3 gap-4 p-4 rounded bg-muted/50">
+            {stats.map((stat, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <div className="p-3 rounded bg-primary/10">
+                  <stat.icon className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium">{stat.label}</p>
+                  <p className="text-sm text-muted-foreground">{stat.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <Separator />
+
+          <SequenceInput
+            sequence={sequence}
+            setSequence={setSequence}
+            onSubmit={handleAnalyze}
+            loading={loading}
+          />
+
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="w-4 h-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
+
+        <CardFooter className="flex flex-col gap-2">
+          <div className="flex items-start gap-2 text-sm text-muted-foreground">
+            <Info className="h-4 w-4 mt-0.5" />
+            <div className="space-y-1">
+              <p>
+                This tool analyzes metagenomic DNA sequences to identify the
+                microbial composition of your sample. It uses k-mer-based
+                taxonomic classification against reference databases.
+              </p>
+              <p>
+                Paste raw metagenomic reads or processed sequences for analysis.
+                For best results, ensure quality reads with minimal
+                contamination.
+              </p>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
+
+      {results && (
+        <div className="mt-6 space-y-6">
+          <StatsGrid stats={results.stats} />
+          <TaxonomyChart taxa={results.taxa} />
+          <TaxonomyTable details={results.details} />
         </div>
       )}
     </div>

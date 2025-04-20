@@ -30,7 +30,7 @@ export const analyzeMetagenomics = async (
 ): Promise<MetagenomicsResponse> => {
   const response = await api.client.post<MetagenomicsResponse>(
     api.endpoints.tools.metagenomics,
-    { sequence }
+    { fasta_text: sequence }
   );
   if (!response) {
     throw new Error("Failed to analyze metagenomics data");

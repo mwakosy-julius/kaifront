@@ -41,3 +41,6 @@ export const LazyMultipleAlignment = lazy(
 export const LazyMusicDNA = lazy(
   () => import("@/pages/protected/tools/musicdna")
 );
+export const LazyMetagenomics = lazy(
+  () => import("@/pages/protected/tools/metagenomics")
+);

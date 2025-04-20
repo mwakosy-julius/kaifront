@@ -44,7 +44,7 @@ export default function GCContentDashboard() {
   };
 
   return (
-    <div className="grid grid-cols-12 gap-6 p-3 mx-auto max-w-7xl">
+    <div className="container grid grid-cols-12 gap-6 p-3 mx-auto">
       <div className="col-span-4">
         <Card className="!bg-background/60 backdrop-blur-sm border-none shadow-none">
           <CardHeader>

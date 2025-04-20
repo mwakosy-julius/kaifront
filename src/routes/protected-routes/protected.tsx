@@ -11,6 +11,7 @@ import {
   LazyMotifFinder,
   LazyMultipleAlignment,
   LazyMusicDNA,
+  LazyMetagenomics,
 } from "./protected-route-elements";
 
 export const protectedRoutes = [
@@ -61,6 +62,10 @@ export const protectedRoutes = [
       {
         path: "tools/music_dna",
         element: <LazyMusicDNA />,
+      },
+      {
+        path: "tools/metagenomics",
+        element: <LazyMetagenomics />,
       },
     ],
   },
