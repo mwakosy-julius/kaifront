@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 // local imports
-import { cn } from "@/lib/utils";
 import { Page } from "../core/page";
 import { Sidebar } from "../dashboard/sidebar";
 import { useAuth } from "../../context/AuthContext";
@@ -18,19 +17,16 @@ const ProtectedLayoutContent = () => {
   return (
     <Page
       overflowHidden
-      className={cn("flex !flex-row", "bg-background text-foreground")}
+      className="flex !flex-row bg-background text-foreground"
     >
       <Sidebar />
       <Page
         overflowHidden
-        className={cn(
-          "flex-1 flex flex-col",
-          "bg-background border-l border-border"
-        )}
+        className="flex flex-col flex-1 border-l border-border"
       >
         <DashboardNavbar />
         <div className="relative flex-1 overflow-auto">
-          <main className={cn("min-h-full ", "bg-background")}>
+          <main className="min-h-full my-6">
             <Outlet />
           </main>
         </div>
