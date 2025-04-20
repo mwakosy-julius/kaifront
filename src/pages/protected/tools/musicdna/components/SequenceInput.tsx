@@ -1,46 +1,103 @@
-import React from 'react';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Upload, FileText, RotateCw, Music } from "lucide-react";
 
 interface SequenceInputProps {
   sequence: string;
-  setSequence: (seq: string) => void;
+  setSequence: (sequence: string) => void;
   onSubmit: () => void;
+  loading: boolean;
 }
 
-const SequenceInput: React.FC<SequenceInputProps> = ({ sequence, setSequence, onSubmit }) => {
+const SequenceInput: React.FC<SequenceInputProps> = ({
+  sequence,
+  setSequence,
+  onSubmit,
+  loading,
+}) => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const text = event.target?.result as string;
-        setSequence(text.trim());
-      };
-      reader.readAsText(file);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      setSequence(content);
+    };
+    reader.readAsText(file);
+  };
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setSequence(text);
+    } catch (err) {
+      console.error("Failed to read clipboard:", err);
     }
   };
 
+  const loadSampleSequence = () => {
+    setSequence("ATCGATCGATCGTTACGGATCGATCGAGCTACGTACGTACGATCGATTACG");
+  };
+
   return (
-    <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg backdrop-blur-md">
-      <h2 className="text-2xl font-bold mb-4 text-cyan-300">Input DNA Sequence</h2>
-      <textarea
-        className="w-full h-32 p-4 bg-gray-900 text-white rounded-lg border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-        placeholder="Enter DNA sequence or FASTA (e.g., ATGCCATGCTAG or >Seq1\nATGCCATGCTAG)"
-        value={sequence}
-        onChange={(e) => setSequence(e.target.value)}
-      />
-      <input
-        type="file"
-        accept=".fasta,.txt"
-        className="mt-4 text-white"
-        onChange={handleFileUpload}
-      />
-      <button
-        className="mt-4 px-6 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg shadow-lg hover:shadow-cyan-500/50 transition"
-        onClick={onSubmit}
-        disabled={!sequence.trim()}
-      >
-        Generate Melody
-      </button>
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="sequence-input">Enter DNA Sequence</Label>
+        <Textarea
+          id="sequence-input"
+          value={sequence}
+          onChange={(e) => setSequence(e.target.value)}
+          placeholder="Enter your DNA sequence (A, T, G, C)..."
+          className="min-h-[100px] font-mono text-sm"
+        />
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button onClick={onSubmit} disabled={loading || !sequence.trim()}>
+          {loading ? (
+            <>
+              <RotateCw className="w-4 h-4 mr-2 animate-spin" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Music className="w-4 h-4 mr-2" />
+              Generate Melody
+            </>
+          )}
+        </Button>
+
+        <Button variant="outline" onClick={handlePaste}>
+          <FileText className="w-4 h-4 mr-2" />
+          Paste from Clipboard
+        </Button>
+
+        <div className="relative">
+          <Button variant="outline" className="relative">
+            <Upload className="w-4 h-4 mr-2" />
+            Upload File
+            <input
+              type="file"
+              className="absolute inset-0 opacity-0 cursor-pointer"
+              accept=".txt,.fasta,.fa,.seq"
+              onChange={handleFileUpload}
+            />
+          </Button>
+        </div>
+
+        <Button variant="secondary" onClick={loadSampleSequence}>
+          Load Sample
+        </Button>
+      </div>
+
+      {!sequence.trim() && (
+        <p className="text-sm text-muted-foreground">
+          Enter a DNA sequence to convert it into a musical melody.
+        </p>
+      )}
     </div>
   );
 };
