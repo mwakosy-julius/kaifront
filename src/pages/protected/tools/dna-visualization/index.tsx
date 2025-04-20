@@ -93,7 +93,7 @@ const DNAVisualization = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="container mx-auto">
       <Card className="border-none shadow-none bg-background/60 backdrop-blur-sm">
         <CardHeader>
           <div className="flex items-start justify-between w-full gap-1">
@@ -101,7 +101,7 @@ const DNAVisualization = () => {
               <div className="flex items-center gap-2">
                 <CardTitle className="flex items-center gap-2 text-3xl font-bold text-primary">
                   <Dna className="w-8 h-8" />
-                  DNAVision
+                  DNA Visualization
                 </CardTitle>
               </div>
               <CardDescription className="text-base text-muted-foreground">
