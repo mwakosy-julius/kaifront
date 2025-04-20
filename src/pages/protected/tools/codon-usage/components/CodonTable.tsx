@@ -1,15 +1,16 @@
-import React from 'react';
-
-interface CodonData {
-  amino_acid: string;
-  relative_usage: number;
-  percentage: number;
-  count: number;
-}
-
-interface CodonUsage {
-  [codon: string]: CodonData;
-}
+import React from "react";
+import { CodonUsage } from "@/lib/services/tools/codon_usage";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 interface CodonTableProps {
   tableHtml: string;
@@ -18,59 +19,137 @@ interface CodonTableProps {
   setAminoAcidFilter: (filter: string) => void;
 }
 
+interface GroupedCodon {
+  aminoAcid: string;
+  letter: string;
+  codons: {
+    codon: string;
+    count: number;
+    frequency: number;
+  }[];
+}
+
 const CodonTable: React.FC<CodonTableProps> = ({
-  tableHtml,
   codonUsage,
   aminoAcidFilter,
   setAminoAcidFilter,
 }) => {
-  const aminoAcids = Array.from(new Set(Object.values(codonUsage).map(d => d.amino_acid))).sort();
+  // Group codons by amino acid
+  const groupedCodons: GroupedCodon[] = [];
+  const aminoAcidMap: { [key: string]: { name: string; letter: string } } = {
+    Ala: { name: "Alanine", letter: "A" },
+    Arg: { name: "Arginine", letter: "R" },
+    Asn: { name: "Asparagine", letter: "N" },
+    Asp: { name: "Aspartic acid", letter: "D" },
+    Cys: { name: "Cysteine", letter: "C" },
+    Gln: { name: "Glutamine", letter: "Q" },
+    Glu: { name: "Glutamic acid", letter: "E" },
+    Gly: { name: "Glycine", letter: "G" },
+    His: { name: "Histidine", letter: "H" },
+    Ile: { name: "Isoleucine", letter: "I" },
+    Leu: { name: "Leucine", letter: "L" },
+    Lys: { name: "Lysine", letter: "K" },
+    Met: { name: "Methionine", letter: "M" },
+    Phe: { name: "Phenylalanine", letter: "F" },
+    Pro: { name: "Proline", letter: "P" },
+    Ser: { name: "Serine", letter: "S" },
+    Thr: { name: "Threonine", letter: "T" },
+    Trp: { name: "Tryptophan", letter: "W" },
+    Tyr: { name: "Tyrosine", letter: "Y" },
+    Val: { name: "Valine", letter: "V" },
+    Stop: { name: "Stop codon", letter: "*" },
+  };
+
+  // Process codon usage data
+  Object.entries(codonUsage).forEach(([codon, data]) => {
+    const aminoAcid = data.amino_acid;
+    const count = data.count;
+    const frequency = data.percentage;
+
+    let group = groupedCodons.find((g) => g.aminoAcid === aminoAcid);
+    if (!group) {
+      group = {
+        aminoAcid,
+        letter: aminoAcidMap[aminoAcid]?.letter || "?",
+        codons: [],
+      };
+      groupedCodons.push(group);
+    }
+
+    group.codons.push({ codon, count, frequency });
+  });
+
+  // Sort groups alphabetically by amino acid
+  groupedCodons.sort((a, b) => a.aminoAcid.localeCompare(b.aminoAcid));
+
+  // Filter groups based on search
+  const filteredGroups = aminoAcidFilter
+    ? groupedCodons.filter(
+        (group) =>
+          group.aminoAcid
+            .toLowerCase()
+            .includes(aminoAcidFilter.toLowerCase()) ||
+          group.letter.toLowerCase() === aminoAcidFilter.toLowerCase()
+      )
+    : groupedCodons;
 
   return (
-    <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg backdrop-blur-md mt-6">
-      <h2 className="text-2xl font-bold mb-4 text-cyan-300">Codon Usage Table</h2>
-      <select
-        className="mb-4 p-2 bg-gray-900 text-white rounded-lg border border-cyan-500"
-        value={aminoAcidFilter}
-        onChange={(e) => setAminoAcidFilter(e.target.value)}
-      >
-        <option value="">All Amino Acids</option>
-        {aminoAcids.map(aa => (
-          <option key={aa} value={aa}>{aa}</option>
-        ))}
-      </select>
-      <div
-        className="overflow-x-auto"
-        dangerouslySetInnerHTML={{
-          __html: aminoAcidFilter
-            ? `<table border="1" class="w-full text-center text-white"><tr>${Object.entries(codonUsage)
-                .filter(([_, data]) => data.amino_acid === aminoAcidFilter)
-                .map(([codon, data]) => (
-                  `<td class="p-2">${codon}<br>${data.amino_acid}<br>${data.relative_usage.toFixed(2)}<br>${data.percentage.toFixed(1)}%<br>${data.count}</td>`
-                )).join('')}</tr></table>`
-            : tableHtml
-        }}
-      />
-      <button
-        className="mt-4 px-6 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg shadow-lg hover:shadow-cyan-500/50 transition"
-        onClick={() => {
-          const csv = [
-            'Codon,Amino Acid,Relative Usage,Percentage,Count',
-            ...Object.entries(codonUsage).map(([codon, data]) =>
-              `${codon},${data.amino_acid},${data.relative_usage},${data.percentage},${data.count}`
-            ),
-          ].join('\n');
-          const blob = new Blob([csv], { type: 'text/csv' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'codon_usage.csv';
-          a.click();
-          URL.revokeObjectURL(url);
-        }}
-      >
-        Download CSV
-      </button>
+    <div className="space-y-4">
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="amino-acid-filter">Filter by amino acid</Label>
+        <Input
+          id="amino-acid-filter"
+          type="text"
+          placeholder="Filter by amino acid (e.g., Ala, A)"
+          value={aminoAcidFilter}
+          onChange={(e) => setAminoAcidFilter(e.target.value)}
+          className="max-w-sm"
+        />
+      </div>
+
+      <div className="overflow-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Amino Acid</TableHead>
+              <TableHead>Codon</TableHead>
+              <TableHead className="text-right">Count</TableHead>
+              <TableHead className="text-right">Frequency (%)</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredGroups.map((group) => (
+              <React.Fragment key={group.aminoAcid}>
+                {group.codons.map((codon, i) => (
+                  <TableRow key={codon.codon}>
+                    {i === 0 && (
+                      <TableCell
+                        rowSpan={group.codons.length}
+                        className="font-medium align-top"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Badge
+                            variant="outline"
+                            className="flex items-center justify-center w-6 h-6"
+                          >
+                            {group.letter}
+                          </Badge>
+                          <span>{group.aminoAcid}</span>
+                        </div>
+                      </TableCell>
+                    )}
+                    <TableCell className="font-mono">{codon.codon}</TableCell>
+                    <TableCell className="text-right">{codon.count}</TableCell>
+                    <TableCell className="text-right">
+                      {codon.frequency}%
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </React.Fragment>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };
