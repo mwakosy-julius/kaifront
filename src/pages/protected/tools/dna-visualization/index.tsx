@@ -189,7 +189,7 @@ const DNAVisualization = () => {
               <div className="grid grid-cols-1 gap-4 p-4 rounded md:grid-cols-3 bg-muted/30">
                 <div className="space-y-1">
                   <p className="text-sm font-medium">RNA Transcript</p>
-                  <p className="p-2 font-mono text-xs rounded bg-muted">
+                  <p className="p-2 font-mono text-xs rounded bg-muted overflow-x-auto break-words">
                     {data.transcript}
                   </p>
                 </div>
