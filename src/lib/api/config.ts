@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
   },
   tools: {
     list: "/auth/users/tools/",
+    blast: "tools/blast/",
     pairwise_alignment: "tools/pairwise_alignment/",
     gc_content: "tools/gc_content/",
     variant_calling: "tools/variant_calling/",
