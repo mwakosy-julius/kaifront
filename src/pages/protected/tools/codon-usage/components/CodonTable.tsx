@@ -25,6 +25,7 @@ interface GroupedCodon {
   codons: {
     codon: string;
     count: number;
+    relativeUsage: number;
     frequency: number;
   }[];
 }
@@ -65,6 +66,7 @@ const CodonTable: React.FC<CodonTableProps> = ({
     const aminoAcid = data.amino_acid;
     const count = data.count;
     const frequency = data.percentage;
+    const relativeUsage = data.relative_usage;
 
     let group = groupedCodons.find((g) => g.aminoAcid === aminoAcid);
     if (!group) {
@@ -76,7 +78,7 @@ const CodonTable: React.FC<CodonTableProps> = ({
       groupedCodons.push(group);
     }
 
-    group.codons.push({ codon, count, frequency });
+    group.codons.push({ codon, count, relativeUsage, frequency });
   });
 
   // Sort groups alphabetically by amino acid
@@ -114,6 +116,7 @@ const CodonTable: React.FC<CodonTableProps> = ({
               <TableHead>Amino Acid</TableHead>
               <TableHead>Codon</TableHead>
               <TableHead className="text-right">Count</TableHead>
+              <TableHead className="text-right">Relative Usage</TableHead>
               <TableHead className="text-right">Frequency (%)</TableHead>
             </TableRow>
           </TableHeader>
@@ -140,6 +143,9 @@ const CodonTable: React.FC<CodonTableProps> = ({
                     )}
                     <TableCell className="font-mono">{codon.codon}</TableCell>
                     <TableCell className="text-right">{codon.count}</TableCell>
+                    <TableCell className="text-right">
+                      {codon.relativeUsage}
+                    </TableCell>
                     <TableCell className="text-right">
                       {codon.frequency}%
                     </TableCell>
