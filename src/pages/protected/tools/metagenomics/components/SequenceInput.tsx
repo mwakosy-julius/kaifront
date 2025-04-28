@@ -42,9 +42,13 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
   const loadSampleData = () => {
     // Sample metagenomic data - simplified for demonstration
     setSequence(
+      ">seq1\n" +
       "ATCGATCGTAGCTAGCTGACTAGCTAGCTAGCTAGCTAGCTAGCTACGTACGTAGCTAGCTAGCTA\n" +
+      ">seq2\n" +
         "CTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCT\n" +
+        ">seq3\n" +
         "AGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAG\n" +
+        ">seq4\n" +
         "CTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCT"
     );
   };
