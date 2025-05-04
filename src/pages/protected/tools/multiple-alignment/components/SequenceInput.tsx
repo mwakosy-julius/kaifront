@@ -139,12 +139,12 @@ MVLSGEDKSNIKAAWGKIGGHGAEYGAEALERM`;
         </Button>
       </div>
 
-      {!sequences.trim() && (
+      {/* {!sequences.trim() && (
         <p className="text-sm text-muted-foreground">
           Input multiple sequences in FASTA format with a header line (starting
           with &gt;) for each sequence.
         </p>
-      )}
+      )} */}
     </div>
   );
 };

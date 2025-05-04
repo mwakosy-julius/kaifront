@@ -4,7 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,7 +16,7 @@ import {
   Dna,
   Music,
   FileAudio,
-  Info,
+  // Info,
   BookOpen,
   Share2,
 } from "lucide-react";
@@ -138,7 +138,7 @@ const MusicDNA: React.FC = () => {
           )}
         </CardContent>
 
-        <CardFooter className="flex flex-col gap-2">
+        {/* <CardFooter className="flex flex-col gap-2">
           <div className="flex items-start gap-2 text-sm text-muted-foreground">
             <Info className="h-4 w-4 mt-0.5" />
             <div className="space-y-1">
@@ -154,7 +154,7 @@ const MusicDNA: React.FC = () => {
               </p>
             </div>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
 
       {melody.length > 0 && <MelodyPlayer melody={melody} />}

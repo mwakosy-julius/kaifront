@@ -13,8 +13,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle, Dna, Calculator, Settings2 } from "lucide-react";
+import { 
+  AlertCircle, 
+  Dna, 
+  Calculator, 
+  BookOpen,
+  Share2, 
+  Settings2 
+} from "lucide-react";
 
 const CodonUsageTool: React.FC = () => {
   const [sequence, setSequence] = useState("");
@@ -69,6 +77,16 @@ const CodonUsageTool: React.FC = () => {
               <CardDescription className="text-base text-muted-foreground">
                 Analyze codon usage frequency and bias in DNA/RNA sequences
               </CardDescription>
+              <div className="flex gap-2 mt-2">
+                <Badge variant="outline" className="text-xs">
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  Documentation
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Share Results
+                </Badge>
+              </div>
             </div>
           </div>
         </CardHeader>

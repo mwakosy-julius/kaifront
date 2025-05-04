@@ -9,7 +9,15 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Dna, AlertCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Dna,
+  BookOpen,
+  Share2,
+  // Info, 
+  AlertCircle 
+} from "lucide-react";
+// import { Separator } from "@/components/ui/separator";
 import { GCContentRequest } from "./schema";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
@@ -58,6 +66,16 @@ export default function GCContentDashboard() {
               Analyze DNA sequences for GC content using advanced visualization
               tools.
             </CardDescription>
+            <div className="flex gap-2 mt-2">
+                <Badge variant="outline" className="text-xs">
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  Documentation
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Share Results
+                </Badge>
+              </div>
           </CardHeader>
           <div className="p-4">
             <GCContentForm onSubmit={handleSubmit} loading={loading} />

@@ -25,7 +25,7 @@ import {
   Archive,
   Zap,
   FileText,
-  Info,
+  // Info,
   BookOpen,
   Share2,
   RefreshCcw,
@@ -39,7 +39,7 @@ import {
 
 const DataCompression: React.FC = () => {
   const [sequence, setSequence] = useState<string>(
-    ">seq1\nATCGATCGATCGATCG\n>seq2\nATGGATCGATCGATCG"
+    ">seq1\nATCGATCGATCGATCG\n"
   );
   const [method, setMethod] = useState<"run_length" | "delta">("run_length");
   const [reference, setReference] = useState<string>("");
@@ -217,7 +217,7 @@ const DataCompression: React.FC = () => {
           </div>
         </CardContent>
 
-        <CardFooter className="flex flex-col gap-2">
+        {/* <CardFooter className="flex flex-col gap-2">
           <div className="flex items-start gap-2 text-sm text-muted-foreground">
             <Info className="h-4 w-4 mt-0.5" />
             <div className="space-y-1">
@@ -229,7 +229,7 @@ const DataCompression: React.FC = () => {
               </p>
             </div>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
 
       {result && (

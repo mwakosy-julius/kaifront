@@ -11,7 +11,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { Dna, Calculator, AlertCircle } from "lucide-react"; // Import icons for better UX
+import { Badge } from "@/components/ui/badge";
+import { 
+  Dna, 
+  Calculator,
+  BookOpen,
+  Share2,
+  // Info, 
+  AlertCircle 
+} from "lucide-react"; // Import icons for better UX
 import { Textarea } from "@/components/ui/textarea";
 
 const BlastTool: React.FC = () => {
@@ -73,6 +81,16 @@ const BlastTool: React.FC = () => {
               <CardDescription className="text-base text-muted-foreground">
                 Analyze your sequence against a database for similar sequences
               </CardDescription>
+              <div className="flex gap-2 mt-2">
+                <Badge variant="outline" className="text-xs">
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  Documentation
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Share Results
+                </Badge>
+              </div>
             </div>
           </div>
         </CardHeader>

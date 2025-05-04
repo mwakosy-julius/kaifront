@@ -10,7 +10,6 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CardFooter,
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
@@ -31,7 +30,6 @@ import {
   AlertCircle,
   Dna,
   Zap,
-  Info,
   BookOpen,
   Share2,
   RefreshCcw,
@@ -211,19 +209,6 @@ const VariantCaller: React.FC = () => {
             </Alert>
           )}
         </CardContent>
-
-        <CardFooter className="flex flex-col gap-2">
-          <div className="flex items-start gap-2 text-sm text-muted-foreground">
-            <Info className="h-4 w-4 mt-0.5" />
-            <div className="space-y-1">
-              <p>
-                This tool compares a sample sequence against a reference to
-                identify genetic variants. Input sequences must be in FASTA
-                format with valid nucleotide bases (A, T, C, G).
-              </p>
-            </div>
-          </div>
-        </CardFooter>
       </Card>
 
       <AnimatePresence>

@@ -4,7 +4,7 @@ import {
   Dna,
   BarChart,
   Dices,
-  Info,
+  // Info,
   BookOpen,
   Share2,
   RefreshCcw,
@@ -22,7 +22,7 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -162,7 +162,7 @@ const DNAVisualization = () => {
           )}
         </CardContent>
 
-        <CardFooter className="flex flex-col gap-2">
+        {/* <CardFooter className="flex flex-col gap-2">
           <div className="flex items-start gap-2 text-sm text-muted-foreground">
             <Info className="h-4 w-4 mt-0.5" />
             <div className="space-y-1">
@@ -173,7 +173,7 @@ const DNAVisualization = () => {
               </p>
             </div>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
 
       {data && (

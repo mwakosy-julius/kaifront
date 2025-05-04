@@ -117,14 +117,6 @@ const ConsensusResults: React.FC<ConsensusResultsProps> = ({
             <span className="text-xs">G (Guanine)</span>
           </div>
         </div>
-
-        <div className="text-sm text-muted-foreground">
-          <p>
-            This consensus sequence represents the most common nucleotide at
-            each position across all input sequences. It can be used for primer
-            design, reference sequence creation, or sequence analysis.
-          </p>
-        </div>
       </CardContent>
     </Card>
   );

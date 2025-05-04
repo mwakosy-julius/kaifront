@@ -82,11 +82,11 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
         </div>
       </div>
 
-      {!sequence.trim() && (
+      {/* {!sequence.trim() && (
         <p className="text-sm text-muted-foreground">
           Enter a DNA or RNA sequence to analyze codon usage patterns.
         </p>
-      )}
+      )} */}
     </div>
   );
 };

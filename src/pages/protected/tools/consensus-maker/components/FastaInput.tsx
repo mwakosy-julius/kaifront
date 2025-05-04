@@ -108,12 +108,12 @@ const FastaInput: React.FC<FastaInputProps> = ({
         </Button>
       </div>
 
-      {!fasta.trim() && (
+      {/* {!fasta.trim() && (
         <p className="text-sm text-muted-foreground">
           Input multiple sequences in FASTA format with header lines (starting
           with &gt;) to generate a consensus sequence.
         </p>
-      )}
+      )} */}
     </div>
   );
 };

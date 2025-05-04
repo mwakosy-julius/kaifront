@@ -4,7 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,7 +16,7 @@ import {
   Dna,
   Bug,
   Database,
-  Info,
+  // Info,
   BookOpen,
   Share2,
 } from "lucide-react";
@@ -135,7 +135,7 @@ const Metagenomics: React.FC = () => {
           )}
         </CardContent>
 
-        <CardFooter className="flex flex-col gap-2">
+        {/* <CardFooter className="flex flex-col gap-2">
           <div className="flex items-start gap-2 text-sm text-muted-foreground">
             <Info className="h-4 w-4 mt-0.5" />
             <div className="space-y-1">
@@ -151,7 +151,7 @@ const Metagenomics: React.FC = () => {
               </p>
             </div>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
 
       {results && (

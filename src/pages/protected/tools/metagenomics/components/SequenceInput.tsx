@@ -107,13 +107,13 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
         </Button>
       </div>
 
-      {!sequence.trim() && (
+      {/* {!sequence.trim() && (
         <p className="text-sm text-muted-foreground">
           Input metagenomic sequence data for taxonomic analysis. The tool
           accepts raw reads, assembled contigs, or any DNA sequence data from a
           microbial community sample.
         </p>
-      )}
+      )} */}
     </div>
   );
 };
