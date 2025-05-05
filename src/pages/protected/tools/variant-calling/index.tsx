@@ -43,10 +43,12 @@ const VariantCaller: React.FC = () => {
   const [variants, setVariants] = useState<Variant[]>([]);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [showResults, setShowResults] = useState<boolean>(false); // New state to control results visibility
 
   const handleCallVariants = async () => {
     setError("");
     setVariants([]);
+    setShowResults(false); // Hide results until new variants are retrieved
     setLoading(true);
 
     const request: VariantCallRequest = {
@@ -57,6 +59,7 @@ const VariantCaller: React.FC = () => {
     try {
       const response = await callVariants(request);
       setVariants(response.variants);
+      setShowResults(true); // Show results after successful variant calling
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ detail: string }>;
       setError(axiosError.response?.data?.detail || "Failed to call variants");
@@ -100,7 +103,7 @@ const VariantCaller: React.FC = () => {
   ];
 
   return (
-    <div className="container mx-auto">
+    <div className="max-w-4xl mx-auto">
       <Card className="border-none shadow-none bg-background/60 backdrop-blur-sm">
         <CardHeader>
           <div className="flex items-start justify-between w-full gap-1">
@@ -154,9 +157,9 @@ const VariantCaller: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <p className="mb-2 text-sm font-medium">Reference FASTA</p>
+              <p className="mb-2 text-sm font-medium">Reference</p>
               <Textarea
-                className="h-40 font-mono"
+                className="font-mono h-24 rounded-sm !outline-none !ring-0 !shadow-none"
                 value={refFasta}
                 onChange={(e) => setRefFasta(e.target.value)}
                 placeholder="Enter reference FASTA"
@@ -169,9 +172,9 @@ const VariantCaller: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <p className="mb-2 text-sm font-medium">Sample FASTA</p>
+              <p className="mb-2 text-sm font-medium">Sample</p>
               <Textarea
-                className="h-40 font-mono"
+                className="font-mono h-24 rounded-sm !outline-none !ring-0 !shadow-none"
                 value={sampleFasta}
                 onChange={(e) => setSampleFasta(e.target.value)}
                 placeholder="Enter sample FASTA"
@@ -185,7 +188,7 @@ const VariantCaller: React.FC = () => {
               disabled={loading}
               size="lg"
               variant="primary"
-              className="mt-2"
+              className="w-full rounded shadow-none"
             >
               {loading ? (
                 <>
@@ -212,71 +215,7 @@ const VariantCaller: React.FC = () => {
       </Card>
 
       <AnimatePresence>
-        {variants.length > 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mt-8"
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle>Variants Detected</CardTitle>
-                <CardDescription>
-                  {variants.length} variant{variants.length !== 1 ? "s" : ""}{" "}
-                  found between reference and sample
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Position</TableHead>
-                      <TableHead>Reference</TableHead>
-                      <TableHead>Variant</TableHead>
-                      <TableHead>Type</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {variants.map((v, idx) => (
-                      <TableRow key={idx}>
-                        <TableCell>{v.position}</TableCell>
-                        <TableCell
-                          className={`font-mono ${getNucleotideColor(
-                            v.reference
-                          )}`}
-                        >
-                          {v.reference || "-"}
-                        </TableCell>
-                        <TableCell
-                          className={`font-mono ${getNucleotideColor(
-                            v.variant
-                          )}`}
-                        >
-                          {v.variant || "-"}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              v.type === "SNP"
-                                ? "secondary"
-                                : v.type === "INSERTION"
-                                ? "outline"
-                                : "default"
-                            }
-                          >
-                            {v.type}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ) : (
+        {showResults && variants.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

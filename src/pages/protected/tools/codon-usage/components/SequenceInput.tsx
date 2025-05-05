@@ -37,6 +37,12 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
       console.error("Failed to read clipboard:", err);
     }
   };
+  const loadSampleData = () => {
+    setSequence(
+      ">gene_sequence\nATCGATCGATCGATCGATCGATCGATCGCGTAGCTGTAGCTGTAGCTGATCGTAGCTAGTCGTAGCTGATCGTACGTAGCTAGTCGTAGTGCTAGTGCTAGTCGTACGTGAT"
+    );
+    // setFile(null);
+  };
 
   return (
     <div className="space-y-4">
@@ -80,6 +86,9 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
             />
           </Button>
         </div>
+        <Button variant="secondary" onClick={loadSampleData}>
+          Load Sample
+        </Button>
       </div>
 
       {/* {!sequence.trim() && (
