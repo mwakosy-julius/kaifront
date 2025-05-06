@@ -56,13 +56,17 @@ export const AlignmentResults: React.FC<AlignmentResultsProps> = ({
                   <div className="grid grid-cols-2 gap-y-2">
                     <p className="text-muted-foreground">Match Score:</p>
                     <p className="font-medium">{results.results.match_score}</p>
-                    <p className="text-muted-foreground">Gap Open:</p>
+                    <p className="text-muted-foreground">Mismatch:</p>
                     <p className="font-medium">{results.results.gap_open}</p>
                     <p className="text-muted-foreground">Gap Extend:</p>
                     <p className="font-medium">{results.results.gap_extend}</p>
                     <p className="text-muted-foreground">Alignment Score:</p>
                     <p className="font-medium text-primary">
                       {results.results.alignment_score}
+                    </p>
+                    <p className="text-muted-foreground">Similarity:</p>
+                    <p className="font-medium text-primary">
+                      {results.results.similarity}%
                     </p>
                   </div>
                 </div>

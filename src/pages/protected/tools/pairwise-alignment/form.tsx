@@ -21,8 +21,8 @@ export const AlignmentForm: React.FC<AlignmentFormProps> = ({ onSubmit, loading 
     const form = useForm<AlignmentFormValues>({
         resolver: zodResolver(alignmentFormSchema),
         defaultValues: {
-            sequence1: '',
-            sequence2: '',
+            sequence1: 'ATGCCATGCTAGCTAGCTAG',
+            sequence2: 'CGATCGATCGATCGATCGAT',
             alignment_type: 'Global_Alignment',
         },
     });
@@ -108,12 +108,12 @@ export const AlignmentForm: React.FC<AlignmentFormProps> = ({ onSubmit, loading 
 
                 <Button
                     type="submit"
-                    className="w-full rounded shadow-none"
+                    className="w-full rounded shadow-none bg-primary text-white"
                     disabled={loading}
                 >
                     {loading ? (
                         <div className="flex items-center gap-2">
-                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                             Processing...
                         </div>
                     ) : (

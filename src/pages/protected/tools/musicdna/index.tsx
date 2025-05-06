@@ -26,7 +26,7 @@ import SequenceInput from "./components/SequenceInput";
 import MelodyPlayer from "./components/MelodyPlayer";
 
 const MusicDNA: React.FC = () => {
-  const [sequence, setSequence] = useState<string>("ATCGATCGATCG");
+  const [sequence, setSequence] = useState<string>("");
   const [melody, setMelody] = useState<string[]>([]);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);

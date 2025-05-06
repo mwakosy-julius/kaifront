@@ -25,9 +25,7 @@ import ConsensusResults from "./components/ConsensusResults";
 import { generateConsensus } from "@/lib/services/tools/consensus_maker";
 
 const ConsensusMaker: React.FC = () => {
-  const [fastaInput, setFastaInput] = useState<string>(
-    ">seq1\nATCGATCGATCG\n>seq2\nATGGATCGATCG\n>seq3\nATCGATGGATCG"
-  );
+  const [fastaInput, setFastaInput] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [consensus, setConsensus] = useState<string>("");
   const [error, setError] = useState<string>("");

@@ -3,6 +3,7 @@ export interface AlignmentResults {
     gap_open: number;
     gap_extend: number;
     alignment_score: number;
+    similarity: number;
     sequence1_aligned: string;
     sequence2_aligned: string;
 }

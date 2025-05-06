@@ -23,6 +23,6 @@ export async function analyzeGCContent(
         stack?: string;
       }
     );
-    throw new Error("Failed to process GC content analysis");
+    throw new Error((error as { message?: string }).message || "An unknown error occurred");
   }
 }

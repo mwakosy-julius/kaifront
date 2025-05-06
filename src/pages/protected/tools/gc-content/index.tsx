@@ -44,9 +44,13 @@ export default function GCContentDashboard() {
     try {
       const response = await analyzeGCContent(data);
       setResults(response);
-    } catch {
-      setError("Failed to analyze GC content. Please try again.");
-    } finally {
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }else{
+        setError("Failed to analyze GC content. Please try again.");
+    } 
+    }finally {
       setLoading(false);
     }
   };

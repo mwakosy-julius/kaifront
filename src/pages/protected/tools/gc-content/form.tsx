@@ -15,7 +15,7 @@ export function GCContentForm({ onSubmit, loading }: GCContentFormProps) {
     const form = useForm<GCContentRequest>({
         resolver: zodResolver(gcContentSchema),
         defaultValues: {
-            sequence: '',
+            sequence: 'GTGCTAGCTGTAGCTTATTATTATTACAAGTCGATGTCGCGGCGGCCCTA',
             window_size: 10
         }
     });
@@ -66,8 +66,8 @@ export function GCContentForm({ onSubmit, loading }: GCContentFormProps) {
                 {/* Submit Button */}
                 <Button
                     type="submit"
-                    variant={"default"}
-                    className="w-full py-3 text-lg text-white rounded hover:bg-primary-700 disabled:bg-gray-400"
+                    variant="primary"
+                    className="w-full py-3 text-white rounded hover:bg-primary-700 disabled:bg-gray-400"
                     disabled={loading}
                 >
                     {loading ? "Analyzing..." : "Analyze Sequence"}

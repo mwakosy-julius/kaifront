@@ -56,7 +56,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button onClick={onSubmit} disabled={loading || !sequence.trim()}>
+        <Button onClick={onSubmit} disabled={loading || !sequence.trim()} variant="primary">
           {loading ? (
             <>
               <RotateCw className="w-4 h-4 mr-2 animate-spin" />
@@ -93,11 +93,11 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
         </Button>
       </div>
 
-      {!sequence.trim() && (
+      {/* {!sequence.trim() && (
         <p className="text-sm text-muted-foreground">
           Enter a DNA sequence to convert it into a musical melody.
         </p>
-      )}
+      )} */}
     </div>
   );
 };

@@ -23,9 +23,7 @@ import MotifResults from "./components/MotifResults";
 import { findMotifs, MotifResponse } from "@/lib/services/tools/motif_finder";
 
 const MotifFinder: React.FC = () => {
-  const [fastaInput, setFastaInput] = useState<string>(
-    ">seq1\nATCGATGCTAGCTAGC\n>seq2\nATGCTAGCTAGCATCG\n>seq3\nGCTAGCTAGCATCGAT"
-  );
+  const [fastaInput, setFastaInput] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [response, setResponse] = useState<MotifResponse | null>(null);
   const [error, setError] = useState<string>("");

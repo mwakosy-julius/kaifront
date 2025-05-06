@@ -68,7 +68,7 @@ const FastaInput: React.FC<FastaInputProps> = ({
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button onClick={onSubmit} disabled={loading || !fasta.trim()}>
+        <Button onClick={onSubmit} disabled={loading || !fasta.trim()} variant="primary">
           {loading ? (
             <>
               <RotateCw className="w-4 h-4 mr-2 animate-spin" />
@@ -105,12 +105,12 @@ const FastaInput: React.FC<FastaInputProps> = ({
         </Button>
       </div>
 
-      {!fasta.trim() && (
+      {/* {!fasta.trim() && (
         <p className="text-sm text-muted-foreground">
           Input multiple sequences in FASTA format with header lines (starting
           with &gt;) to find common sequence motifs.
         </p>
-      )}
+      )} */}
     </div>
   );
 };

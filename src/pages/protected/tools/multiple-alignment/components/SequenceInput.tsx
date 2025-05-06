@@ -102,7 +102,7 @@ MVLSGEDKSNIKAAWGKIGGHGAEYGAEALERM`;
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button onClick={onSubmit} disabled={loading || !sequences.trim()}>
+        <Button onClick={onSubmit} disabled={loading || !sequences.trim()} variant="primary">
           {loading ? (
             <>
               <RotateCw className="w-4 h-4 mr-2 animate-spin" />
