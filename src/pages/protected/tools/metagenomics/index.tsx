@@ -1,38 +1,37 @@
 import React, { useState } from "react";
 import { AxiosError } from "axios";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  // CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import {
   AlertCircle,
   Dna,
   Bug,
   Database,
-  // Info,
   BookOpen,
   Share2,
 } from "lucide-react";
+
+// local imports
+import { Badge } from "@/components/ui/badge";
 import StatsGrid from "./components/StatsGrid";
+import { Separator } from "@/components/ui/separator";
+import TaxonomyChart from "./components/TaxonomyChart";
+import TaxonomyTable from "./components/TaxonomyTable";
+import SequenceInput from "./components/SequenceInput";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   analyzeMetagenomics,
   MetagenomicsResponse,
 } from "@/lib/services/tools/metagenomics";
-import { AnalysisResult } from "./types";
-import TaxonomyChart from "./components/TaxonomyChart";
-import TaxonomyTable from "./components/TaxonomyTable";
-import SequenceInput from "./components/SequenceInput";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const Metagenomics: React.FC = () => {
   const [sequence, setSequence] = useState("");
-  const [results, setResults] = useState<AnalysisResult | null>(null);
+  const [results, setResults] = useState<MetagenomicsResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 

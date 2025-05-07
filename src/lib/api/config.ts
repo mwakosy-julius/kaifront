@@ -22,7 +22,7 @@ export const API_ENDPOINTS = {
     multiple_alignment: "tools/multiple_alignment/",
     musicdna: "tools/musicdna/",
     metagenomics: "tools/metagenomics/",
-    phylogenetic_tree: "tools/phylogenetic_tree/",
+    phylogenetic_tree: "tools/phylogenetic_trees/",
   },
   users: {
     profile: "/users/profile/",

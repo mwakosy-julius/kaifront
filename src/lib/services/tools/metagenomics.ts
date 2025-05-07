@@ -13,16 +13,29 @@ export interface TaxonomyMatch {
   e_value: number;
 }
 
+export interface Taxon {
+  genus: string;
+  abundance: number;
+}
+
+export interface Stats {
+  total_reads: number;
+  classified_kmers: number;
+  unique_genera: number;
+}
+
+export interface Detail {
+  genus: string;
+  phylum: string;
+  kmer_count: number;
+  distance?: number;
+  confidence: number;
+}
+
 export interface MetagenomicsResponse {
-  matches: TaxonomyMatch[];
-  stats: {
-    total_reads: number;
-    classified_reads: number;
-    unclassified_reads: number;
-  };
-  visualization_data: {
-    [key: string]: number;
-  };
+  taxa: Taxon[];
+  stats: Stats;
+  details: Detail[];
 }
 
 export const analyzeMetagenomics = async (

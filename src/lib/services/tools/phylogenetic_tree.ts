@@ -1,7 +1,7 @@
 import api from "@/lib/api";
 
 export interface PhylogeneticTreeRequest {
-  sequences: string;
+  fasta: string;
 }
 
 export interface PhylogeneticTreeResponse {
@@ -14,7 +14,10 @@ export const generatePhylogeneticTree = async (
 ): Promise<PhylogeneticTreeResponse> => {
   const response = await api.client.post<PhylogeneticTreeResponse>(
     api.endpoints.tools.phylogenetic_tree,
-    { sequences }
+    {},
+    {
+      params: { fasta: sequences },
+    }
   );
   if (!response) {
     throw new Error("Failed to generate phylogenetic tree");

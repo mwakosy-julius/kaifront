@@ -13,6 +13,7 @@ import {
   LazyMusicDNA,
   LazyBlast,
   LazyMetagenomics,
+  LazyPhylogeneticTree,
 } from "./protected-route-elements";
 
 export const protectedRoutes = [
@@ -71,6 +72,10 @@ export const protectedRoutes = [
       {
         path: "tools/blast",
         element: <LazyBlast />,
+      },
+      {
+        path: "tools/phylogenetic_tree",
+        element: <LazyPhylogeneticTree />,
       },
     ],
   },
