@@ -59,7 +59,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           id="phylo-input"
           value={sequences}
           onChange={(e) => setSequences(e.target.value)}
-          placeholder=">Sequence1&#10;ATCGATCGATCG...&#10;>Sequence2&#10;ATCGTAGCTAGC..."
+          placeholder=">Sequence1&#10;ATCGATCGATCG...&#10;>Sequence2&#10;GTCGTAGCTAGC...&#10;>Sequence3&#10;TGAGTAGTCGAC..."
           className="min-h-[200px] font-mono text-sm"
         />
       </div>
@@ -106,13 +106,13 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
         </Button>
       </div>
 
-      {!sequences.trim() && (
+      {/* {!sequences.trim() && (
         <p className="text-sm text-muted-foreground">
           Input multiple sequences in FASTA format to generate a phylogenetic
           tree. A minimum of 3 sequences is required for meaningful tree
           construction.
         </p>
-      )}
+      )} */}
     </div>
   );
 };
