@@ -20,9 +20,12 @@ export const API_ENDPOINTS = {
     codon_usage: "tools/codon_usage/",
     motif_finder: "tools/motif_finder/",
     multiple_alignment: "tools/multiple_alignment/",
-    musicdna: "tools/musicdna/",
+    sequence_search: "tools/sequence_search/",
+    // musicdna: "tools/musicdna/",
     metagenomics: "tools/metagenomics/",
     phylogenetic_tree: "tools/phylogenetic_trees/",
+    protein_structure: "tools/protein_structure/",
+    sequence_mutator: "tools/sequence_mutator/",
   },
   users: {
     profile: "/users/profile/",

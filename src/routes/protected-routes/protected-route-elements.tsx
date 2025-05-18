@@ -44,7 +44,17 @@ export const LazyMusicDNA = lazy(
 export const LazyMetagenomics = lazy(
   () => import("@/pages/protected/tools/metagenomics")
 );
-export const LazyBlast = lazy(() => import("@/pages/protected/tools/blast"));
+export const LazyBlast = lazy(
+  () => import("@/pages/protected/tools/blast"));
 export const LazyPhylogeneticTree = lazy(
   () => import("@/pages/protected/tools/phylogenetic-tree")
+);
+export const LazySequenceSearch = lazy(
+  () => import("@/pages/protected/tools/sequence-search")
+);
+export const LazyProteinStructure = lazy(
+  () => import("@/pages/protected/tools/protein-structure")
+);
+export const LazySequenceMutator = lazy(
+  () => import("@/pages/protected/tools/sequence-mutator")
 );

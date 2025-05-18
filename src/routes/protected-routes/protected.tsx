@@ -14,6 +14,9 @@ import {
   LazyBlast,
   LazyMetagenomics,
   LazyPhylogeneticTree,
+  LazySequenceSearch,
+  LazyProteinStructure,
+  LazySequenceMutator
 } from "./protected-route-elements";
 
 export const protectedRoutes = [
@@ -74,8 +77,20 @@ export const protectedRoutes = [
         element: <LazyBlast />,
       },
       {
+        path: "tools/sequence_search",
+        element: <LazySequenceSearch />,
+      },
+      {
         path: "tools/phylogenetic_tree",
         element: <LazyPhylogeneticTree />,
+      },
+      {
+        path: "tools/protein_structure",
+        element: <LazyProteinStructure />,
+      },
+      {
+        path: "tools/sequence_mutator",
+        element: <LazySequenceMutator />,
       },
     ],
   },

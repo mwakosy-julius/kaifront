@@ -39,7 +39,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
   };
 
   const loadSampleSequence = () => {
-    setSequence("ATCGATCGATCGTTACGGATCGATCGAGCTACGTACGTACGATCGATTACG");
+    setSequence("ATCGATCGATCGTTACGGATCGATCG");
   };
 
   return (
