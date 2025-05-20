@@ -8,6 +8,7 @@ const ProteinStructurePredictor: React.FC = () => {
   const [result, setResult] = useState<StructurePrediction | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
 
   const handlePredict = async () => {
     if (!sequence.trim()) {
@@ -31,17 +32,17 @@ const ProteinStructurePredictor: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <main className="py-16 px-4 sm:px-6 lg:px-8">
-        <SequenceInput
-          sequence={sequence}
-          setSequence={setSequence}
-          handlePredict={handlePredict}
-          loading={loading}
-          error={error}
-        />
-        <StructureResults result={result} />
-      </main>
+    <div className="container mx-auto space-y-6">
+      <SequenceInput
+        sequence={sequence}
+        setSequence={setSequence}
+        handlePredict={handlePredict}
+        loading={loading}
+        error={error}
+        file={file}
+        setFile={setFile}
+      />
+      <StructureResults result={result} />
     </div>
   );
 };

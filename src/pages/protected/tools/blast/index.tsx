@@ -53,7 +53,7 @@ const BlastTool: React.FC = () => {
         loading={loading}
         error={error}
       />
-      <BlastResults results={results} />
+    <BlastResults results={results} />
     </div>
   );
 };

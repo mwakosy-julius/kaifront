@@ -40,12 +40,12 @@ const StructureResults: React.FC<StructureResultsProps> = ({ result }) => {
 
   return (
     <motion.div
-      className="max-w-6xl mx-auto mt-8"
+      className="container mx-auto space-y-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="bg-gray-700 border-none shadow-[0_0_12px_#00f6ff]">
+      <Card className="mt-6">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-cyan-400">Predicted Protein Structure</CardTitle>
           <CardDescription className="text-gray-300">
