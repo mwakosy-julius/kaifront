@@ -28,7 +28,7 @@ export const API_ENDPOINTS = {
     sequence_mutator: "tools/sequence_mutator/",
   },
   users: {
-    profile: "/users/profile/",
+    profile: "/auth/users/me/",
     update: "/users/update/",
   },
 } as const;

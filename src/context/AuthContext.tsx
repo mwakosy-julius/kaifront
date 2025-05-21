@@ -1,13 +1,19 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import {
   storeAuthData,
   clearAuthData,
   hasValidAuth,
   getAccessToken,
-} from '@/lib/services/auth/utils';
-import { User } from '@/lib/api/types';
-import { getCurrentUser } from '@/lib/services/auth';
-import { PageLoader } from '@/components/ui/LoadingFallback';
+} from "@/lib/services/auth/utils";
+import { User } from "@/lib/api/types";
+import { getCurrentUser } from "@/lib/services/auth";
+import { PageLoader } from "@/components/ui/LoadingFallback";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -54,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
     setUser(null);
 
-    window.location.href = '/sign-in';
+    window.location.href = "/sign-in";
   };
 
   const getToken = () => {
@@ -73,7 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         loading,
         login,
         logout,
-        getToken
+        getToken,
       }}
     >
       {children}
@@ -85,7 +91,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
