@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 // Local imports
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -33,6 +34,8 @@ import {
 } from "@/components/ui/card";
 
 const LandingPage: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
   // Tool categories
   const toolCategories = [
     {
@@ -314,26 +317,38 @@ const LandingPage: React.FC = () => {
               </li>
             </ul>
           </nav>
-          <div className="flex gap-4">
-            <Button
-              variant="ghost"
-              href="/sign-in"
-              size="sm"
-              className="font-medium text-white hover:bg-cyan-400/20"
-              asChild
-            >
-              Sign In
-            </Button>
-            <Button
-              variant="default"
-              href="/sign-up"
-              size="sm"
-              className="font-medium text-gray-900 bg-cyan-400 hover:bg-cyan-300"
-              asChild
-            >
-              Try Free
-            </Button>
-          </div>
+
+          {isAuthenticated ? (
+            <Link to="/dashboard">
+              <Button
+                variant="default"
+                className="hidden px-4 py-2 text-sm font-medium text-gray-900 bg-cyan-400 hover:bg-cyan-300 md:block"
+              >
+                Go to Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <div className="flex gap-4">
+              <Button
+                variant="ghost"
+                href="/sign-in"
+                size="sm"
+                className="font-medium text-white"
+                asChild
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="default"
+                href="/sign-up"
+                size="sm"
+                className="font-medium text-gray-900 bg-cyan-400 hover:bg-cyan-300"
+                asChild
+              >
+                Try Free
+              </Button>
+            </div>
+          )}
         </div>
       </motion.header>
 
