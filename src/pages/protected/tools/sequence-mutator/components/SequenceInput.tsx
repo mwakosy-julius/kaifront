@@ -1,5 +1,11 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
@@ -7,9 +13,24 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dna, Calculator, BookOpen, Share2, Upload, FileText, RefreshCcw, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dna,
+  Calculator,
+  BookOpen,
+  Share2,
+  Upload,
+  FileText,
+  RefreshCcw,
+  AlertCircle,
+} from "lucide-react";
+import { motion } from "motion/react";
 
 interface SequenceInputProps {
   sequence: string;
@@ -73,7 +94,8 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
   };
 
   const sampleDna = ">sample_dna\nATCGATCGATCGATCGATCG";
-  const sampleProtein = ">sample_protein\nMVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTK";
+  const sampleProtein =
+    ">sample_protein\nMVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTK";
 
   const loadSampleData = () => {
     setSequence(sequenceType === "dna" ? sampleDna : sampleProtein);
@@ -94,7 +116,8 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
             Sequence Mutator
           </CardTitle>
           <CardDescription className="text-base text-muted-foreground">
-            Mutate DNA or protein sequences in FASTA format with specified parameters
+            Mutate DNA or protein sequences in FASTA format with specified
+            parameters
           </CardDescription>
           <div className="flex gap-2 mt-2">
             <Badge variant="outline" className="text-xs">
@@ -129,16 +152,22 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
               <Label htmlFor="sequence">Enter Sequence in FASTA Format</Label>
               <RadioGroup
                 value={sequenceType}
-                onValueChange={(value) => setSequenceType(value as "dna" | "protein")}
+                onValueChange={(value) =>
+                  setSequenceType(value as "dna" | "protein")
+                }
                 className="flex items-center space-x-2"
               >
                 <div className="flex items-center space-x-1">
                   <RadioGroupItem value="dna" id="dna" />
-                  <Label htmlFor="dna" className="cursor-pointer">DNA</Label>
+                  <Label htmlFor="dna" className="cursor-pointer">
+                    DNA
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-1">
                   <RadioGroupItem value="protein" id="protein" />
-                  <Label htmlFor="protein" className="cursor-pointer">Protein</Label>
+                  <Label htmlFor="protein" className="cursor-pointer">
+                    Protein
+                  </Label>
                 </div>
               </RadioGroup>
               <Textarea
@@ -148,7 +177,9 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
                   setSequence(e.target.value);
                   setFile(null);
                 }}
-                placeholder={`Enter sequence in FASTA format:\n${sequenceType === "dna" ? sampleDna : sampleProtein}`}
+                placeholder={`Enter sequence in FASTA format:\n${
+                  sequenceType === "dna" ? sampleDna : sampleProtein
+                }`}
                 className="min-h-[200px] font-mono text-sm"
                 disabled={loading}
               />

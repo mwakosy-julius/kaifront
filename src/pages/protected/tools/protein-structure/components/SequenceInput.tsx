@@ -1,13 +1,28 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { Dna, Calculator, BookOpen, Share2, Upload, FileText, RefreshCcw, AlertCircle } from "lucide-react";
+import {
+  Dna,
+  Calculator,
+  BookOpen,
+  Share2,
+  Upload,
+  FileText,
+  RefreshCcw,
+  AlertCircle,
+} from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 interface SequenceInputProps {
   sequence: string;
@@ -58,7 +73,8 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
     }
   };
 
-  const sampleProtein = ">Sample_Protein\nMVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR";
+  const sampleProtein =
+    ">Sample_Protein\nMVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR";
 
   const loadSampleData = () => {
     setSequence(sampleProtein);
@@ -79,7 +95,8 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
             Protein Structure Predictor
           </CardTitle>
           <CardDescription className="text-base text-muted-foreground">
-            Predict the 3D structure of a protein from its amino acid sequence in FASTA format
+            Predict the 3D structure of a protein from its amino acid sequence
+            in FASTA format
           </CardDescription>
           <div className="flex gap-2 mt-2">
             <Badge variant="outline" className="text-xs">
@@ -110,7 +127,9 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           <Separator className="bg-gray-600" />
 
           <div className="space-y-2">
-            <Label htmlFor="sequence">Enter Amino Acid Sequence in FASTA Format</Label>
+            <Label htmlFor="sequence">
+              Enter Amino Acid Sequence in FASTA Format
+            </Label>
             <Textarea
               id="sequence"
               value={sequence}
