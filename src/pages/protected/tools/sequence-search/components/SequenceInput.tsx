@@ -124,7 +124,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
             className="min-h-[50px] font-mono text-sm"
             />
           </div>
-          <div className="flex justify-center">
+          <div className="">
             <Button
               onClick={onSubmit}
               disabled={loading || !query.trim()}

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { saveAs } from "file-saver";
 import { motion } from "motion/react";
 import { MutationResult } from "@/lib/services/tools/sequence_mutator";
-import SequenceViewer from "react-sequence-viewer";
+// import SequenceViewer from "react-sequence-viewer";
 
 interface MutationResultsProps {
   result: MutationResult | null;

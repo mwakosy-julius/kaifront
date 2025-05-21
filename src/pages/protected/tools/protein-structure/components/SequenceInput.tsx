@@ -148,7 +148,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
               onClick={handlePredict}
               disabled={loading || !sequence.trim()}
               variant="primary"
-              className="transition-all duration-300 hover:[box-shadow:_0_0_12px_#ff0000]"
+              className="transition-all duration-300"
             >
               {loading ? (
                 <>

@@ -6,14 +6,15 @@ export interface SequenceRequest {
 }
 
 export interface SequenceResult {
-  id: string;
-  name: string;
-  description: string;
+  // id: string;
+  // name: string;
+  // description: string;
+  error?: string;
+  sequences?: string;
 }
 
 export interface SearchResponse {
-  gene_results: SequenceResult;
-  protein_results: SequenceResult;
+  sequence_results: SequenceResult;
 }
 
 export const searchSequence = async (request: SequenceRequest): Promise<SearchResponse> => {
@@ -21,9 +22,7 @@ export const searchSequence = async (request: SequenceRequest): Promise<SearchRe
     api.endpoints.tools.sequence_search,
     request
   );
-  if (response.status !== 200) {
-    throw new Error("Failed to fetch sequence search results");
-  }
+  console.log("Response from sequence search:", response);
   
 
   return response as SearchResponse;

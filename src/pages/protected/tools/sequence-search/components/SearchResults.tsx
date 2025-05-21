@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import {
   Card,
   CardContent,
@@ -14,6 +15,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+=======
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+>>>>>>> 07015f7 (sequence search)
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { motion } from "motion/react";
@@ -36,13 +41,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
     });
   };
 
-  const geneSequences = results.gene_results
-    ? parseFasta(results.gene_results)
+  const sequencesResults = results.sequence_results && typeof results.sequence_results.sequences === "string"
+    ? parseFasta(results.sequence_results.sequences)
     : [];
-  const proteinSequences = results.protein_results
-    ? parseFasta(results.protein_results.sequences)
-    : [];
-
+  
   return (
     <motion.div
       className="max-w-6xl mx-auto mt-8"
@@ -50,23 +52,28 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="bg-gray-700 border-none shadow-[0_0_12px_#00f6ff]">
+      <Card className="bg-white-700 border-none">
         <CardHeader>
+<<<<<<< HEAD
           <CardTitle className="text-2xl font-bold text-cyan-400">
             Search Results
           </CardTitle>
           <CardDescription className="text-gray-300">
             Gene and protein sequences from NCBI
           </CardDescription>
+=======
+          <CardTitle className="text-2xl font-bold text-primary">Search Results</CardTitle>    
+>>>>>>> 07015f7 (sequence search)
         </CardHeader>
         <CardContent>
-          {results.gene_results.error && (
+          {results.sequence_results.error && (
             <Alert variant="destructive" className="mb-4">
               <AlertCircle className="w-4 h-4" />
               <AlertTitle>Gene Search Error</AlertTitle>
-              <AlertDescription>{results.gene_results.error}</AlertDescription>
+              <AlertDescription>{results.sequence_results.error}</AlertDescription>
             </Alert>
           )}
+<<<<<<< HEAD
           {geneSequences.length > 0 && (
             <>
               <h3 className="text-xl font-semibold text-white mb-2">
@@ -142,6 +149,30 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
             !results.protein_results.error && (
               <p className="text-gray-300">No sequences found.</p>
             )}
+=======
+          {sequencesResults.length > 0 && (
+            <Table>
+              <TableHeader>
+                <TableRow className="border-gray-600">
+                  <TableHead className="text-black">Header</TableHead>
+                  <TableHead className="text-black">Sequence</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sequencesResults.map((seq, index) => (
+                  <TableRow key={`gene-${index}`} className="border-gray-600 hover:bg-gray-200">
+                    <TableCell className="text-black">{seq.header}</TableCell>
+                    <TableCell className="text-black font-mono text-sm break-all">{seq.sequence}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+          
+          {sequencesResults.length === 0 && !results.sequence_results.error && (
+            <p className="text-gray-300">No sequences found.</p>
+          )}
+>>>>>>> 07015f7 (sequence search)
         </CardContent>
       </Card>
     </motion.div>

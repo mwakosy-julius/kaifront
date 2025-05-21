@@ -12,11 +12,16 @@ export const predictStructure = async (sequence: string): Promise<StructurePredi
     const response = await api.client.post<StructurePrediction>
     (api.endpoints.tools.protein_structure, 
     { sequence });
-    if (!response.data) {
-      throw new Error("No data returned from structure prediction API");
-    }
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.detail || "Failed to predict structure");
+    
+    return response as StructurePrediction;
+  }
+  catch (error) {
+    console.error("Error predicting protein structure:", error);
+    return {
+      sequence,
+      pdb_data: "",
+      confidence: 0,
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 };
