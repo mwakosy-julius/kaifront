@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { saveAs } from "file-saver";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { MutationResult } from "@/lib/services/tools/sequence_mutator";
 // import SequenceViewer from "react-sequence-viewer";
 

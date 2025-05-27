@@ -22,7 +22,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 interface SequenceInputProps {
   sequence: string;

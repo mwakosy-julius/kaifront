@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Play,
@@ -375,9 +375,9 @@ const LandingPage: React.FC = () => {
             <h1 className="mb-6 text-4xl font-extrabold leading-tight text-white md:text-6xl lg:text-7xl">
               Modern{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500">
-                Bioinformatics
+                Bioinformatics Platform
               </span>{" "}
-              for the Genomics Era
+              for Genomics
             </h1>
             <p className="max-w-2xl mx-auto mb-8 text-lg text-gray-200 md:text-xl">
               A comprehensive platform with 15+ specialized tools for DNA

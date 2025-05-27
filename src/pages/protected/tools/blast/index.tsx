@@ -29,7 +29,7 @@ const BlastTool: React.FC = () => {
     setError(null);
 
     try {
-      const data = await runBlast(sequence);
+      const data = await runBlast({ sequence, seqType: seqType });
       setResults([data]);
     } catch (err) {
       setError("An error occurred while fetching BLAST results.");

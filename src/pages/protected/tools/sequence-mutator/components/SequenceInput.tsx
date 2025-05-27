@@ -30,7 +30,7 @@ import {
   RefreshCcw,
   AlertCircle,
 } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 interface SequenceInputProps {
   sequence: string;
@@ -220,7 +220,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
               onClick={handleMutate}
               disabled={loading || !sequence.trim()}
               variant="primary"
-              className="transition-all duration-300 hover:[box-shadow:_0_0_12px_#ff0000]"
+              className="transition-all duration-300]"
             >
               {loading ? (
                 <>

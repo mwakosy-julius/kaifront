@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { saveAs } from "file-saver";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import * as ThreeDMol from "3dmol";
 import { StructurePrediction } from "@/lib/services/tools/protein_structure";
 
@@ -55,31 +55,21 @@ const StructureResults: React.FC<StructureResultsProps> = ({ result }) => {
     >
       <Card className="mt-6">
         <CardHeader>
-<<<<<<< HEAD
           <CardTitle className="text-2xl font-bold text-cyan-400">
             Predicted Protein Structure
           </CardTitle>
-          <CardDescription className="text-gray-300">
-=======
-          <CardTitle className="text-2xl font-bold text-primary">Predicted Protein Structure</CardTitle>
-          <CardDescription className="text-gray-700">
->>>>>>> 07015f7 (sequence search)
+          <CardDescription className="text-gray-600">
             3D structure predicted from your amino acid sequence
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-<<<<<<< HEAD
-            <p className="text-white">
+            <p className="text-gray-700 break-all">
               Sequence: <span className="font-mono">{result.sequence}</span>
             </p>
-            <p className="text-white">
+            <p className="text-gray-700">
               Confidence Score: {result.confidence.toFixed(2)}
             </p>
-=======
-            <p className="text-black break-all">Sequence: <span className="font-mono">{result.sequence}</span></p>
-            <p className="text-black">Confidence Score: {result.confidence}</p>
->>>>>>> 07015f7 (sequence search)
           </div>
           <div
             ref={viewerRef}
