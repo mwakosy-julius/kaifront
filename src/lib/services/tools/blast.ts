@@ -2,13 +2,15 @@ import api from "@/lib/api";
 
 export interface BlastRequest {
   sequence: string;
-  seqType: "dna" | "protein"; 
+  seqType: "dna" | "protein";
 }
 
 export interface BlastResult {
-  organism: string;
-  hit_id: string;
-  percentage_match: number;
+  results: {
+    organism: string;
+    hit_id: string;
+    percentage_match: number;
+  }[];
 }
 
 export const runBlast = async (request: BlastRequest): Promise<BlastResult> => {
@@ -20,6 +22,5 @@ export const runBlast = async (request: BlastRequest): Promise<BlastResult> => {
   if (!response) {
     throw new Error("Failed to get BLAST results");
   }
-
   return response as BlastResult;
 };

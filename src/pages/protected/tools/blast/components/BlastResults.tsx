@@ -3,12 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { BlastResult } from "@/lib/services/tools/blast";
 
-interface BlastResultsProps {
-  results: BlastResult[] | null;
-}
-
-const BlastResults: React.FC<BlastResultsProps> = ({ results }) => {
-  if (!results || results.length === 0) {
+const BlastResults: React.FC<BlastResult> = ({ results }) => {
+  if (!results) {
     return null;
   }
 
@@ -18,13 +14,18 @@ const BlastResults: React.FC<BlastResultsProps> = ({ results }) => {
         <CardTitle>BLAST Results</CardTitle>
         <CardDescription>Analysis results for your sequence</CardDescription>
       </CardHeader>
+      {/* <pre>
+        <code>
+          {JSON.stringify(results, null, 2)}
+        </code>
+      </pre> */}
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow className="border-gray-600">
-              <TableHead className="text-white">Organism</TableHead>
-              <TableHead className="text-white">Hit ID</TableHead>
-              <TableHead className="text-white">Identity (%)</TableHead>
+              <TableHead className="text-black">Organism</TableHead>
+              <TableHead className="text-black">Hit ID</TableHead>
+              <TableHead className="text-black">Identity (%)</TableHead>
               {/* <TableHead className="text-white">Accession</TableHead> */}
               {/* <TableHead className="text-white">Query Coverage (%)</TableHead>
               <TableHead className="text-white">E-value</TableHead>
@@ -34,10 +35,10 @@ const BlastResults: React.FC<BlastResultsProps> = ({ results }) => {
           </TableHeader>
           <TableBody>
             {results.map((result, index) => (
-              <TableRow key={index} className="border-gray-600 hover:bg-gray-600">
-                <TableCell className="text-gray-300">{result.organism}</TableCell>
-                <TableCell className="text-gray-300">{result.hit_id}</TableCell>
-                <TableCell className="text-gray-300">{result.percentage_match.toFixed(2)}</TableCell>
+              <TableRow key={index} className="border-gray-600 hover:bg-gray-200">
+                <TableCell className="text-gray-900">{result.organism}</TableCell>
+                <TableCell className="text-gray-900">{result.hit_id}</TableCell>
+                <TableCell className="text-gray-900">{result.percentage_match}</TableCell>
                 {/* <TableCell className="text-gray-300">{result.accession}</TableCell> */}
                 {/* <TableCell className="text-gray-300">{result.query_coverage.toFixed(2)}</TableCell>
                 <TableCell className="text-gray-300">{result.evalue.toExponential(2)}</TableCell>

@@ -5,7 +5,7 @@ import BlastResults from "./components/BlastResults";
 
 const BlastTool: React.FC = () => {
   const [sequence, setSequence] = useState("");
-  const [results, setResults] = useState<BlastResult[] | null>(null);
+  const [results, setResults] = useState<BlastResult>();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +30,7 @@ const BlastTool: React.FC = () => {
 
     try {
       const data = await runBlast({ sequence, seqType: seqType });
-      setResults([data]);
+      setResults(data);
     } catch (err) {
       setError("An error occurred while fetching BLAST results.");
       console.error("BLAST error:", err);
@@ -53,7 +53,7 @@ const BlastTool: React.FC = () => {
         loading={loading}
         error={error}
       />
-    <BlastResults results={results} />
+    <BlastResults results={results?.results!} />
     </div>
   );
 };
