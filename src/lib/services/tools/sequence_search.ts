@@ -17,13 +17,13 @@ export interface SearchResponse {
   sequence_results: SequenceResult;
 }
 
-export const searchSequence = async (request: SequenceRequest): Promise<SearchResponse> => {
+export const searchSequence = async (
+  request: SequenceRequest
+): Promise<SearchResponse> => {
   const response = await api.client.post<SearchResponse>(
     api.endpoints.tools.sequence_search,
     request
   );
-  console.log("Response from sequence search:", response);
-  
 
   return response as SearchResponse;
 };

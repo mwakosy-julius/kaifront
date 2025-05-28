@@ -23,18 +23,23 @@ export const mutateSequence = async (
   mutationRate: number
 ): Promise<MutationResult> => {
   try {
-    const response = await api.client.post<MutationResult>
-    (api.endpoints.tools.sequence_mutator,
-    {sequence,
-      sequence_type: sequenceType,
-      mutation_type: mutationType,
-      mutation_rate: mutationRate,
-    });
-    if (!response.data) {
+    const response = await api.client.post<MutationResult>(
+      api.endpoints.tools.sequence_mutator,
+      {
+        sequence,
+        sequence_type: sequenceType,
+        mutation_type: mutationType,
+        mutation_rate: mutationRate,
+      }
+    );
+
+    if (!response) {
       throw new Error("No data returned from mutation API");
     }
-    return response.data;
+    return response as MutationResult;
   } catch (error: any) {
-    throw new Error(error.response?.data?.detail || "Failed to mutate sequence");
+    throw new Error(
+      error.response?.data?.detail || "Failed to mutate sequence"
+    );
   }
 };
