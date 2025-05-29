@@ -1,5 +1,5 @@
 import * as ThreeDMol from "3dmol";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Card,

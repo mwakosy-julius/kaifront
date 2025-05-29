@@ -170,28 +170,28 @@ const LandingPage: React.FC = () => {
   // User testimonials with improved quotes
   const testimonials = [
     {
-      name: "Dr. Sarah Chen",
-      position: "Research Scientist, GeneTech Institute",
+      name: "Ngereza Stuart",
+      position: "Biotechnology Student, Udsm",
       quote:
-        "Kaidoku has transformed our genomics workflow. The integrated tools have reduced our analysis time by 40% and enabled discoveries we would have missed with our previous tools.",
+        "KaiDoku is mind-blowing for a newbie like me! I used the metagenomics tool to analyze a FASTA file for my ecology class, and it was so easy-no coding, just paste and go. The visualizations helped me understand complex data in minutes.",
       image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsJTIwd29tYW58ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60",
+        "https://i.pinimg.com/736x/0f/69/1c/0f691cd77a8c6d90f07b35c10c95668f.jpg",
     },
     {
-      name: "Prof. James Rodriguez",
-      position: "Computational Biology Department, Stanford",
+      name: "Mr. Felix",
+      position: "Bioinformatician, Pwani University",
       quote:
-        "My students use Kaidoku for everything from basic sequence alignments to complex phylogenetic analyses. Its intuitive interface makes teaching bioinformatics concepts much more effective.",
+        "KaiDoku is a game-changer for no-code bioinformatics. The app is super intuitive for quick checks, and the aesthetic design makes it feel fresh, not like another clunky bioinformatics tool.",
       image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2Zlc3Npb25hbCUyMG1hbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
+        "https://i.pinimg.com/736x/0f/69/1c/0f691cd77a8c6d90f07b35c10c95668f.jpg",
     },
     {
-      name: "Aisha Patel, PhD",
-      position: "Genomics Researcher, Biotech Innovations",
+      name: "Mr. Kiula",
+      position: "Genomics Researcher, MUHAS",
       quote:
-        "Analyzing 14,000 bp gene regions used to take days. With Kaidoku's consensus maker and variant caller, I can process the same data in minutes and focus on interpretation rather than processing.",
+        "As a researcher, I am looking for quick ways to analyze my data. KaiDoku delivers results in seconds and the charts are publication-ready. The design is also slick. 14,000 bp gene regions used to take days. With Kaidoku's consensus maker and variant caller, I can process the same data in minutes and focus on interpretation rather than processing.",
       image:
-        "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2Zlc3Npb25hbCUyMHdvbWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60",
+        "https://i.pinimg.com/736x/0f/69/1c/0f691cd77a8c6d90f07b35c10c95668f.jpg",
     },
   ];
 
@@ -420,17 +420,17 @@ const LandingPage: React.FC = () => {
               <p className="text-gray-300">Specialized Tools</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-cyan-400">50M+</p>
+              <p className="text-3xl font-bold text-cyan-400">5000+</p>
               <p className="text-gray-300">Sequences Processed</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-cyan-400">10k+</p>
+              <p className="text-3xl font-bold text-cyan-400">100+</p>
               <p className="text-gray-300">Researchers</p>
             </div>
-            <div>
+            {/* <div>
               <p className="text-3xl font-bold text-cyan-400">200+</p>
               <p className="text-gray-300">Publications</p>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </section>
@@ -520,8 +520,51 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Why Choose Us */}
+      <section className="py-20 bg-gradient-to-b from-gray-950 to-gray-900">
+        <div className="container px-4 mx-auto">
+          <motion.div
+            className="max-w-3xl mx-auto mb-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">
+              Why Choose Kaidoku
+            </h2>
+            <p className="text-xl text-gray-300">
+              Our platform is designed to meet the needs of both novice students
+              and experienced researchers.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {advantages.map((advantage, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="p-8 text-center">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-full bg-cyan-900/50">
+                    <advantage.icon className="w-8 h-8 text-cyan-400" />
+                  </div>
+                  <h3 className="mb-4 text-xl font-bold text-white">
+                    {advantage.title}
+                  </h3>
+                  <p className="text-gray-300">{advantage.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Research & Publications */}
-      <section
+      {/* <section
         id="research"
         className="py-20 bg-gradient-to-b from-gray-900 to-gray-950"
       >
@@ -589,7 +632,7 @@ const LandingPage: React.FC = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials */}
       <section id="testimonials" className="py-20 bg-gray-950">
@@ -605,7 +648,7 @@ const LandingPage: React.FC = () => {
               Trusted by Scientists Worldwide
             </h2>
             <p className="text-xl text-gray-300">
-              Hear from researchers and educators who've transformed their work
+              Hear from students and researchers who've transformed their work
               with Kaidoku.
             </p>
           </motion.div>
@@ -639,49 +682,6 @@ const LandingPage: React.FC = () => {
                     <p className="text-gray-300">"{testimonial.quote}"</p>
                   </CardContent>
                 </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-20 bg-gradient-to-b from-gray-950 to-gray-900">
-        <div className="container px-4 mx-auto">
-          <motion.div
-            className="max-w-3xl mx-auto mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">
-              Why Choose Kaidoku
-            </h2>
-            <p className="text-xl text-gray-300">
-              Our platform is designed to meet the needs of both novice students
-              and experienced researchers.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {advantages.map((advantage, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="p-8 text-center">
-                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-full bg-cyan-900/50">
-                    <advantage.icon className="w-8 h-8 text-cyan-400" />
-                  </div>
-                  <h3 className="mb-4 text-xl font-bold text-white">
-                    {advantage.title}
-                  </h3>
-                  <p className="text-gray-300">{advantage.description}</p>
-                </div>
               </motion.div>
             ))}
           </div>
