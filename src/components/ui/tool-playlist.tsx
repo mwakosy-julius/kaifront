@@ -84,17 +84,12 @@ export const ToolPlaylistCard: React.FC<ToolPlaylistProps> = ({
 };
 
 interface ToolPlaylistsProps {
-  title: string;
   playlists: ToolPlaylistProps[];
 }
 
-export const ToolPlaylists: React.FC<ToolPlaylistsProps> = ({
-  title,
-  playlists,
-}) => {
+export const ToolPlaylists: React.FC<ToolPlaylistsProps> = ({ playlists }) => {
   return (
-    <div className="mb-12 space-y-4">
-      <h2 className="text-2xl font-bold">{title}</h2>
+    <div className="mb-12 ">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {playlists.map((playlist, index) => (
           <ToolPlaylistCard key={index} {...playlist} />

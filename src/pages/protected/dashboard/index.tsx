@@ -304,32 +304,34 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container w-full px-2 py-8 mx-auto md:px-8">
+    <div className="w-full px-2 py-8 mx-auto max-w-7xl md:px-8">
       {/* Header */}
-      <div className="flex flex-col gap-4 mb-10 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">
-            Bioinformatics Platform
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            Discover specialized tools for biological research and analysis
-          </p>
-        </div>
-
-        <div className="relative w-full md:w-64">
-          <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search tools, playlists, or users"
-            className="pl-9"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
+      <div className="relative w-full mb-10">
+        <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search tools, playlists, or users"
+          className="pl-9"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
 
       {/* Featured Tool Playlists Section */}
-      <section className="px-6 py-8 mb-10 rounded-lg bg-muted/30 dark:bg-muted/10">
-        <ToolPlaylists title="Featured Tools" playlists={TOOL_PLAYLISTS} />
+      <section className="mb-12">
+        <div className="flex items-center justify-between pb-3 mb-6 border-b border-border/40">
+          <div>
+            <h2 className="text-3xl font-bold">Featured Tools</h2>
+            <p className="text-muted-foreground">
+              Essential tools and collections for your research
+            </p>
+          </div>
+          <Button variant="outline" className="gap-2">
+            Explore All Collections <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+        <div>
+          <ToolPlaylists playlists={TOOL_PLAYLISTS} />
+        </div>
       </section>
 
       {/* New Tools Section */}
