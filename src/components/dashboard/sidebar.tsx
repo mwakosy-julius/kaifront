@@ -24,7 +24,7 @@ export const Sidebar = () => {
           to="/dashboard"
           className={cn(
             "h-[65px] w-[60px]",
-            "relative flex items-center bg-background justify-center",
+            "relative flex items-center bg-gray-900 justify-center",
             "transition-opacity duration-300",
             isExpanded ? "opacity-0" : "opacity-100"
           )}

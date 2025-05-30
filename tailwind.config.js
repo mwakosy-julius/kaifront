@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	darkMode: ["class"],
 	content: [
 		"./index.html",
 		"./src/**/*.{js,ts,jsx,tsx}",
@@ -78,6 +77,20 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+
+				// Tool category colors
+				genomics: {
+					DEFAULT: '#166534', // Dark green in light mode
+					dark: '#4ade80'      // Light green in dark mode
+				},
+				proteomics: {
+					DEFAULT: '#1e40af', // Dark blue in light mode
+					dark: '#60a5fa'      // Light blue in dark mode
+				},
+				metabolomics: {
+					DEFAULT: '#7e22ce', // Dark purple in light mode
+					dark: '#c084fc'      // Light purple in dark mode
 				}
 			},
 			// Add any additional theme customizations
@@ -104,6 +117,10 @@ export default {
 					'0%': { transform: 'translateX(0)' },
 					'100%': { transform: 'translateX(-100%)' },
 				},
+			},
+			boxShadow: {
+				'tool-card': '0 4px 14px 0 rgb(0 0 0 / 0.1)',
+				'tool-card-dark': '0 4px 14px 0 rgb(255 255 255 / 0.05)',
 			}
 		}
 	},

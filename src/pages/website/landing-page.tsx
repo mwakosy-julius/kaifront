@@ -196,35 +196,35 @@ const LandingPage: React.FC = () => {
   ];
 
   // Research publications using Kaidoku
-  const publications = [
-    {
-      title:
-        "Comparative genomic analysis reveals novel insights into the evolution of SARS-CoV-2 variants",
-      authors: "Martinez et al.",
-      journal: "Nature Genetics",
-      year: "2024",
-      doi: "10.1038/s41588-024-1234-5",
-      toolsUsed: ["Multiple Alignment", "Phylogenetic Tree", "Variant Calling"],
-    },
-    {
-      title:
-        "Metagenomic characterization of microbial communities in deep-sea hydrothermal vents",
-      authors: "Johnson et al.",
-      journal: "Science Advances",
-      year: "2024",
-      doi: "10.1126/sciadv.abc1234",
-      toolsUsed: ["Metagenomics", "Sequence Search", "GC Content"],
-    },
-    {
-      title:
-        "Novel algorithms for efficient compression of large-scale genomic datasets",
-      authors: "Williams et al.",
-      journal: "Bioinformatics",
-      year: "2023",
-      doi: "10.1093/bioinformatics/btad123",
-      toolsUsed: ["Data Compression"],
-    },
-  ];
+  // const publications = [
+  //   {
+  //     title:
+  //       "Comparative genomic analysis reveals novel insights into the evolution of SARS-CoV-2 variants",
+  //     authors: "Martinez et al.",
+  //     journal: "Nature Genetics",
+  //     year: "2024",
+  //     doi: "10.1038/s41588-024-1234-5",
+  //     toolsUsed: ["Multiple Alignment", "Phylogenetic Tree", "Variant Calling"],
+  //   },
+  //   {
+  //     title:
+  //       "Metagenomic characterization of microbial communities in deep-sea hydrothermal vents",
+  //     authors: "Johnson et al.",
+  //     journal: "Science Advances",
+  //     year: "2024",
+  //     doi: "10.1126/sciadv.abc1234",
+  //     toolsUsed: ["Metagenomics", "Sequence Search", "GC Content"],
+  //   },
+  //   {
+  //     title:
+  //       "Novel algorithms for efficient compression of large-scale genomic datasets",
+  //     authors: "Williams et al.",
+  //     journal: "Bioinformatics",
+  //     year: "2023",
+  //     doi: "10.1093/bioinformatics/btad123",
+  //     toolsUsed: ["Data Compression"],
+  //   },
+  // ];
 
   // Platform advantages
   const advantages = [
@@ -367,7 +367,7 @@ const LandingPage: React.FC = () => {
         </div>
         <div className="container relative z-10 px-4 mx-auto">
           <motion.div
-            className="max-w-3xl mx-auto mb-8"
+            className="max-w-5xl mx-auto mb-8"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -379,7 +379,7 @@ const LandingPage: React.FC = () => {
               </span>{" "}
               for Genomics
             </h1>
-            <p className="max-w-2xl mx-auto mb-8 text-lg text-gray-200 md:text-xl">
+            <p className="max-w-3xl mx-auto mb-8 text-lg text-gray-200 md:text-xl">
               A comprehensive platform with 15+ specialized tools for DNA
               sequence analysis, genomics research, and interactive data
               visualization designed for scientists and students.
@@ -455,7 +455,7 @@ const LandingPage: React.FC = () => {
           </motion.div>
 
           <Tabs defaultValue="sequence-analysis" className="w-full">
-            <TabsList className="flex flex-wrap justify-center w-full mb-8 space-x-2 bg-transparent">
+            <TabsList className="flex flex-wrap justify-center w-full mb-8 space-x-2 !bg-transparent">
               {toolCategories.map((category) => (
                 <TabsTrigger
                   key={category.id}

@@ -4,91 +4,96 @@
 
 @tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 @layer base {
   :root {
-    --background: 220 60% 98%;
-    --foreground: 220 74% 4%;
-    --muted: 220 24% 88%;
-    --muted-foreground: 220 14% 35%;
-    --popover: 220 60% 98%;
-    --popover-foreground: 220 74% 4%;
-    --card: 220 60% 97%;
-    --card-foreground: 220 74% 3%;
-    --border: 220 7% 93%;
-    --input: 220 7% 93%;
-    --primary: 220 80% 43%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 6% 86%;
-    --secondary-foreground: 220 6% 26%;
-    --accent: 220 6% 86%;
-    --accent-foreground: 220 6% 26%;
-    --destructive: 16 93% 30%;
-    --destructive-foreground: 16 93% 90%;
-    --ring: 220 80% 43%;
-    --chart-1: 220 80% 43%;
-    --chart-2: 220 6% 86%;
-    --chart-3: 220 6% 86%;
-    --chart-4: 220 6% 89%;
-    --chart-5: 220 83% 43%;
+    /* Base radius for rounded corners */
     --radius: 0.5rem;
+
+    /* Dark mode colors - aligned with landing page */
+    --background: 220 14% 10%; /* Dark gray background */
+    --foreground: 0 0% 98%; /* Near white text */
+
+    --card: 222 13% 13%; /* Slightly lighter gray for cards */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 222 13% 13%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 186 100% 70%; /* Cyan color from landing page */
+    --primary-foreground: 220 14% 10%;
+
+    --secondary: 186 100% 40%; /* Darker cyan */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 217 10% 25%;
+    --muted-foreground: 215 10% 65%;
+
+    --accent: 186 100% 15%; /* Very dark cyan for accents */
+    --accent-foreground: 186 100% 80%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 14% 18%; /* Dark gray border */
+    --input: 222 14% 18%;
+    --ring: 186 100% 40%; /* Cyan ring */
+
+    /* Chart colors - Dark mode biological visualization palette */
+    --chart-1: 214.3 95% 60%; /* Brighter Blue */
+    --chart-2: 142.1 76.2% 45%; /* Brighter Green */
+    --chart-3: 32.1 94.6% 55%; /* Brighter Orange */
+    --chart-4: 187 92% 40%; /* Brighter Teal */
+    --chart-5: 280 100% 60%; /* Brighter Purple */
+
+    /* Sidebar colors */
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 214.3 95% 21%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 210 40% 98%;
   }
 
-  .dark {
-    --background: 220 58% 4%;
-    --foreground: 220 30% 100%;
-    --muted: 220 24% 12%;
-    --muted-foreground: 220 14% 65%;
-    --popover: 220 58% 4%;
-    --popover-foreground: 220 30% 100%;
-    --card: 220 58% 5%;
-    --card-foreground: 0 0% 100%;
-    --border: 220 7% 12%;
-    --input: 220 7% 12%;
-    --primary: 220 80% 43%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 20% 20%;
-    --secondary-foreground: 220 20% 80%;
-    --accent: 220 20% 20%;
-    --accent-foreground: 220 20% 80%;
-    --destructive: 16 93% 53%;
-    --destructive-foreground: 0 0% 100%;
-    --ring: 220 80% 43%;
-    --chart-1: 220 80% 43%;
-    --chart-2: 220 20% 20%;
-    --chart-3: 220 20% 20%;
-    --chart-4: 220 20% 23%;
-    --chart-5: 220 83% 43%;
+  /* Dark mode consistency */
+  body {
+    @apply text-gray-100 bg-gray-900;
+  }
+
+  /* Improved scrollbar for dark mode */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-700 rounded-full hover:bg-gray-600;
   }
 }
 
-@layer base {
-  * {
-    box-sizing: border-box;
-    @apply border-border;
+@layer utilities {
+  /* Additional utility classes can be added here */
+  .tool-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
   }
 }
 
-body {
-  @apply bg-background text-foreground;
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.1;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  50% {
-    opacity: 0.2;
+  to {
+    opacity: 1;
   }
-}
-.animate-pulse {
-  animation: pulse 4s ease-in-out infinite;
 }
