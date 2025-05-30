@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   ArrowRight,
@@ -9,15 +10,15 @@ import {
 } from "lucide-react";
 
 // local imports
+import { cn } from "@/lib/utils";
 import { tools } from "@/lib/services/tools";
-import { KaiToolsInterface } from "@/lib/services/tools/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { KaiToolsInterface } from "@/lib/services/tools/types";
 import { ToolPlaylists } from "@/components/ui/tool-playlist";
 import { TOOL_IMAGES, getToolImage } from "@/lib/constants/tool-images";
-import { cn } from "@/lib/utils";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 // Extended tool interface with additional marketplace metadata
 interface MarketplaceToolInterface extends KaiToolsInterface {
@@ -71,38 +72,6 @@ const TOOL_PLAYLISTS = [
     route: "/protected/tools/genome-assembly",
   },
 ];
-
-// New tools playlists
-// const NEW_TOOLS_PLAYLISTS = [
-//   {
-//     title: "Protein Structure Predictor",
-//     description: "Predict protein structures from sequences",
-//     image: TOOL_IMAGES.proteinStructure,
-//     category: "Proteomics",
-//     route: "/protected/tools/protein-structure",
-//   },
-//   {
-//     title: "Mass Spec Analyzer",
-//     description: "Analyze mass spectrometry data",
-//     image: TOOL_IMAGES.massSpec,
-//     category: "Proteomics",
-//     route: "/protected/tools/mass-spec",
-//   },
-//   {
-//     title: "Metabolite Identifier",
-//     description: "Identify metabolites in samples",
-//     image: TOOL_IMAGES.metaboliteIdentifier,
-//     category: "Metabolomics",
-//     route: "/protected/tools/metabolite-identifier",
-//   },
-//   {
-//     title: "Pathway Analysis Tool",
-//     description: "Analyze metabolic pathways",
-//     image: TOOL_IMAGES.pathwayAnalysis,
-//     category: "Metabolomics",
-//     route: "/protected/tools/pathway-analysis",
-//   },
-// ];
 
 const Dashboard = () => {
   const [toolsData, setToolsData] = useState<MarketplaceToolInterface[]>([]);
@@ -297,27 +266,30 @@ const Dashboard = () => {
 
   return (
     <div className="w-full px-2 py-8 mx-auto max-w-7xl md:px-8">
-      {/* Header */}
+      {/* Header */}{" "}
       <div className="relative w-full mb-10">
-        <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+        <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
         <Input
           placeholder="Search tools, playlists, or users"
-          className="pl-9"
+          className="border-gray-700 pl-9 bg-gray-800/50 focus:border-cyan-700 focus:ring-cyan-700/25"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-
       {/* Featured Tool Playlists Section */}
       <section className="mb-12">
-        <div className="flex items-center justify-between pb-3 mb-6 border-b border-border/40">
+        {" "}
+        <div className="flex items-center justify-between pb-3 mb-6 border-b border-gray-800">
           <div>
-            <h2 className="text-3xl font-bold">Featured Tools</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-3xl font-bold text-white">Featured Tools</h2>
+            <p className="text-gray-300">
               Essential tools and collections for your research
             </p>
           </div>
-          <Button variant="outline" className="gap-2">
+          <Button
+            variant="outline"
+            className="gap-2 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-cyan-400"
+          >
             Explore All Collections <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
@@ -325,17 +297,21 @@ const Dashboard = () => {
           <ToolPlaylists playlists={TOOL_PLAYLISTS} />
         </div>
       </section>
-
       {/* New Tools Section */}
       <section className="mb-10">
-        <div className="flex items-center justify-between pb-2 mb-6 border-b">
+        {" "}
+        <div className="flex items-center justify-between pb-2 mb-6 border-b border-gray-800">
           <div>
-            <h2 className="text-2xl font-semibold">New Tools</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-2xl font-semibold text-white">New Tools</h2>
+            <p className="text-sm text-gray-300">
               Recently added to our platform
             </p>
           </div>
-          <Button variant="link" className="text-primary" onClick={() => {}}>
+          <Button
+            variant="link"
+            className="text-cyan-400 hover:text-cyan-300"
+            onClick={() => {}}
+          >
             View all <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
@@ -351,17 +327,23 @@ const Dashboard = () => {
             ))}
         </div>
       </section>
-
       {/* Recommended Tools Section */}
       <section className="mb-10">
-        <div className="flex items-center justify-between pb-2 mb-6 border-b border-border/40">
+        {" "}
+        <div className="flex items-center justify-between pb-2 mb-6 border-b border-gray-800">
           <div>
-            <h2 className="text-2xl font-semibold">Recommended Tools</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-2xl font-semibold text-white">
+              Recommended Tools
+            </h2>
+            <p className="text-sm text-gray-300">
               Popular tools you might find useful
             </p>
           </div>
-          <Button variant="link" className="text-primary" onClick={() => {}}>
+          <Button
+            variant="link"
+            className="text-cyan-400 hover:text-cyan-300"
+            onClick={() => {}}
+          >
             View all <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
@@ -377,24 +359,27 @@ const Dashboard = () => {
             ))}
         </div>
       </section>
-
       {/* All Tools Section */}
-      <section className="pt-4 mt-10 border-t border-border/50">
+      <section className="pt-4 mt-10 border-t border-gray-800">
+        {" "}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-2xl font-semibold">All Tools</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-2xl font-semibold text-white">All Tools</h2>
+            <p className="text-sm text-gray-300">
               Browse the complete collection
             </p>
           </div>
-
-          {/* Category pills */}
+          {/* Category pills */}{" "}
           <div className="flex-wrap hidden gap-2 md:flex">
             {CATEGORIES.map((category) => (
               <Badge
                 key={category}
                 variant={activeCategory === category ? "default" : "outline"}
-                className="cursor-pointer"
+                className={`cursor-pointer px-4 py-1.5 ${
+                  activeCategory === category
+                    ? "bg-cyan-900/50 text-cyan-300 border-cyan-700"
+                    : "bg-transparent text-gray-300 border-gray-700 hover:border-gray-600"
+                }`}
                 onClick={() =>
                   setActiveCategory(
                     activeCategory === category ? null : category
@@ -409,7 +394,7 @@ const Dashboard = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="flex-shrink-0"
+                className="flex-shrink-0 text-gray-400 hover:text-cyan-300"
                 onClick={resetFilters}
               >
                 <FilterX className="w-4 h-4 mr-1" />
@@ -417,20 +402,33 @@ const Dashboard = () => {
               </Button>
             )}
           </div>
-        </div>
-
+        </div>{" "}
         <Tabs defaultValue="all" className="mt-6">
-          <TabsList className="p-1 mb-6 bg-muted/40 dark:bg-muted/20">
-            <TabsTrigger value="all">All Tools</TabsTrigger>
-            <TabsTrigger value="trending">
+          <TabsList className="flex justify-end flex-wrap w-full mb-6 space-x-2 px-0 !bg-transparent h-fit">
+            <TabsTrigger
+              value="all"
+              className="px-6 py-3 text-gray-300 border border-gray-700 data-[state=active]:bg-cyan-900 data-[state=active]:text-cyan-300 rounded-full data-[state=active]:border-cyan-700 hover:border-gray-600"
+            >
+              All Tools
+            </TabsTrigger>
+            <TabsTrigger
+              value="trending"
+              className="px-6 py-3 text-gray-300 border border-gray-700 data-[state=active]:bg-cyan-900 data-[state=active]:text-cyan-300 rounded-full data-[state=active]:border-cyan-700 hover:border-gray-600"
+            >
               <TrendingUp className="w-4 h-4 mr-1" />
               Trending
             </TabsTrigger>
-            <TabsTrigger value="new">
+            <TabsTrigger
+              value="new"
+              className="px-6 py-3 text-gray-300 border border-gray-700 data-[state=active]:bg-cyan-900 data-[state=active]:text-cyan-300 rounded-full data-[state=active]:border-cyan-700 hover:border-gray-600"
+            >
               <Sparkles className="w-4 h-4 mr-1" />
               New
             </TabsTrigger>
-            <TabsTrigger value="favorites">
+            <TabsTrigger
+              value="favorites"
+              className="px-6 py-3 text-gray-300 border border-gray-700 data-[state=active]:bg-cyan-900 data-[state=active]:text-cyan-300 rounded-full data-[state=active]:border-cyan-700 hover:border-gray-600"
+            >
               <Star className="w-4 h-4 mr-1" />
               Favorites
             </TabsTrigger>
@@ -449,10 +447,14 @@ const Dashboard = () => {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-400">
                     No tools found matching your search criteria.
                   </p>
-                  <Button variant="link" onClick={resetFilters}>
+                  <Button
+                    variant="link"
+                    className="text-cyan-400 hover:text-cyan-300"
+                    onClick={resetFilters}
+                  >
                     Reset filters
                   </Button>
                 </div>
@@ -473,11 +475,13 @@ const Dashboard = () => {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">
-                    No trending tools found.
-                  </p>
+                  <p className="text-gray-400">No trending tools found.</p>
                   {(activeCategory || searchQuery) && (
-                    <Button variant="link" onClick={resetFilters}>
+                    <Button
+                      variant="link"
+                      className="text-cyan-400 hover:text-cyan-300"
+                      onClick={resetFilters}
+                    >
                       Reset filters
                     </Button>
                   )}
@@ -499,9 +503,13 @@ const Dashboard = () => {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">No new tools found.</p>
+                  <p className="text-gray-400">No new tools found.</p>
                   {(activeCategory || searchQuery) && (
-                    <Button variant="link" onClick={resetFilters}>
+                    <Button
+                      variant="link"
+                      className="text-cyan-400 hover:text-cyan-300"
+                      onClick={resetFilters}
+                    >
                       Reset filters
                     </Button>
                   )}
@@ -523,7 +531,7 @@ const Dashboard = () => {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-400">
                     No favorite tools yet. Mark tools as favorites to see them
                     here.
                   </p>
@@ -548,10 +556,13 @@ const ToolCard = ({
   showFavorite?: boolean;
 }) => {
   return (
-    <div className={cn("h-full flex flex-col space-y-4")}>
+    <Link
+      to={`tools${tool.frontend_url}`}
+      className={cn("h-full flex flex-col space-y-4")}
+    >
       {/* Image section */}
       <div
-        className="relative overflow-hidden h-52"
+        className="relative overflow-hidden rounded-lg h-52"
         style={{
           background: "linear-gradient(to bottom, #1a1a1a, #0a0a0a)",
         }}
@@ -561,14 +572,14 @@ const ToolCard = ({
           alt={tool.name}
           className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
         />
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-800/50 to-transparent" /> */}
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-800/50 to-transparent" />
         {showFavorite && (
           <Button
             variant="ghost"
             size="icon"
             className={cn(
-              "absolute top-2 right-2 rounded-full bg-background/70 text-foreground",
-              "hover:bg-background/90"
+              "absolute top-2 right-2 rounded-full bg-gray-900/70 text-white",
+              "hover:bg-gray-900/90"
             )}
             onClick={(e) => {
               e.stopPropagation();
@@ -580,7 +591,7 @@ const ToolCard = ({
             }
           >
             {tool.isFavorited ? (
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <Star className="w-4 h-4 fill-cyan-400 text-cyan-400" />
             ) : (
               <Star className="w-4 h-4" />
             )}
@@ -625,23 +636,30 @@ const ToolCard = ({
 
       <div className="flex flex-col flex-grow">
         <div className="pb-2">
-          <div className="text-lg font-medium">{tool.name}</div>
+          <div className="text-lg font-medium text-white">{tool.name}</div>
         </div>
 
         <div className="flex-grow">
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-sm text-gray-300 line-clamp-2">
             {tool.description}
           </p>
 
           {tool.tags && tool.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-3">
               {tool.tags.slice(0, 2).map((tag) => (
-                <Badge key={tag} variant="secondary" className="text-xs">
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  className="text-xs bg-cyan-900/50 text-cyan-300 hover:bg-cyan-900/70 border-cyan-700/50"
+                >
                   {tag}
                 </Badge>
               ))}
               {tool.tags.length > 2 && (
-                <Badge variant="outline" className="text-xs">
+                <Badge
+                  variant="outline"
+                  className="text-xs text-gray-400 border-gray-700"
+                >
                   +{tool.tags.length - 2}
                 </Badge>
               )}
@@ -649,7 +667,7 @@ const ToolCard = ({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

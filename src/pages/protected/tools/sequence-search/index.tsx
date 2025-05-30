@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import SequenceInput from "./components/SequenceInput";
 import SearchResults from "./components/SearchResults";
-import { SearchResponse, searchSequence } from "@/lib/services/tools/sequence_search";
+import {
+  SearchResponse,
+  searchSequence,
+} from "@/lib/services/tools/sequence_search";
 
 const SequenceSearchTool: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -32,7 +35,7 @@ const SequenceSearchTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="container mx-auto">
       <SequenceInput
         query={query}
         setQuery={setQuery}
