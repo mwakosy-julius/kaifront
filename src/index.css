@@ -9,40 +9,41 @@
     /* Base radius for rounded corners */
     --radius: 0.5rem;
 
-    /* Dark mode colors - aligned with landing page */
-    --background: 220 14% 10%; /* Dark gray background */
-    --foreground: 0 0% 98%; /* Near white text */
+    /* Light mode colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-    --card: 222 13% 13%; /* Slightly lighter gray for cards */
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 222 13% 13%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 186 100% 70%; /* Cyan color from landing page */
-    --primary-foreground: 220 14% 10%;
+    --primary: 214.3 95% 21%; /* Deep blue for bioinformatics */
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 186 100% 40%; /* Darker cyan */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 142.1 76.2% 36.3%; /* DNA Green */
+    --secondary-foreground: 355.7 100% 97.3%;
 
-    --muted: 217 10% 25%;
-    --muted-foreground: 215 10% 65%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 186 100% 15%; /* Very dark cyan for accents */
-    --accent-foreground: 186 100% 80%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 222 14% 18%; /* Dark gray border */
-    --input: 222 14% 18%;
-    --ring: 186 100% 40%; /* Cyan ring */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
 
-    /* Chart colors - Dark mode biological visualization palette */
-    --chart-1: 214.3 95% 60%; /* Brighter Blue */
-    --chart-2: 142.1 76.2% 45%; /* Brighter Green */
-    --chart-3: 32.1 94.6% 55%; /* Brighter Orange */
-    --chart-4: 187 92% 40%; /* Brighter Teal */
-    --chart-5: 280 100% 60%; /* Brighter Purple */
+    /* Chart colors - Biological visualization palette */
+    --chart-1: 214.3 95% 21%; /* Deep Blue */
+    --chart-2: 142.1 76.2% 36.3%; /* Green */
+    --chart-3: 32.1 94.6% 43.7%; /* Orange */
+    --chart-4: 187 92% 24%; /* Teal */
+    --chart-5: 280 100% 45%; /* Purple */
 
     /* Sidebar colors */
     --sidebar-background: 222.2 84% 4.9%;
@@ -55,23 +56,42 @@
     --sidebar-ring: 210 40% 98%;
   }
 
-  /* Dark mode consistency */
-  body {
-    @apply text-gray-100 bg-gray-900;
-  }
+  .dark {
+    /* Dark mode colors */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-  /* Improved scrollbar for dark mode */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-  ::-webkit-scrollbar-track {
-    @apply bg-gray-900;
-  }
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-  ::-webkit-scrollbar-thumb {
-    @apply bg-gray-700 rounded-full hover:bg-gray-600;
+    --primary: 214.3 95% 45%; /* Lighter blue for dark mode */
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 142.1 76.2% 45%; /* Lighter green for dark mode */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Chart colors - Dark mode biological visualization palette */
+    --chart-1: 214.3 95% 60%; /* Brighter Blue */
+    --chart-2: 142.1 76.2% 45%; /* Brighter Green */
+    --chart-3: 32.1 94.6% 55%; /* Brighter Orange */
+    --chart-4: 187 92% 40%; /* Brighter Teal */
+    --chart-5: 280 100% 60%; /* Brighter Purple */
   }
 }
 

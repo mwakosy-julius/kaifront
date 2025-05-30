@@ -15,11 +15,14 @@ const ProtectedLayoutContent = () => {
   }
 
   return (
-    <Page overflowHidden className="flex !flex-row bg-gray-900 text-white">
-      <Sidebar />{" "}
+    <Page
+      overflowHidden
+      className="flex !flex-row bg-background text-foreground"
+    >
+      <Sidebar />
       <Page
         overflowHidden
-        className="flex flex-col flex-1 border-l border-gray-800"
+        className="flex flex-col flex-1 border-l border-border"
       >
         <DashboardNavbar />
         <div className="relative flex-1 overflow-auto">
