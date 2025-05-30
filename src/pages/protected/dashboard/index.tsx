@@ -12,19 +12,11 @@ import {
 import { tools } from "@/lib/services/tools";
 import { KaiToolsInterface } from "@/lib/services/tools/types";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ToolPlaylists } from "@/components/ui/tool-playlist";
 import { TOOL_IMAGES, getToolImage } from "@/lib/constants/tool-images";
-import { useTheme } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 
 // Extended tool interface with additional marketplace metadata
@@ -361,7 +353,7 @@ const Dashboard = () => {
       </section>
 
       {/* Recommended Tools Section */}
-      <section className="px-6 py-8 mb-10 rounded-lg bg-muted/30 dark:bg-muted/10">
+      <section className="mb-10">
         <div className="flex items-center justify-between pb-2 mb-6 border-b border-border/40">
           <div>
             <h2 className="text-2xl font-semibold">Recommended Tools</h2>
@@ -555,26 +547,21 @@ const ToolCard = ({
   onFavoriteToggle: (name: string) => void;
   showFavorite?: boolean;
 }) => {
-  const { theme } = useTheme();
-  const isDark =
-    theme === "dark" ||
-    (theme === "system" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches);
-
   return (
-    <Card
-      className={cn(
-        "overflow-hidden transition-all duration-200 hover:shadow-tool-card dark:hover:shadow-tool-card-dark border",
-        "h-full flex flex-col"
-      )}
-    >
+    <div className={cn("h-full flex flex-col space-y-4")}>
       {/* Image section */}
-      <div className="relative h-40 overflow-hidden">
+      <div
+        className="relative overflow-hidden h-52"
+        style={{
+          background: "linear-gradient(to bottom, #1a1a1a, #0a0a0a)",
+        }}
+      >
         <img
           src={tool.imageUrl || getToolImage(tool.name, tool.category)}
           alt={tool.name}
           className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
         />
+        {/* <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-800/50 to-transparent" /> */}
         {showFavorite && (
           <Button
             variant="ghost"
@@ -602,7 +589,7 @@ const ToolCard = ({
         )}
 
         {/* Category label */}
-        <div
+        {/* <div
           className={cn(
             "absolute top-2 left-2 px-2 py-1 text-xs font-medium rounded text-white",
             tool.category?.toLowerCase().includes("genom")
@@ -619,10 +606,10 @@ const ToolCard = ({
           )}
         >
           {tool.category}
-        </div>
+        </div> */}
 
         {/* New/Trending badges */}
-        <div className="absolute flex gap-1 bottom-2 left-2">
+        {/* <div className="absolute flex gap-1 bottom-2 left-2">
           {tool.new && (
             <Badge className="text-white bg-emerald-500 hover:bg-emerald-500/90">
               New
@@ -633,15 +620,15 @@ const ToolCard = ({
               Trending
             </Badge>
           )}
-        </div>
+        </div> */}
       </div>
 
       <div className="flex flex-col flex-grow">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-medium">{tool.name}</CardTitle>
-        </CardHeader>
+        <div className="pb-2">
+          <div className="text-lg font-medium">{tool.name}</div>
+        </div>
 
-        <CardContent className="flex-grow">
+        <div className="flex-grow">
           <p className="text-sm text-muted-foreground line-clamp-2">
             {tool.description}
           </p>
@@ -660,22 +647,9 @@ const ToolCard = ({
               )}
             </div>
           )}
-        </CardContent>
-
-        <CardFooter className="pt-0">
-          <Button
-            variant="default"
-            className="w-full"
-            onClick={() =>
-              (window.location.href = `/protected/tools${tool.frontend_url}`)
-            }
-          >
-            Open Tool
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </CardFooter>
+        </div>
       </div>
-    </Card>
+    </div>
   );
 };
 
