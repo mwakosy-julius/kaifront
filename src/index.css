@@ -4,91 +4,116 @@
 
 @tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 @layer base {
   :root {
-    --background: 220 60% 98%;
-    --foreground: 220 74% 4%;
-    --muted: 220 24% 88%;
-    --muted-foreground: 220 14% 35%;
-    --popover: 220 60% 98%;
-    --popover-foreground: 220 74% 4%;
-    --card: 220 60% 97%;
-    --card-foreground: 220 74% 3%;
-    --border: 220 7% 93%;
-    --input: 220 7% 93%;
-    --primary: 220 80% 43%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 6% 86%;
-    --secondary-foreground: 220 6% 26%;
-    --accent: 220 6% 86%;
-    --accent-foreground: 220 6% 26%;
-    --destructive: 16 93% 30%;
-    --destructive-foreground: 16 93% 90%;
-    --ring: 220 80% 43%;
-    --chart-1: 220 80% 43%;
-    --chart-2: 220 6% 86%;
-    --chart-3: 220 6% 86%;
-    --chart-4: 220 6% 89%;
-    --chart-5: 220 83% 43%;
+    /* Base radius for rounded corners */
     --radius: 0.5rem;
+
+    /* Light mode colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 214.3 95% 21%; /* Deep blue for bioinformatics */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 142.1 76.2% 36.3%; /* DNA Green */
+    --secondary-foreground: 355.7 100% 97.3%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    /* Chart colors - Biological visualization palette */
+    --chart-1: 214.3 95% 21%; /* Deep Blue */
+    --chart-2: 142.1 76.2% 36.3%; /* Green */
+    --chart-3: 32.1 94.6% 43.7%; /* Orange */
+    --chart-4: 187 92% 24%; /* Teal */
+    --chart-5: 280 100% 45%; /* Purple */
+
+    /* Sidebar colors */
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 214.3 95% 21%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 210 40% 98%;
   }
 
   .dark {
-    --background: 220 58% 4%;
-    --foreground: 220 30% 100%;
-    --muted: 220 24% 12%;
-    --muted-foreground: 220 14% 65%;
-    --popover: 220 58% 4%;
-    --popover-foreground: 220 30% 100%;
-    --card: 220 58% 5%;
-    --card-foreground: 0 0% 100%;
-    --border: 220 7% 12%;
-    --input: 220 7% 12%;
-    --primary: 220 80% 43%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 20% 20%;
-    --secondary-foreground: 220 20% 80%;
-    --accent: 220 20% 20%;
-    --accent-foreground: 220 20% 80%;
-    --destructive: 16 93% 53%;
-    --destructive-foreground: 0 0% 100%;
-    --ring: 220 80% 43%;
-    --chart-1: 220 80% 43%;
-    --chart-2: 220 20% 20%;
-    --chart-3: 220 20% 20%;
-    --chart-4: 220 20% 23%;
-    --chart-5: 220 83% 43%;
+    /* Dark mode colors */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 214.3 95% 45%; /* Lighter blue for dark mode */
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 142.1 76.2% 45%; /* Lighter green for dark mode */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Chart colors - Dark mode biological visualization palette */
+    --chart-1: 214.3 95% 60%; /* Brighter Blue */
+    --chart-2: 142.1 76.2% 45%; /* Brighter Green */
+    --chart-3: 32.1 94.6% 55%; /* Brighter Orange */
+    --chart-4: 187 92% 40%; /* Brighter Teal */
+    --chart-5: 280 100% 60%; /* Brighter Purple */
   }
 }
 
-@layer base {
-  * {
-    box-sizing: border-box;
-    @apply border-border;
+@layer utilities {
+  /* Additional utility classes can be added here */
+  .tool-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
   }
 }
 
-body {
-  @apply bg-background text-foreground;
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.1;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  50% {
-    opacity: 0.2;
+  to {
+    opacity: 1;
   }
-}
-.animate-pulse {
-  animation: pulse 4s ease-in-out infinite;
 }

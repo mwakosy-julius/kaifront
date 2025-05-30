@@ -3,7 +3,6 @@ import {
   ArrowRight,
   Star,
   Search as SearchIcon,
-  Clock,
   TrendingUp,
   Sparkles,
   FilterX,
@@ -23,6 +22,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ToolPlaylists } from "@/components/ui/tool-playlist";
+import { TOOL_IMAGES, getToolImage } from "@/lib/constants/tool-images";
+import { useTheme } from "@/components/providers/theme-provider";
+import { cn } from "@/lib/utils";
 
 // Extended tool interface with additional marketplace metadata
 interface MarketplaceToolInterface extends KaiToolsInterface {
@@ -34,6 +37,7 @@ interface MarketplaceToolInterface extends KaiToolsInterface {
   usageCount?: number;
   dateAdded?: string;
   tags?: string[];
+  imageUrl?: string;
 }
 
 // Tool categories from landing page
@@ -43,6 +47,70 @@ const CATEGORIES = [
   "Comparative Genomics",
   "Visualization",
 ];
+
+// Featured playlist categories
+const TOOL_PLAYLISTS = [
+  {
+    title: "Genomics Essentials",
+    description: "Essential tools for genomics research",
+    image: TOOL_IMAGES.genomics,
+    category: "Genomics",
+    route: "/protected/tools/genomics",
+  },
+  {
+    title: "Transcriptomics Toolkit",
+    description: "Tools for analyzing gene expression data",
+    image: TOOL_IMAGES.transcriptomics,
+    category: "Genomics",
+    route: "/protected/tools/transcriptomics",
+  },
+  {
+    title: "Variant Analysis Suite",
+    description: "Tools for identifying genetic variants",
+    image: TOOL_IMAGES.variantAnalysis,
+    category: "Genomics",
+    route: "/protected/tools/variant-analysis",
+  },
+  {
+    title: "Genome Assembly Resources",
+    description: "Resources for assembling genomes",
+    image: TOOL_IMAGES.genomeAssembly,
+    category: "Genomics",
+    route: "/protected/tools/genome-assembly",
+  },
+];
+
+// New tools playlists
+// const NEW_TOOLS_PLAYLISTS = [
+//   {
+//     title: "Protein Structure Predictor",
+//     description: "Predict protein structures from sequences",
+//     image: TOOL_IMAGES.proteinStructure,
+//     category: "Proteomics",
+//     route: "/protected/tools/protein-structure",
+//   },
+//   {
+//     title: "Mass Spec Analyzer",
+//     description: "Analyze mass spectrometry data",
+//     image: TOOL_IMAGES.massSpec,
+//     category: "Proteomics",
+//     route: "/protected/tools/mass-spec",
+//   },
+//   {
+//     title: "Metabolite Identifier",
+//     description: "Identify metabolites in samples",
+//     image: TOOL_IMAGES.metaboliteIdentifier,
+//     category: "Metabolomics",
+//     route: "/protected/tools/metabolite-identifier",
+//   },
+//   {
+//     title: "Pathway Analysis Tool",
+//     description: "Analyze metabolic pathways",
+//     image: TOOL_IMAGES.pathwayAnalysis,
+//     category: "Metabolomics",
+//     route: "/protected/tools/pathway-analysis",
+//   },
+// ];
 
 const Dashboard = () => {
   const [toolsData, setToolsData] = useState<MarketplaceToolInterface[]>([]);
@@ -66,6 +134,7 @@ const Dashboard = () => {
           const isNew = Math.random() > 0.7; // Random for demo
           const isTrending = Math.random() > 0.7; // Random for demo
           const favCount = Math.floor(Math.random() * 100);
+          const imageUrl = getToolImage(tool.name, category);
 
           return {
             ...tool,
@@ -77,6 +146,7 @@ const Dashboard = () => {
             usageCount: Math.floor(Math.random() * 1000),
             dateAdded: getRandomRecentDate(),
             tags: getToolTags(tool.name),
+            imageUrl,
           };
         });
 
@@ -235,274 +305,445 @@ const Dashboard = () => {
 
   return (
     <div className="container w-full px-2 py-8 mx-auto md:px-8">
-      {/* Header with search and filters */}
-      <div className="mb-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-3xl font-semibold text-foreground">
-              Bioinformatics Tools
-            </h1>
-            <p className="mt-2 text-muted-foreground">
-              Discover and use specialized tools for biological sequence
-              analysis
-            </p>
-          </div>
+      {/* Header */}
+      <div className="flex flex-col gap-4 mb-10 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">
+            Bioinformatics Platform
+          </h1>
+          <p className="mt-2 text-muted-foreground">
+            Discover specialized tools for biological research and analysis
+          </p>
+        </div>
 
-          <div className="flex gap-2">
-            <div className="relative w-full md:w-64">
-              <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search tools..."
-                className="pl-9"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+        <div className="relative w-full md:w-64">
+          <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search tools, playlists, or users"
+            className="pl-9"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Tool Playlists */}
+      {/* <div className="mb-12">
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold">Tool Playlists</h2>
+          <Tabs defaultValue="genomics" className="mt-4">
+            <TabsList className="mb-4 bg-card">
+              <TabsTrigger
+                value="genomics"
+                className="data-[state=active]:bg-genomics data-[state=active]:text-white dark:data-[state=active]:bg-genomics-dark"
+              >
+                Genomics
+              </TabsTrigger>
+              <TabsTrigger
+                value="proteomics"
+                className="data-[state=active]:bg-proteomics data-[state=active]:text-white dark:data-[state=active]:bg-proteomics-dark"
+              >
+                Proteomics
+              </TabsTrigger>
+              <TabsTrigger
+                value="metabolomics"
+                className="data-[state=active]:bg-metabolomics data-[state=active]:text-white dark:data-[state=active]:bg-metabolomics-dark"
+              >
+                Metabolomics
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="genomics" className="mt-0">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                {TOOL_PLAYLISTS.map((playlist, idx) => (
+                  <ToolCard
+                    key={idx}
+                    tool={
+                      {
+                        name: playlist.title,
+                        description: playlist.description,
+                        frontend_url: playlist.route,
+                        category: playlist.category,
+                        imageUrl: playlist.image,
+                      } as MarketplaceToolInterface
+                    }
+                    showFavorite={false}
+                    onFavoriteToggle={() => {}}
+                  />
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="proteomics" className="mt-0">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                {NEW_TOOLS_PLAYLISTS.slice(0, 2).map((playlist, idx) => (
+                  <ToolCard
+                    key={idx}
+                    tool={
+                      {
+                        name: playlist.title,
+                        description: playlist.description,
+                        frontend_url: playlist.route,
+                        category: playlist.category,
+                        imageUrl: playlist.image,
+                      } as MarketplaceToolInterface
+                    }
+                    showFavorite={false}
+                    onFavoriteToggle={() => {}}
+                  />
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="metabolomics" className="mt-0">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                {NEW_TOOLS_PLAYLISTS.slice(2, 4).map((playlist, idx) => (
+                  <ToolCard
+                    key={idx}
+                    tool={
+                      {
+                        name: playlist.title,
+                        description: playlist.description,
+                        frontend_url: playlist.route,
+                        category: playlist.category,
+                        imageUrl: playlist.image,
+                      } as MarketplaceToolInterface
+                    }
+                    showFavorite={false}
+                    onFavoriteToggle={() => {}}
+                  />
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div> */}
+
+      <ToolPlaylists
+        title="Featured Tool Playlists"
+        playlists={TOOL_PLAYLISTS}
+      />
+
+      {/* New Tools Section */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-semibold">New Tools</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {getNewTools()
+            .slice(0, 4)
+            .map((tool) => (
+              <ToolCard
+                key={tool.name}
+                tool={tool}
+                onFavoriteToggle={toggleFavorite}
               />
-            </div>
+            ))}
+        </div>
+      </div>
+
+      {/* Recommended Tools */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-semibold">Recommended Tools</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {getPopularTools()
+            .slice(0, 4)
+            .map((tool) => (
+              <ToolCard
+                key={tool.name}
+                tool={tool}
+                onFavoriteToggle={toggleFavorite}
+              />
+            ))}
+        </div>
+      </div>
+
+      {/* All Tools Section */}
+      <div className="mt-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-semibold">All Tools</h2>
+
+          {/* Category pills */}
+          <div className="flex-wrap hidden gap-2 md:flex">
+            {CATEGORIES.map((category) => (
+              <Badge
+                key={category}
+                variant={activeCategory === category ? "default" : "outline"}
+                className="cursor-pointer"
+                onClick={() =>
+                  setActiveCategory(
+                    activeCategory === category ? null : category
+                  )
+                }
+              >
+                {category}
+              </Badge>
+            ))}
+
             {(activeCategory || searchQuery) && (
               <Button
                 variant="ghost"
-                size="icon"
+                size="sm"
                 className="flex-shrink-0"
                 onClick={resetFilters}
               >
-                <FilterX className="w-4 h-4" />
-                <span className="sr-only">Reset filters</span>
+                <FilterX className="w-4 h-4 mr-1" />
+                Reset
               </Button>
             )}
           </div>
         </div>
 
-        {/* Category pills */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          {CATEGORIES.map((category) => (
-            <Badge
-              key={category}
-              variant={activeCategory === category ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() =>
-                setActiveCategory(activeCategory === category ? null : category)
-              }
-            >
-              {category}
-            </Badge>
-          ))}
-        </div>
-      </div>
+        <Tabs defaultValue="all" className="mt-6">
+          <TabsList className="mb-6">
+            <TabsTrigger value="all">All Tools</TabsTrigger>
+            <TabsTrigger value="trending">
+              <TrendingUp className="w-4 h-4 mr-1" />
+              Trending
+            </TabsTrigger>
+            <TabsTrigger value="new">
+              <Sparkles className="w-4 h-4 mr-1" />
+              New
+            </TabsTrigger>
+            <TabsTrigger value="favorites">
+              <Star className="w-4 h-4 mr-1" />
+              Favorites
+            </TabsTrigger>
+          </TabsList>
 
-      {/* Main content with tabs */}
-      <Tabs defaultValue="all" className="mt-6">
-        <TabsList className="mb-6">
-          <TabsTrigger value="all">All Tools</TabsTrigger>
-          <TabsTrigger value="trending">
-            <TrendingUp className="w-4 h-4 mr-1" />
-            Trending
-          </TabsTrigger>
-          <TabsTrigger value="new">
-            <Sparkles className="w-4 h-4 mr-1" />
-            New
-          </TabsTrigger>
-          <TabsTrigger value="favorites">
-            <Star className="w-4 h-4 mr-1" />
-            Favorites
-          </TabsTrigger>
-        </TabsList>
-
-        {/* All tools */}
-        <TabsContent value="all">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {displayedTools.length > 0 ? (
-              displayedTools.map((tool) => (
-                <ToolCard
-                  key={tool.name}
-                  tool={tool}
-                  onFavoriteToggle={toggleFavorite}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center col-span-3 py-12 text-center">
-                <p className="text-muted-foreground">
-                  No tools found matching your search criteria.
-                </p>
-                <Button variant="link" onClick={resetFilters}>
-                  Reset filters
-                </Button>
-              </div>
-            )}
-          </div>
-        </TabsContent>
-
-        {/* Trending tools */}
-        <TabsContent value="trending">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {getTrendingTools().length > 0 ? (
-              getTrendingTools().map((tool) => (
-                <ToolCard
-                  key={tool.name}
-                  tool={tool}
-                  onFavoriteToggle={toggleFavorite}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center col-span-3 py-12 text-center">
-                <p className="text-muted-foreground">
-                  No trending tools found.
-                </p>
-                {(activeCategory || searchQuery) && (
+          {/* All tools */}
+          <TabsContent value="all">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {displayedTools.length > 0 ? (
+                displayedTools.map((tool) => (
+                  <ToolCard
+                    key={tool.name}
+                    tool={tool}
+                    onFavoriteToggle={toggleFavorite}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
+                  <p className="text-muted-foreground">
+                    No tools found matching your search criteria.
+                  </p>
                   <Button variant="link" onClick={resetFilters}>
                     Reset filters
                   </Button>
-                )}
-              </div>
-            )}
-          </div>
-        </TabsContent>
+                </div>
+              )}
+            </div>
+          </TabsContent>
 
-        {/* New tools */}
-        <TabsContent value="new">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {getNewTools().length > 0 ? (
-              getNewTools().map((tool) => (
-                <ToolCard
-                  key={tool.name}
-                  tool={tool}
-                  onFavoriteToggle={toggleFavorite}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center col-span-3 py-12 text-center">
-                <p className="text-muted-foreground">No new tools found.</p>
-                {(activeCategory || searchQuery) && (
-                  <Button variant="link" onClick={resetFilters}>
-                    Reset filters
-                  </Button>
-                )}
-              </div>
-            )}
-          </div>
-        </TabsContent>
+          {/* Trending tools */}
+          <TabsContent value="trending">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {getTrendingTools().length > 0 ? (
+                getTrendingTools().map((tool) => (
+                  <ToolCard
+                    key={tool.name}
+                    tool={tool}
+                    onFavoriteToggle={toggleFavorite}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
+                  <p className="text-muted-foreground">
+                    No trending tools found.
+                  </p>
+                  {(activeCategory || searchQuery) && (
+                    <Button variant="link" onClick={resetFilters}>
+                      Reset filters
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
+          </TabsContent>
 
-        {/* Favorite tools */}
-        <TabsContent value="favorites">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {getFavoritedTools().length > 0 ? (
-              getFavoritedTools().map((tool) => (
-                <ToolCard
-                  key={tool.name}
-                  tool={tool}
-                  onFavoriteToggle={toggleFavorite}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center col-span-3 py-12 text-center">
-                <p className="text-muted-foreground">
-                  No favorite tools yet. Mark tools as favorites to see them
-                  here.
-                </p>
-              </div>
-            )}
-          </div>
-        </TabsContent>
-      </Tabs>
+          {/* New tools */}
+          <TabsContent value="new">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {getNewTools().length > 0 ? (
+                getNewTools().map((tool) => (
+                  <ToolCard
+                    key={tool.name}
+                    tool={tool}
+                    onFavoriteToggle={toggleFavorite}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
+                  <p className="text-muted-foreground">No new tools found.</p>
+                  {(activeCategory || searchQuery) && (
+                    <Button variant="link" onClick={resetFilters}>
+                      Reset filters
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
+          </TabsContent>
 
-      {/* Popular tools section */}
-      <div className="mt-12">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-semibold">Popular Tools</h2>
-        </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {getPopularTools().map((tool) => (
-            <ToolCard
-              key={tool.name}
-              tool={tool}
-              onFavoriteToggle={toggleFavorite}
-            />
-          ))}
-        </div>
+          {/* Favorite tools */}
+          <TabsContent value="favorites">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {getFavoritedTools().length > 0 ? (
+                getFavoritedTools().map((tool) => (
+                  <ToolCard
+                    key={tool.name}
+                    tool={tool}
+                    onFavoriteToggle={toggleFavorite}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
+                  <p className="text-muted-foreground">
+                    No favorite tools yet. Mark tools as favorites to see them
+                    here.
+                  </p>
+                </div>
+              )}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
 };
 
-// Enhanced tool card with favorite button and metadata
+// Enhanced tool card with favorite button, metadata, and image
 const ToolCard = ({
   tool,
   onFavoriteToggle,
+  showFavorite = true,
 }: {
   tool: MarketplaceToolInterface;
   onFavoriteToggle: (name: string) => void;
+  showFavorite?: boolean;
 }) => {
+  const { theme } = useTheme();
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
+
   return (
-    <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
-      <CardHeader className="relative flex flex-row justify-between pb-2">
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <CardTitle className="text-lg font-semibold text-foreground">
-              {tool.name}
-            </CardTitle>
-            {tool.new && (
-              <Badge className="bg-emerald-500 hover:bg-emerald-500/90">
-                New
-              </Badge>
+    <Card
+      className={cn(
+        "overflow-hidden transition-all duration-200 hover:shadow-tool-card dark:hover:shadow-tool-card-dark border-0",
+        "h-full flex flex-col"
+      )}
+    >
+      {/* Image section */}
+      <div className="relative h-40 overflow-hidden">
+        <img
+          src={tool.imageUrl || getToolImage(tool.name, tool.category)}
+          alt={tool.name}
+          className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+        />
+        {showFavorite && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "absolute top-2 right-2 rounded-full bg-background/70 text-foreground",
+              "hover:bg-background/90"
             )}
-            {tool.trending && (
-              <Badge className="bg-amber-500 hover:bg-amber-500/90">
-                Trending
-              </Badge>
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              onFavoriteToggle(tool.name);
+            }}
+            title={
+              tool.isFavorited ? "Remove from favorites" : "Add to favorites"
+            }
+          >
+            {tool.isFavorited ? (
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+            ) : (
+              <Star className="w-4 h-4" />
             )}
-          </div>
-          <div className="flex flex-wrap gap-1 mt-1">
-            {tool.tags &&
-              tool.tags.map((tag) => (
+            <span className="sr-only">Toggle favorite</span>
+          </Button>
+        )}
+
+        {/* Category label */}
+        <div
+          className={cn(
+            "absolute top-2 left-2 px-2 py-1 text-xs font-medium rounded text-white",
+            tool.category?.toLowerCase().includes("genom")
+              ? isDark
+                ? "bg-genomics-dark"
+                : "bg-genomics"
+              : tool.category?.toLowerCase().includes("proteo")
+              ? isDark
+                ? "bg-proteomics-dark"
+                : "bg-proteomics"
+              : isDark
+              ? "bg-metabolomics-dark"
+              : "bg-metabolomics"
+          )}
+        >
+          {tool.category}
+        </div>
+
+        {/* New/Trending badges */}
+        <div className="absolute flex gap-1 bottom-2 left-2">
+          {tool.new && (
+            <Badge className="text-white bg-emerald-500 hover:bg-emerald-500/90">
+              New
+            </Badge>
+          )}
+          {tool.trending && (
+            <Badge className="text-white bg-amber-500 hover:bg-amber-500/90">
+              Trending
+            </Badge>
+          )}
+        </div>
+      </div>
+
+      <div className="flex flex-col flex-grow">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-medium">{tool.name}</CardTitle>
+        </CardHeader>
+
+        <CardContent className="flex-grow">
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {tool.description}
+          </p>
+
+          {tool.tags && tool.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-3">
+              {tool.tags.slice(0, 2).map((tag) => (
                 <Badge key={tag} variant="secondary" className="text-xs">
                   {tag}
                 </Badge>
               ))}
-          </div>
-        </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-muted-foreground hover:text-amber-400"
-          onClick={() => onFavoriteToggle(tool.name)}
-          title={
-            tool.isFavorited ? "Remove from favorites" : "Add to favorites"
-          }
-        >
-          {tool.isFavorited ? (
-            <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
-          ) : (
-            <Star className="w-5 h-5" />
+              {tool.tags.length > 2 && (
+                <Badge variant="outline" className="text-xs">
+                  +{tool.tags.length - 2}
+                </Badge>
+              )}
+            </div>
           )}
-          <span className="sr-only">Toggle favorite</span>
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <p className="h-16 text-sm text-muted-foreground line-clamp-3">
-          {tool.description}
-        </p>
-        <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
-          <div className="flex items-center space-x-1">
-            <Star className="w-3 h-3" />
-            <span>{tool.favorites} favorites</span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <Clock className="w-3 h-3" />
-            <span>Added {tool.dateAdded}</span>
-          </div>
-        </div>
-      </CardContent>{" "}
-      <CardFooter className="pt-0">
-        <Button
-          variant="ghost"
-          className="justify-between w-full text-primary hover:text-primary/80"
-          onClick={() =>
-            (window.location.href = `/protected/tools${tool.frontend_url}`)
-          }
-        >
-          <span>Open Tool</span>
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
-      </CardFooter>
+        </CardContent>
+
+        <CardFooter className="pt-0">
+          <Button
+            variant="default"
+            className="w-full"
+            onClick={() =>
+              (window.location.href = `/protected/tools${tool.frontend_url}`)
+            }
+          >
+            Open Tool
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </CardFooter>
+      </div>
     </Card>
   );
 };
