@@ -1,4 +1,5 @@
 import {
+  // Navigate,
   RouterProvider,
   createBrowserRouter,
   RouteObject,
@@ -7,6 +8,7 @@ import { publicRoutes } from "./routes/public-routes/public";
 import { protectedRoutes } from "./routes/protected-routes/protected";
 import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "./components/ui/toaster";
+import { ThemeProvider } from "./components/providers/theme-provider";
 
 const routes: RouteObject[] = [...publicRoutes, ...protectedRoutes];
 
@@ -14,10 +16,12 @@ const router = createBrowserRouter(routes);
 
 function App() {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-      <Toaster />
-    </AuthProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
