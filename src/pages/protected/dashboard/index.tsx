@@ -327,107 +327,23 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Tool Playlists */}
-      {/* <div className="mb-12">
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold">Tool Playlists</h2>
-          <Tabs defaultValue="genomics" className="mt-4">
-            <TabsList className="mb-4 bg-card">
-              <TabsTrigger
-                value="genomics"
-                className="data-[state=active]:bg-genomics data-[state=active]:text-white dark:data-[state=active]:bg-genomics-dark"
-              >
-                Genomics
-              </TabsTrigger>
-              <TabsTrigger
-                value="proteomics"
-                className="data-[state=active]:bg-proteomics data-[state=active]:text-white dark:data-[state=active]:bg-proteomics-dark"
-              >
-                Proteomics
-              </TabsTrigger>
-              <TabsTrigger
-                value="metabolomics"
-                className="data-[state=active]:bg-metabolomics data-[state=active]:text-white dark:data-[state=active]:bg-metabolomics-dark"
-              >
-                Metabolomics
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="genomics" className="mt-0">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                {TOOL_PLAYLISTS.map((playlist, idx) => (
-                  <ToolCard
-                    key={idx}
-                    tool={
-                      {
-                        name: playlist.title,
-                        description: playlist.description,
-                        frontend_url: playlist.route,
-                        category: playlist.category,
-                        imageUrl: playlist.image,
-                      } as MarketplaceToolInterface
-                    }
-                    showFavorite={false}
-                    onFavoriteToggle={() => {}}
-                  />
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="proteomics" className="mt-0">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                {NEW_TOOLS_PLAYLISTS.slice(0, 2).map((playlist, idx) => (
-                  <ToolCard
-                    key={idx}
-                    tool={
-                      {
-                        name: playlist.title,
-                        description: playlist.description,
-                        frontend_url: playlist.route,
-                        category: playlist.category,
-                        imageUrl: playlist.image,
-                      } as MarketplaceToolInterface
-                    }
-                    showFavorite={false}
-                    onFavoriteToggle={() => {}}
-                  />
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="metabolomics" className="mt-0">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                {NEW_TOOLS_PLAYLISTS.slice(2, 4).map((playlist, idx) => (
-                  <ToolCard
-                    key={idx}
-                    tool={
-                      {
-                        name: playlist.title,
-                        description: playlist.description,
-                        frontend_url: playlist.route,
-                        category: playlist.category,
-                        imageUrl: playlist.image,
-                      } as MarketplaceToolInterface
-                    }
-                    showFavorite={false}
-                    onFavoriteToggle={() => {}}
-                  />
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </div> */}
-
-      <ToolPlaylists
-        title="Featured Tool Playlists"
-        playlists={TOOL_PLAYLISTS}
-      />
+      {/* Featured Tool Playlists Section */}
+      <section className="px-6 py-8 mb-10 rounded-lg bg-muted/30 dark:bg-muted/10">
+        <ToolPlaylists title="Featured Tools" playlists={TOOL_PLAYLISTS} />
+      </section>
 
       {/* New Tools Section */}
-      <div className="mb-12">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold">New Tools</h2>
+      <section className="mb-10">
+        <div className="flex items-center justify-between pb-2 mb-6 border-b">
+          <div>
+            <h2 className="text-2xl font-semibold">New Tools</h2>
+            <p className="text-sm text-muted-foreground">
+              Recently added to our platform
+            </p>
+          </div>
+          <Button variant="link" className="text-primary" onClick={() => {}}>
+            View all <ArrowRight className="w-4 h-4 ml-1" />
+          </Button>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {getNewTools()
@@ -440,12 +356,20 @@ const Dashboard = () => {
               />
             ))}
         </div>
-      </div>
+      </section>
 
-      {/* Recommended Tools */}
-      <div className="mb-12">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold">Recommended Tools</h2>
+      {/* Recommended Tools Section */}
+      <section className="px-6 py-8 mb-10 rounded-lg bg-muted/30 dark:bg-muted/10">
+        <div className="flex items-center justify-between pb-2 mb-6 border-b border-border/40">
+          <div>
+            <h2 className="text-2xl font-semibold">Recommended Tools</h2>
+            <p className="text-sm text-muted-foreground">
+              Popular tools you might find useful
+            </p>
+          </div>
+          <Button variant="link" className="text-primary" onClick={() => {}}>
+            View all <ArrowRight className="w-4 h-4 ml-1" />
+          </Button>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {getPopularTools()
@@ -458,12 +382,17 @@ const Dashboard = () => {
               />
             ))}
         </div>
-      </div>
+      </section>
 
       {/* All Tools Section */}
-      <div className="mt-12">
+      <section className="pt-4 mt-10 border-t border-border/50">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold">All Tools</h2>
+          <div>
+            <h2 className="text-2xl font-semibold">All Tools</h2>
+            <p className="text-sm text-muted-foreground">
+              Browse the complete collection
+            </p>
+          </div>
 
           {/* Category pills */}
           <div className="flex-wrap hidden gap-2 md:flex">
@@ -497,7 +426,7 @@ const Dashboard = () => {
         </div>
 
         <Tabs defaultValue="all" className="mt-6">
-          <TabsList className="mb-6">
+          <TabsList className="p-1 mb-6 bg-muted/40 dark:bg-muted/20">
             <TabsTrigger value="all">All Tools</TabsTrigger>
             <TabsTrigger value="trending">
               <TrendingUp className="w-4 h-4 mr-1" />
@@ -609,7 +538,7 @@ const Dashboard = () => {
             </div>
           </TabsContent>
         </Tabs>
-      </div>
+      </section>
     </div>
   );
 };
@@ -633,7 +562,7 @@ const ToolCard = ({
   return (
     <Card
       className={cn(
-        "overflow-hidden transition-all duration-200 hover:shadow-tool-card dark:hover:shadow-tool-card-dark border-0",
+        "overflow-hidden transition-all duration-200 hover:shadow-tool-card dark:hover:shadow-tool-card-dark border",
         "h-full flex flex-col"
       )}
     >
