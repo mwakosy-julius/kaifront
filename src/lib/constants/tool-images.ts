@@ -6,7 +6,7 @@
 export const TOOL_IMAGES = {
   // Category images
   genomics:
-    "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1719163534402-ba86dcb55228?q=80&w=1990&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   proteomics:
     "https://images.unsplash.com/photo-1576086776761-cc33f1db113d?q=80&w=500&auto=format&fit=crop",
   metabolomics:
@@ -16,7 +16,7 @@ export const TOOL_IMAGES = {
   sequencing:
     "https://images.unsplash.com/photo-1566570245405-9d3a89432b86?q=80&w=500&auto=format&fit=crop",
   alignment:
-    "https://images.unsplash.com/photo-1599720574473-7d19d9958785?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1717501218221-1da14c0f365e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   analysis:
     "https://images.unsplash.com/photo-1518152006812-edab29b069ac?q=80&w=500&auto=format&fit=crop",
   visualization:
@@ -24,29 +24,29 @@ export const TOOL_IMAGES = {
 
   // Tool-specific images
   variantAnalysis:
-    "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1707681611906-5f941658d392?q=80&w=2011&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   genomeAssembly:
     "https://images.unsplash.com/photo-1526666923127-b2970f64b422?q=80&w=500&auto=format&fit=crop",
   transcriptomics:
-    "https://images.unsplash.com/photo-1516110833967-0b5716ca1387?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1580378159116-918e927816ce?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   massSpec:
-    "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1678945253365-51d5f2ebf298?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   proteinStructure:
-    "https://images.unsplash.com/photo-1614935151651-0bea6508db6b?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1653462072468-644bc3c86574?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   metaboliteIdentifier:
-    "https://images.unsplash.com/photo-1552152370-fb49b5454e23?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1705256811175-b1e3398d50e4?q=80&w=1940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   pathwayAnalysis:
     "https://images.unsplash.com/photo-1543286386-2e659306cd6c?q=80&w=500&auto=format&fit=crop",
 
   // Generic scientific imagery
   phylogeneticTree:
-    "https://images.unsplash.com/photo-1588613254732-9dde08396b4d?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1692607038273-8f45f4b0b1c7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   sequenceAligner:
-    "https://images.unsplash.com/photo-1637419450536-378d5457abb8?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1659922112975-6698cdcb9f9c?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   statistical:
     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=500&auto=format&fit=crop",
   dataVisualization:
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=500&auto=format&fit=crop",
+    "https://plus.unsplash.com/premium_photo-1676226342632-5072f3b96149?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQ0fHxiaW8lMjBpbmZvcm1hdGljc3xlbnwwfHwwfHx8MA%3D%3D",
 
   // Default/fallback image
   default:

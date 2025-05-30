@@ -15,9 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ToolPlaylists } from "@/components/ui/tool-playlist";
-import { TOOL_IMAGES, getToolImage } from "@/lib/constants/tool-images";
+import { getToolImage } from "@/lib/constants/tool-images";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 // Extended tool interface with additional marketplace metadata
 interface MarketplaceToolInterface extends KaiToolsInterface {
@@ -41,66 +41,34 @@ const CATEGORIES = [
 ];
 
 // Featured playlist categories
-const TOOL_PLAYLISTS = [
-  {
-    title: "Genomics Essentials",
-    description: "Essential tools for genomics research",
-    image: TOOL_IMAGES.genomics,
-    category: "Genomics",
-    route: "/protected/tools/genomics",
-  },
-  {
-    title: "Transcriptomics Toolkit",
-    description: "Tools for analyzing gene expression data",
-    image: TOOL_IMAGES.transcriptomics,
-    category: "Genomics",
-    route: "/protected/tools/transcriptomics",
-  },
-  {
-    title: "Variant Analysis Suite",
-    description: "Tools for identifying genetic variants",
-    image: TOOL_IMAGES.variantAnalysis,
-    category: "Genomics",
-    route: "/protected/tools/variant-analysis",
-  },
-  {
-    title: "Genome Assembly Resources",
-    description: "Resources for assembling genomes",
-    image: TOOL_IMAGES.genomeAssembly,
-    category: "Genomics",
-    route: "/protected/tools/genome-assembly",
-  },
-];
-
-// New tools playlists
-// const NEW_TOOLS_PLAYLISTS = [
+// const TOOL_PLAYLISTS = [
 //   {
-//     title: "Protein Structure Predictor",
-//     description: "Predict protein structures from sequences",
-//     image: TOOL_IMAGES.proteinStructure,
-//     category: "Proteomics",
-//     route: "/protected/tools/protein-structure",
+//     title: "Genomics Essentials",
+//     description: "Essential tools for genomics research",
+//     image: TOOL_IMAGES.genomics,
+//     category: "Genomics",
+//     route: "/protected/tools/genomics",
 //   },
 //   {
-//     title: "Mass Spec Analyzer",
-//     description: "Analyze mass spectrometry data",
-//     image: TOOL_IMAGES.massSpec,
-//     category: "Proteomics",
-//     route: "/protected/tools/mass-spec",
+//     title: "Transcriptomics Toolkit",
+//     description: "Tools for analyzing gene expression data",
+//     image: TOOL_IMAGES.transcriptomics,
+//     category: "Genomics",
+//     route: "/protected/tools/transcriptomics",
 //   },
 //   {
-//     title: "Metabolite Identifier",
-//     description: "Identify metabolites in samples",
-//     image: TOOL_IMAGES.metaboliteIdentifier,
-//     category: "Metabolomics",
-//     route: "/protected/tools/metabolite-identifier",
+//     title: "Variant Analysis Suite",
+//     description: "Tools for identifying genetic variants",
+//     image: TOOL_IMAGES.variantAnalysis,
+//     category: "Genomics",
+//     route: "/protected/tools/variant-analysis",
 //   },
 //   {
-//     title: "Pathway Analysis Tool",
-//     description: "Analyze metabolic pathways",
-//     image: TOOL_IMAGES.pathwayAnalysis,
-//     category: "Metabolomics",
-//     route: "/protected/tools/pathway-analysis",
+//     title: "Genome Assembly Resources",
+//     description: "Resources for assembling genomes",
+//     image: TOOL_IMAGES.genomeAssembly,
+//     category: "Genomics",
+//     route: "/protected/tools/genome-assembly",
 //   },
 // ];
 
@@ -296,7 +264,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="w-full px-2 py-8 mx-auto max-w-7xl md:px-8">
+    <div className="w-full max-w-6xl px-2 py-8 mx-auto md:px-8">
       {/* Header */}
       <div className="relative w-full mb-10">
         <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -309,7 +277,7 @@ const Dashboard = () => {
       </div>
 
       {/* Featured Tool Playlists Section */}
-      <section className="mb-12">
+      {/* <section className="mb-12">
         <div className="flex items-center justify-between pb-3 mb-6 border-b border-border/40">
           <div>
             <h2 className="text-3xl font-bold">Featured Tools</h2>
@@ -324,7 +292,7 @@ const Dashboard = () => {
         <div>
           <ToolPlaylists playlists={TOOL_PLAYLISTS} />
         </div>
-      </section>
+      </section> */}
 
       {/* New Tools Section */}
       <section className="mb-10">
@@ -339,9 +307,9 @@ const Dashboard = () => {
             View all <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {getNewTools()
-            .slice(0, 4)
+            .slice(0, 3)
             .map((tool) => (
               <ToolCard
                 key={tool.name}
@@ -365,9 +333,9 @@ const Dashboard = () => {
             View all <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {getPopularTools()
-            .slice(0, 4)
+            .slice(0, 3)
             .map((tool) => (
               <ToolCard
                 key={tool.name}
@@ -420,7 +388,7 @@ const Dashboard = () => {
         </div>
 
         <Tabs defaultValue="all" className="mt-6">
-          <TabsList className="p-1 mb-6 bg-muted/40 dark:bg-muted/20">
+          <TabsList className="flex flex-wrap justify-end p-1 px-0 mb-6 ml-auto space-x-2 w-fit h-fit">
             <TabsTrigger value="all">All Tools</TabsTrigger>
             <TabsTrigger value="trending">
               <TrendingUp className="w-4 h-4 mr-1" />
@@ -438,7 +406,7 @@ const Dashboard = () => {
 
           {/* All tools */}
           <TabsContent value="all">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {displayedTools.length > 0 ? (
                 displayedTools.map((tool) => (
                   <ToolCard
@@ -462,7 +430,7 @@ const Dashboard = () => {
 
           {/* Trending tools */}
           <TabsContent value="trending">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {getTrendingTools().length > 0 ? (
                 getTrendingTools().map((tool) => (
                   <ToolCard
@@ -488,7 +456,7 @@ const Dashboard = () => {
 
           {/* New tools */}
           <TabsContent value="new">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {getNewTools().length > 0 ? (
                 getNewTools().map((tool) => (
                   <ToolCard
@@ -512,7 +480,7 @@ const Dashboard = () => {
 
           {/* Favorite tools */}
           <TabsContent value="favorites">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {getFavoritedTools().length > 0 ? (
                 getFavoritedTools().map((tool) => (
                   <ToolCard
@@ -548,10 +516,13 @@ const ToolCard = ({
   showFavorite?: boolean;
 }) => {
   return (
-    <div className={cn("h-full flex flex-col space-y-4")}>
+    <Link
+      to={`tools${tool.frontend_url}`}
+      className={cn("h-full flex flex-col space-y-4")}
+    >
       {/* Image section */}
       <div
-        className="relative overflow-hidden h-52"
+        className="relative overflow-hidden rounded-lg h-52"
         style={{
           background: "linear-gradient(to bottom, #1a1a1a, #0a0a0a)",
         }}
@@ -649,7 +620,7 @@ const ToolCard = ({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
