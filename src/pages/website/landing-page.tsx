@@ -277,34 +277,18 @@ const LandingPage: React.FC = () => {
             <ul className="flex gap-8">
               <li>
                 <a
-                  href="#tools"
-                  className="text-gray-200 transition-colors hover:text-cyan-400"
-                >
-                  Tools
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#research"
-                  className="text-gray-200 transition-colors hover:text-cyan-400"
-                >
-                  Research
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#testimonials"
-                  className="text-gray-200 transition-colors hover:text-cyan-400"
-                >
-                  Testimonials
-                </a>
-              </li>
-              <li>
-                <a
                   href="#about"
                   className="text-gray-200 transition-colors hover:text-cyan-400"
                 >
                   About
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#tools"
+                  className="text-gray-200 transition-colors hover:text-cyan-400"
+                >
+                  Tools
                 </a>
               </li>
               <li>
@@ -315,6 +299,22 @@ const LandingPage: React.FC = () => {
                   Documentation
                 </a>
               </li>
+              <li>
+                <a
+                  href="#blog"
+                  className="text-gray-200 transition-colors hover:text-cyan-400"
+                >
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#testimonials"
+                  className="text-gray-200 transition-colors hover:text-cyan-400"
+                >
+                  Testimonials
+                </a>
+              </li>              
             </ul>
           </nav>
 

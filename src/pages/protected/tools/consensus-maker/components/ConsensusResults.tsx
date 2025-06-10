@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -54,24 +54,6 @@ const ConsensusResults: React.FC<ConsensusResultsProps> = ({
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span>Consensus Sequence</span>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={copyToClipboard}
-              title="Copy to clipboard"
-            >
-              <Copy className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={downloadSequence}
-              title="Download sequence"
-            >
-              <Download className="w-4 h-4" />
-            </Button>
-          </div>
         </CardTitle>
         <CardDescription>
           Consensus sequence generated from {fileName || "input sequences"}
@@ -116,6 +98,25 @@ const ConsensusResults: React.FC<ConsensusResultsProps> = ({
             <div className="w-3 h-3 mr-2 bg-yellow-500 rounded-full"></div>
             <span className="text-xs">G (Guanine)</span>
           </div>
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={copyToClipboard}
+            title="Copy to clipboard"
+          >
+            <Copy className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={downloadSequence}
+            title="Download sequence"
+          >
+            <Download className="w-4 h-4" />
+          </Button>
         </div>
       </CardContent>
     </Card>
