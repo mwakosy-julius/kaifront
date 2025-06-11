@@ -6,11 +6,12 @@ import {
 } from "react-router-dom";
 import { publicRoutes } from "./routes/public-routes/public";
 import { protectedRoutes } from "./routes/protected-routes/protected";
+import { cmsProtectedRoutes } from "./routes/cms-protected-routes/protected";
 import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "./components/ui/toaster";
 import { ThemeProvider } from "./components/providers/theme-provider";
 
-const routes: RouteObject[] = [...publicRoutes, ...protectedRoutes];
+const routes: RouteObject[] = [...publicRoutes, ...protectedRoutes, ...cmsProtectedRoutes];
 
 const router = createBrowserRouter(routes);
 
