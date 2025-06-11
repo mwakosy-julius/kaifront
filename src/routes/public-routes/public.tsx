@@ -4,6 +4,7 @@ import {
   LazySignIn,
   LazyRegister,
   PublicNotFound,
+  LazyAbout,
 } from "./public-route-elements";
 
 export const publicRoutes = [
@@ -18,6 +19,10 @@ export const publicRoutes = [
       {
         path: "home",
         element: <LazyLandingPage />,
+      },
+      {
+        path: "about",
+        element: <LazyAbout />,
       },
       {
         path: "sign-in",

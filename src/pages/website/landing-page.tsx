@@ -281,7 +281,7 @@ const LandingPage: React.FC = () => {
             <ul className="flex gap-8">
               <li>
                 <a
-                  href="#about"
+                  href="/about"
                   className="text-gray-200 transition-colors hover:text-cyan-400"
                 >
                   About
@@ -318,7 +318,7 @@ const LandingPage: React.FC = () => {
                 >
                   Testimonials
                 </a>
-              </li>              
+              </li>
             </ul>
           </nav>
 
@@ -1188,7 +1188,7 @@ const LandingPage: React.FC = () => {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="/about-us"
+                    href="/about"
                     className="text-gray-400 hover:text-cyan-400"
                   >
                     About Us

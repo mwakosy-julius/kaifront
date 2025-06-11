@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import './AboutUs.css';
 
 // Interface for Team Member data
 interface TeamMember {
@@ -106,7 +105,7 @@ const AboutUs: FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">Our Mission</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto text-center">
-            We are committed to delivering user-friendly, high-performance bioinformatics solutions that enable the analysis, visualization, 
+            We are committed to delivering user-friendly, high-performance bioinformatics solutions that enable the analysis, visualization,
             and interpretation of complex biological data to drive innovation in science and healthcare.
           </p>
         </div>

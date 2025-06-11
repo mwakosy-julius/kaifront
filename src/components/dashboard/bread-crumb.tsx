@@ -20,7 +20,7 @@ const BBreadcrumb = () => {
         const items = [
             {
                 label: 'Kaidoki',
-                path: '/',
+                path: '/home',
                 isLast: paths.length === 0
             }
         ];
