@@ -16,6 +16,10 @@ export const publicRoutes = [
         element: <LazyLandingPage />,
       },
       {
+        path: "home",
+        element: <LazyLandingPage />,
+      },
+      {
         path: "sign-in",
         element: <LazySignIn />,
       },

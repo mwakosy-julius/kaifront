@@ -19,7 +19,7 @@ const Register = () => {
         email: data.email,
         password: data.password,
         username: data.name
-      }).then(() =>
+      }).then(() => {
         toast({
           title: "Your account has been created successfully!",
           action: (
@@ -28,6 +28,10 @@ const Register = () => {
             </ToastAction>
           ),
         })
+        setTimeout(() => {
+          navigate("/sign-in")
+        }, 10000)
+      }
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

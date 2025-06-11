@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Play,
   Dna,
@@ -35,6 +35,10 @@ import {
 
 const LandingPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  if (isAuthenticated && location.pathname === "/") navigate("dashboard")
 
   // Tool categories
   const toolCategories = [
