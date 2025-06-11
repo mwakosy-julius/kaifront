@@ -23,9 +23,9 @@ const BlastResults: React.FC<BlastResult> = ({ results }) => {
         <Table>
           <TableHeader>
             <TableRow className="border-gray-600">
-              <TableHead className="text-black">Organism</TableHead>
-              <TableHead className="text-black">Hit ID</TableHead>
-              <TableHead className="text-black">Identity (%)</TableHead>
+              <TableHead className="">Organism</TableHead>
+              <TableHead className="">Hit ID</TableHead>
+              <TableHead className="">Identity (%)</TableHead>
               {/* <TableHead className="text-white">Accession</TableHead> */}
               {/* <TableHead className="text-white">Query Coverage (%)</TableHead>
               <TableHead className="text-white">E-value</TableHead>
@@ -36,9 +36,9 @@ const BlastResults: React.FC<BlastResult> = ({ results }) => {
           <TableBody>
             {results.map((result, index) => (
               <TableRow key={index} className="border-gray-600 hover:bg-gray-200">
-                <TableCell className="text-gray-900">{result.organism}</TableCell>
-                <TableCell className="text-gray-900">{result.hit_id}</TableCell>
-                <TableCell className="text-gray-900">{result.percentage_match}</TableCell>
+                <TableCell className="">{result.organism}</TableCell>
+                <TableCell className="">{result.hit_id}</TableCell>
+                <TableCell className="">{result.percentage_match}</TableCell>
                 {/* <TableCell className="text-gray-300">{result.accession}</TableCell> */}
                 {/* <TableCell className="text-gray-300">{result.query_coverage.toFixed(2)}</TableCell>
                 <TableCell className="text-gray-300">{result.evalue.toExponential(2)}</TableCell>

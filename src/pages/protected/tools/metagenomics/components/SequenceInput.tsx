@@ -63,7 +63,8 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           id="metagenomics-input"
           value={sequence}
           onChange={(e) => setSequence(e.target.value)}
-          placeholder="Paste your metagenomic sequence data here..."
+          // placeholder="Paste your metagenomic sequence data here..."
+          placeholder=">sequence1&#10;ATCGATCGTAGCTAGCTAGTCGA&#10;>sequence2&#10;AGTCGATCGTAGCTAGCTAGTCGA"
           className="min-h-[200px] font-mono text-sm"
         />
       </div>

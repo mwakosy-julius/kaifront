@@ -50,15 +50,15 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
             <Table>
               <TableHeader>
                 <TableRow className="border-gray-600">
-                  <TableHead className="text-black">Header</TableHead>
-                  <TableHead className="text-black">Sequence</TableHead>
+                  <TableHead className="">Header</TableHead>
+                  <TableHead className="">Sequence</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {sequencesResults.map((seq, index) => (
                   <TableRow key={`gene-${index}`} className="border-gray-600 hover:bg-gray-200">
-                    <TableCell className="text-black">{seq.header}</TableCell>
-                    <TableCell className="text-black font-mono text-sm break-all">{seq.sequence}</TableCell>
+                    <TableCell className="">{seq.header}</TableCell>
+                    <TableCell className=" font-mono text-sm break-all">{seq.sequence}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
