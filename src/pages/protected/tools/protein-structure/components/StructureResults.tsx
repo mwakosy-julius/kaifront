@@ -246,10 +246,17 @@ const StructureResults: React.FC<StructureResultsProps> = ({ result }) => {
           <CardContent className="space-y-4">
             <div>
               <p className="text-gray-700 break-all">
-                Sequence: <span className="font-mono">{result.sequence}</span>
+                Amino Acid Sequence:{" "}
+                <span className="font-mono">{result.sequence}</span>
+              </p>
+              <p className="text-gray-700 break-all">
+                Molecular Weight: <span className="font-mono">{result.molecular_weight}</span>
+              </p>
+              <p className="text-gray-700 break-all">
+                Isometric Point: <span className="font-mono">{result.isometric_point}</span>
               </p>
               <p className="text-gray-700">
-                Confidence Score: {result.confidence.toFixed(2)}
+                Confidence Score: {result.confidence}
               </p>
             </div>
             <div className="relative">

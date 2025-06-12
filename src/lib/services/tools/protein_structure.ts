@@ -2,6 +2,8 @@ import api from "@/lib/api";
 
 export interface StructurePrediction {
   sequence: string;
+  molecular_weight: string;
+  isometric_point: string;
   pdb_data: string;
   confidence: number;
   error?: string;
@@ -18,7 +20,9 @@ export const predictStructure = async (sequence: string): Promise<StructurePredi
   catch (error) {
     console.error("Error predicting protein structure:", error);
     return {
-      sequence,
+      sequence: sequence,
+      molecular_weight: "",
+      isometric_point: "",
       pdb_data: "",
       confidence: 0,
       error: error instanceof Error ? error.message : String(error),

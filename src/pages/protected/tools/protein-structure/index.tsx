@@ -22,6 +22,7 @@ const ProteinStructurePredictor: React.FC = () => {
 
     try {
       const data = await predictStructure(sequence);
+      console.log("Prediction result:", data);
       setResult(data);
     } catch (err: any) {
       setError(err.message);
