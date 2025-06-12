@@ -44,7 +44,7 @@ export const DashboardNavbar = () => {
                   "text-muted-foreground"
                 )}
               >
-                {user?.name || user?.email}
+                {user?.username || user?.email}
               </p>
               <AvatarBubble />
             </div>

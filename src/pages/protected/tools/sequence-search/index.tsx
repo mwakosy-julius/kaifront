@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import SequenceInput from "./components/SequenceInput";
 import SearchResults from "./components/SearchResults";
-import { SearchResponse, searchSequence } from "@/lib/services/tools/sequence_search";
+import {
+  SearchResponse,
+  searchSequence,
+} from "@/lib/services/tools/sequence_search";
+import { ToolLayout } from "@/components/shared/bio-tools";
+import { Dna } from "lucide-react";
 
 const SequenceSearchTool: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -32,7 +37,16 @@ const SequenceSearchTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <ToolLayout
+      title="Genomic Sequence Searcher"
+      description="Quickly search Gene and Protein Sequences from database"
+      icon={Dna}
+      toolId="sequence_search"
+      documentationUrl="/docs/tools/sequence-search"
+      shareUrl="/share/sequence-search"
+      infoText="Use this tool to search for specific genes or proteins in our database. You can enter either a gene name or a protein name to find relevant sequences."
+      // className="max-w-4xl mx-auto"
+    >
       <SequenceInput
         query={query}
         setQuery={setQuery}
@@ -44,7 +58,7 @@ const SequenceSearchTool: React.FC = () => {
         error={error}
       />
       <SearchResults results={results} />
-    </div>
+    </ToolLayout>
   );
 };
 

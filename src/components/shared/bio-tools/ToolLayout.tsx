@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, BookOpen, Share2, Info, LucideIcon } from "lucide-react";
+import { ToolNavigation } from "./ToolNavigation";
 
 export interface ToolLayoutProps {
   title: string;
@@ -27,6 +28,8 @@ export interface ToolLayoutProps {
   documentationUrl?: string;
   shareUrl?: string;
   infoText?: string;
+  toolId: string;
+  category?: string;
 }
 
 const ToolLayout: React.FC<ToolLayoutProps> = ({
@@ -40,9 +43,10 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({
   documentationUrl,
   shareUrl,
   infoText,
+  toolId,
 }) => {
   return (
-    <div className="container mx-auto">
+    <div className="container max-w-4xl mx-auto">
       <Card className="border-none shadow-none bg-background/60 backdrop-blur-sm">
         <CardHeader>
           <div className="flex items-start justify-between w-full gap-1">
@@ -74,7 +78,7 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-12">
           {toolStats && (
             <>
               <div className="grid grid-cols-3 gap-4 p-4 rounded bg-muted/50">
@@ -105,6 +109,8 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
+
+          <ToolNavigation currentToolId={toolId} />
         </CardContent>
 
         {(footerContent || infoText) && (

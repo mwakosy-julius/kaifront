@@ -17,7 +17,7 @@ export interface AuthResponse {
   user: {
     id: string;
     email: string;
-    name: string;
+    username: string;
     role: string;
   };
 }
@@ -25,7 +25,7 @@ export interface AuthResponse {
 export interface User {
   id: string;
   email: string;
-  name: string;
+  username: string;
   role: string;
   bio?: string;
   avatar?: string;
