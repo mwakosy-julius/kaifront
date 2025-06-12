@@ -1,7 +1,7 @@
 import { Settings, ChevronRight, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import DashboardLogo from "@/assets/images/dashboard-logo.svg";
+import DashboardLogo from "@/assets/images/logo.png";
 import { useSidebar } from "@/context/SidebarContext";
 import { Button } from "@/components/ui/button";
 
@@ -13,7 +13,7 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "h-full ",
+        "h-full",
         "border-border",
         "transition-all duration-300 ease-in-out",
         isExpanded ? "-translate-x-16 w-0" : ""
