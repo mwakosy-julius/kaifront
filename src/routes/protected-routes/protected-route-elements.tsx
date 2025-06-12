@@ -10,6 +10,7 @@ export const ProtectedRoot = () => (
 );
 
 export const LazyDashboard = lazy(() => import("@/pages/protected/dashboard"));
+export const LazyProfile = lazy(() => import("@/pages/protected/profile"));
 export const ProtectedNotFound = () => <Navigate to="/" replace />;
 export const LazyPairwiseAlignment = lazy(
   () => import("@/pages/protected/tools/pairwise-alignment")
@@ -44,8 +45,7 @@ export const LazyMusicDNA = lazy(
 export const LazyMetagenomics = lazy(
   () => import("@/pages/protected/tools/metagenomics")
 );
-export const LazyBlast = lazy(
-  () => import("@/pages/protected/tools/blast"));
+export const LazyBlast = lazy(() => import("@/pages/protected/tools/blast"));
 export const LazyPhylogeneticTree = lazy(
   () => import("@/pages/protected/tools/phylogenetic-tree")
 );

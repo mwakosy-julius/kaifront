@@ -22,6 +22,7 @@ interface AuthContextType {
   login: (accessToken: string, refreshToken: string) => void;
   logout: () => void;
   getToken: () => string | null;
+  updateProfile: (data: Partial<User>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -62,9 +63,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     window.location.href = "/sign-in";
   };
-
   const getToken = () => {
     return getAccessToken();
+  };
+
+  const updateProfile = async (data: Partial<User>) => {
+    try {
+      // TODO: Implement the API call to update user profile
+      // const response = await updateUserProfile(data);
+      setUser((prev) => (prev ? { ...prev, ...data } : null));
+    } catch {
+      throw new Error("Failed to update profile");
+    }
   };
 
   if (loading) {
@@ -80,6 +90,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         login,
         logout,
         getToken,
+        updateProfile,
       }}
     >
       {children}

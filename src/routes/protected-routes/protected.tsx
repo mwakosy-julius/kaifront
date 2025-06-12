@@ -1,6 +1,7 @@
 import {
   ProtectedRoot,
   LazyDashboard,
+  LazyProfile,
   LazyPairwiseAlignment,
   LazyGCContent,
   LazyVariantCalling,
@@ -16,7 +17,7 @@ import {
   LazyPhylogeneticTree,
   LazySequenceSearch,
   LazyProteinStructure,
-  LazySequenceMutator
+  LazySequenceMutator,
 } from "./protected-route-elements";
 
 export const protectedRoutes = [
@@ -27,6 +28,10 @@ export const protectedRoutes = [
       {
         index: true,
         element: <LazyDashboard />,
+      },
+      {
+        path: "profile",
+        element: <LazyProfile />,
       },
       {
         path: "tools/pairwise_alignment",

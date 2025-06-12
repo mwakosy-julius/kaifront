@@ -7,21 +7,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { logout } from "@/lib/services/auth";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "../shared/theme-toggler-button";
+import { Link } from "react-router-dom";
 
 export const DashboardNavbar = () => {
   const user = useUser();
 
   return (
-    <div className={cn(
-      "h-[65px] px-8",
-      "border-b border-border",
-      "bg-background",
-      "flex items-center justify-between"
-    )}>
+    <div
+      className={cn(
+        "h-[65px] px-8",
+        "border-b border-border",
+        "bg-background",
+        "flex items-center justify-between"
+      )}
+    >
       <BBreadcrumb />
 
       <div className="flex items-center gap-4">
@@ -35,10 +38,12 @@ export const DashboardNavbar = () => {
             )}
           >
             <div className="flex items-center gap-4 !cursor-pointer">
-              <p className={cn(
-                "text-sm text-pretty hidden md:block",
-                "text-muted-foreground"
-              )}>
+              <p
+                className={cn(
+                  "text-sm text-pretty hidden md:block",
+                  "text-muted-foreground"
+                )}
+              >
                 {user?.name || user?.email}
               </p>
               <AvatarBubble />
@@ -58,6 +63,20 @@ export const DashboardNavbar = () => {
                 "focus:bg-primary/5",
                 "transition-colors duration-200"
               )}
+              asChild
+            >
+              <Link to="profile">
+                <User size={12} className="text-muted-foreground" />
+                <p className="text-sm text-foreground">Profile</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className={cn(
+                "!cursor-pointer text-sm",
+                "hover:bg-primary/5",
+                "focus:bg-primary/5",
+                "transition-colors duration-200"
+              )}
               onClick={async () => {
                 await logout().then(() => {
                   window.location.href = "/";
@@ -65,7 +84,7 @@ export const DashboardNavbar = () => {
               }}
             >
               <LogOut size={12} className="text-muted-foreground" />
-              <p className="text-sm text-foreground ml-2">Sign out</p>
+              <p className="ml-2 text-sm text-foreground">Sign out</p>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
