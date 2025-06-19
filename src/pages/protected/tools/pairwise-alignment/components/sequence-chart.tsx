@@ -34,7 +34,7 @@ export const SequenceChart: React.FC<SequenceChartProps> = ({
           <Tooltip />
           <Legend />
           <Bar dataKey="Sequence 1" fill="#4f46e5" />
-          <Bar dataKey="Sequence 2" fill="#e11d48" />
+          <Bar dataKey="Sequence 2" fill="#e17f1d" />
         </BarChart>
       </ResponsiveContainer>
     </div>
