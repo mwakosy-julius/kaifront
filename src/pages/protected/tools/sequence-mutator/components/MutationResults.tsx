@@ -258,7 +258,7 @@ const MutationResults: React.FC<MutationResultsProps> = ({ result }) => {
                     (m) =>
                       `${m.position},${m.from || m.deleted || ""},${
                         m.to || m.inserted || ""
-                      }`
+                      }`,
                   )
                   .join("\n")}`;
                 const blob = new Blob([csv], {

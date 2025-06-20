@@ -124,13 +124,13 @@ const Dashboard = () => {
             prevTools.map((tool) => ({
               ...tool,
               isFavorited: favs.includes(tool.name),
-            }))
+            })),
           );
           setDisplayedTools((prevTools) =>
             prevTools.map((tool) => ({
               ...tool,
               isFavorited: favs.includes(tool.name),
-            }))
+            })),
           );
         }
       } catch (error) {
@@ -207,8 +207,8 @@ const Dashboard = () => {
           tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
           (tool.tags &&
             tool.tags.some((tag) =>
-              tag.toLowerCase().includes(searchQuery.toLowerCase())
-            ))
+              tag.toLowerCase().includes(searchQuery.toLowerCase()),
+            )),
       );
     }
 
@@ -237,13 +237,13 @@ const Dashboard = () => {
       prevTools.map((tool) => ({
         ...tool,
         isFavorited: newFavorites.includes(tool.name),
-      }))
+      })),
     );
     setDisplayedTools((prevTools) =>
       prevTools.map((tool) => ({
         ...tool,
         isFavorited: newFavorites.includes(tool.name),
-      }))
+      })),
     );
   };
 
@@ -269,7 +269,7 @@ const Dashboard = () => {
       <div className="relative w-full mb-10">
         <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search tools, playlists, or users"
+          placeholder="Search tools"
           className="pl-9"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -365,7 +365,7 @@ const Dashboard = () => {
                 className="cursor-pointer"
                 onClick={() =>
                   setActiveCategory(
-                    activeCategory === category ? null : category
+                    activeCategory === category ? null : category,
                   )
                 }
               >
@@ -539,7 +539,7 @@ const ToolCard = ({
             size="icon"
             className={cn(
               "absolute top-2 right-2 rounded-full bg-background/70 text-foreground",
-              "hover:bg-background/90"
+              "hover:bg-background/90",
             )}
             onClick={(e) => {
               e.stopPropagation();

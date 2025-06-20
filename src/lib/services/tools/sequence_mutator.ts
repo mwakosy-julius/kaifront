@@ -20,7 +20,7 @@ export const mutateSequence = async (
   sequence: string,
   sequenceType: string,
   mutationType: string,
-  mutationRate: number
+  mutationRate: number,
 ): Promise<MutationResult> => {
   try {
     const response = await api.client.post<MutationResult>(
@@ -30,7 +30,7 @@ export const mutateSequence = async (
         sequence_type: sequenceType,
         mutation_type: mutationType,
         mutation_rate: mutationRate,
-      }
+      },
     );
 
     if (!response) {
@@ -39,7 +39,7 @@ export const mutateSequence = async (
     return response as MutationResult;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.detail || "Failed to mutate sequence"
+      error.response?.data?.detail || "Failed to mutate sequence",
     );
   }
 };
