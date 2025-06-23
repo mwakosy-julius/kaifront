@@ -26,6 +26,7 @@ export const API_ENDPOINTS = {
     phylogenetic_tree: "tools/phylogenetic_trees/",
     protein_structure: "tools/protein_structure/",
     sequence_mutator: "tools/sequence_mutator/",
+    primer_design: "tools/primer_design,",
   },
   users: {
     profile: "/auth/users/me/",

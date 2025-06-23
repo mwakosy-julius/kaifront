@@ -250,10 +250,16 @@ const StructureResults: React.FC<StructureResultsProps> = ({ result }) => {
                 <span className="font-mono">{result.sequence}</span>
               </p>
               <p className="text-gray-700 break-all">
-                Molecular Weight: <span className="font-mono">{result.molecular_weight}</span>
+                Molecular Weight:{" "}
+                <span className="font-mono">{result.molecular_weight}</span>
               </p>
               <p className="text-gray-700 break-all">
-                Isometric Point: <span className="font-mono">{result.isometric_point}</span>
+                Isometric Point:{" "}
+                <span className="font-mono">{result.isometric_point}</span>
+              </p>
+              <p className="text-gray-700 break-all">
+                Hydrophobic State:{" "}
+                <span className="font-mono">{result.hydrophobic_state}</span>
               </p>
               <p className="text-gray-700">
                 Confidence Score: {result.confidence}

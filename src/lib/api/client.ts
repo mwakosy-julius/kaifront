@@ -40,7 +40,7 @@ const handleError = (
     error?: string;
     code?: string;
     detail: string;
-  }>
+  }>,
 ): ApiError => {
   const apiError = {
     message: error.response?.data.detail as string,
@@ -63,7 +63,7 @@ axiosInstance.interceptors.request.use(
     apiLogger.request(
       config.method?.toUpperCase() || "UNKNOWN",
       config.url || "UNKNOWN",
-      config.data
+      config.data,
     );
 
     return config;
@@ -72,10 +72,10 @@ axiosInstance.interceptors.request.use(
     apiLogger.error(
       error.config?.method?.toUpperCase() || "UNKNOWN",
       error.config?.url || "UNKNOWN",
-      error.config?.data
+      error.config?.data,
     );
     return Promise.reject(error.config?.data);
-  }
+  },
 );
 
 // Setup response interceptor
@@ -84,13 +84,14 @@ axiosInstance.interceptors.response.use(
     apiLogger.response(
       response.config.method?.toUpperCase() || "UNKNOWN",
       response.config.url || "UNKNOWN",
-      response
+      response,
     );
 
     // Handle setting tokens from response headers if they exist
     const newAccessToken = response.headers["x-access-token"];
     const newRefreshToken = response.headers["x-refresh-token"];
 
+    console.log(response);
     if (newAccessToken) {
       Cookies.set(ACCESS_TOKEN_COOKIE, newAccessToken, COOKIE_CONFIG);
     }
@@ -101,14 +102,14 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (
-    error: AxiosError<{ message?: string; code?: string; detail: string }>
+    error: AxiosError<{ message?: string; code?: string; detail: string }>,
   ) => {
     const originalRequest = error.config;
 
     apiLogger.error(
       originalRequest?.method?.toUpperCase() || "UNKNOWN",
       originalRequest?.url || "UNKNOWN",
-      error
+      error,
     );
 
     // Handle 401 Unauthorized errors (token expired)
@@ -145,19 +146,19 @@ axiosInstance.interceptors.response.use(
             message?: string;
             code?: string;
             detail: string;
-          }>
+          }>,
         );
         handleAuthError();
       }
     }
 
     return Promise.reject(handleError(error));
-  }
+  },
 );
 
 export const get = async <T>(
   url: string,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<ApiResponse<T>> => {
   const response = await axiosInstance.get<ApiResponse<T>>(url, config);
   return response.data;
@@ -166,7 +167,7 @@ export const get = async <T>(
 export const post = async <T>(
   url: string,
   data?: unknown,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<ApiResponse<T>> => {
   const response = await axiosInstance.post<ApiResponse<T>>(url, data, config);
   return response.data;
@@ -174,7 +175,7 @@ export const post = async <T>(
 
 export const put = async <T>(
   url: string,
-  data?: unknown
+  data?: unknown,
 ): Promise<ApiResponse<T>> => {
   const response = await axiosInstance.put<ApiResponse<T>>(url, data);
   return response.data;

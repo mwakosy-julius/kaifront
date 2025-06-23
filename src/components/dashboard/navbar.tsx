@@ -22,7 +22,7 @@ export const DashboardNavbar = () => {
         "h-[65px] px-8",
         "border-b border-border",
         "bg-background",
-        "flex items-center justify-between"
+        "flex items-center justify-between",
       )}
     >
       <BBreadcrumb />
@@ -34,17 +34,18 @@ export const DashboardNavbar = () => {
               "flex items-center gap-2 !outline-none",
               "border border-primary/20",
               "hover:border-primary/30 transition-colors duration-200",
-              "rounded-full md:!pl-3 pr-0.5 py-0.5"
+              "rounded-full md:!pl-3 pr-0.5 py-0.5",
             )}
           >
             <div className="flex items-center gap-4 !cursor-pointer">
               <p
                 className={cn(
                   "text-sm text-pretty hidden md:block",
-                  "text-muted-foreground"
+                  "text-muted-foreground",
                 )}
               >
-                {user?.name || user?.email}
+                {/* {user?.name || user?.email} */}
+                {user?.username || user?.email}
               </p>
               <AvatarBubble />
             </div>
@@ -53,7 +54,7 @@ export const DashboardNavbar = () => {
             className={cn(
               "md:w-64 w-40 mr-1 md:mr-0",
               "border border-border",
-              "bg-background"
+              "bg-background",
             )}
           >
             <DropdownMenuItem
@@ -61,7 +62,7 @@ export const DashboardNavbar = () => {
                 "!cursor-pointer text-sm",
                 "hover:bg-primary/5",
                 "focus:bg-primary/5",
-                "transition-colors duration-200"
+                "transition-colors duration-200",
               )}
               asChild
             >
@@ -75,7 +76,7 @@ export const DashboardNavbar = () => {
                 "!cursor-pointer text-sm",
                 "hover:bg-primary/5",
                 "focus:bg-primary/5",
-                "transition-colors duration-200"
+                "transition-colors duration-200",
               )}
               onClick={async () => {
                 await logout().then(() => {

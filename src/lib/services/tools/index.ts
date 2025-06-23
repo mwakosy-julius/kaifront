@@ -4,7 +4,7 @@ import { KaiToolsInterface } from "./types";
 export const tools = async () => {
   try {
     const response = await api.client.get<KaiToolsInterface[]>(
-      api.endpoints.tools.list
+      api.endpoints.tools.list,
     );
     return response;
   } catch (error) {
@@ -15,7 +15,7 @@ export const tools = async () => {
         response?: { status: number; data: unknown };
         message: string;
         stack?: string;
-      }
+      },
     );
     throw error;
   }
@@ -24,7 +24,7 @@ export const tools = async () => {
 // Export all tool services
 export * from "./variant_calling";
 export * from "./blast";
-export * from "./sequence_search"; 
+export * from "./sequence_search";
 export * from "./pairwise_alignment";
 export * from "./gc_content";
 export * from "./dna_visualization";
@@ -37,5 +37,6 @@ export * from "./protein_structure";
 export * from "./sequence_mutator";
 // export * from "./musicdna";
 export * from "./metagenomics";
+export * from "./primer_design";
 export * from "./phylogenetic_tree";
 export * from "./types";

@@ -1,25 +1,40 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import {
-  ArrowRight,
-  Star,
-  Search as SearchIcon,
-  TrendingUp,
-  Sparkles,
+  SearchIcon,
+  Plus,
+  Folder,
+  BookOpen,
+  Heart,
+  Library,
+  ChevronRight,
+  GitBranch,
+  Download,
+  Share,
+  Zap,
+  Users,
+  Bell,
+  Home,
+  PlusCircle,
+  UserCircle,
   FilterX,
 } from "lucide-react";
 
-// local imports
-import { tools } from "@/lib/services/tools";
-import { KaiToolsInterface } from "@/lib/services/tools/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { getToolImage } from "@/lib/constants/tool-images";
-import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Extended tool interface with additional marketplace metadata
+// Mock interfaces since we don't have access to the actual types
+interface KaiToolsInterface {
+  name: string;
+  description: string;
+  frontend_url: string;
+}
+
 interface MarketplaceToolInterface extends KaiToolsInterface {
   category: string;
   trending?: boolean;
@@ -30,9 +45,215 @@ interface MarketplaceToolInterface extends KaiToolsInterface {
   dateAdded?: string;
   tags?: string[];
   imageUrl?: string;
+  rating?: number;
+  downloads?: number;
+  lastUsed?: string;
 }
 
-// Tool categories from landing page
+// Mock data for tools (since we can't access the actual API)
+const mockTools: MarketplaceToolInterface[] = [
+  {
+    name: "BLAST Search",
+    description:
+      "Basic Local Alignment Search Tool for sequence similarity searching",
+    frontend_url: "/blast-search",
+    category: "Sequence Analysis",
+    trending: true,
+    new: false,
+    favorites: 245,
+    isFavorited: false,
+    usageCount: 1250,
+    dateAdded: "2024-01-15",
+    tags: ["DNA", "Protein", "Alignment"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.8,
+    downloads: 5420,
+    lastUsed: "2 hours ago",
+  },
+  {
+    name: "GC Content Calculator",
+    description: "Calculate GC content percentage in DNA sequences",
+    frontend_url: "/gc-calculator",
+    category: "Genomics",
+    trending: false,
+    new: true,
+    favorites: 89,
+    isFavorited: true,
+    usageCount: 567,
+    dateAdded: "2024-06-10",
+    tags: ["DNA", "Statistics"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.5,
+    downloads: 1230,
+    lastUsed: "1 day ago",
+  },
+  {
+    name: "Phylogenetic Tree Builder",
+    description: "Construct phylogenetic trees from sequence alignments",
+    frontend_url: "/phylo-tree",
+    category: "Comparative Genomics",
+    trending: true,
+    new: false,
+    favorites: 156,
+    isFavorited: false,
+    usageCount: 890,
+    dateAdded: "2024-03-22",
+    tags: ["Evolution", "Tree", "Alignment"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.7,
+    downloads: 2340,
+    lastUsed: "3 days ago",
+  },
+  {
+    name: "Genome Visualizer",
+    description: "Interactive genome browser and visualization tool",
+    frontend_url: "/genome-viz",
+    category: "Visualization",
+    trending: false,
+    new: true,
+    favorites: 203,
+    isFavorited: true,
+    usageCount: 1100,
+    dateAdded: "2024-06-05",
+    tags: ["Visualization", "Browser", "Interactive"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.9,
+    downloads: 3450,
+    lastUsed: "5 hours ago",
+  },
+  {
+    name: "Protein Structure Predictor",
+    description: "Predict protein secondary and tertiary structures",
+    frontend_url: "/protein-structure",
+    category: "Genomics",
+    trending: true,
+    new: false,
+    favorites: 178,
+    isFavorited: false,
+    usageCount: 723,
+    dateAdded: "2024-02-18",
+    tags: ["Protein", "Structure", "Prediction"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.6,
+    downloads: 2890,
+    lastUsed: "1 week ago",
+  },
+  {
+    name: "RNA-Seq Analyzer",
+    description: "Comprehensive RNA sequencing data analysis pipeline",
+    frontend_url: "/rna-seq",
+    category: "Sequence Analysis",
+    trending: false,
+    new: true,
+    favorites: 134,
+    isFavorited: true,
+    usageCount: 445,
+    dateAdded: "2024-06-08",
+    tags: ["RNA", "Sequencing", "Pipeline"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.4,
+    downloads: 1670,
+    lastUsed: "4 hours ago",
+  },
+  {
+    name: "Variant Caller",
+    description: "Identify genetic variants from sequencing data",
+    frontend_url: "/variant-caller",
+    category: "Genomics",
+    trending: true,
+    new: false,
+    favorites: 267,
+    isFavorited: false,
+    usageCount: 1340,
+    dateAdded: "2024-01-30",
+    tags: ["Variants", "SNP", "Genomics"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.8,
+    downloads: 4120,
+    lastUsed: "6 hours ago",
+  },
+  {
+    name: "Codon Usage Analyzer",
+    description: "Analyze codon usage bias in protein-coding sequences",
+    frontend_url: "/codon-usage",
+    category: "Sequence Analysis",
+    trending: false,
+    new: false,
+    favorites: 92,
+    isFavorited: false,
+    usageCount: 334,
+    dateAdded: "2024-04-12",
+    tags: ["Codon", "Bias", "Analysis"],
+    imageUrl: "/placeholder.svg?height=200&width=300",
+    rating: 4.3,
+    downloads: 890,
+    lastUsed: "2 weeks ago",
+  },
+];
+
+// Mock data for projects and activity
+const mockProjects = [
+  {
+    id: 1,
+    name: "COVID-19 Genome Analysis",
+    status: "active",
+    progress: 75,
+  },
+  {
+    id: 2,
+    name: "Plant Genomics Study",
+    status: "completed",
+    progress: 100,
+  },
+  {
+    id: 3,
+    name: "Protein Folding Research",
+    status: "draft",
+    progress: 30,
+  },
+  {
+    id: 4,
+    name: "Cancer Genomics Pipeline",
+    status: "active",
+    progress: 60,
+  },
+  {
+    id: 5,
+    name: "RNA Expression Analysis",
+    status: "active",
+    progress: 45,
+  },
+  {
+    id: 6,
+    name: "Microbiome Study",
+    status: "draft",
+    progress: 15,
+  },
+];
+
+const mockActivity = [
+  { id: 1, action: "Used BLAST Search", time: "2h", type: "tool_usage" },
+  { id: 2, action: "Favorited GC Calculator", time: "5h", type: "favorite" },
+  { id: 3, action: "Completed analysis", time: "1d", type: "project" },
+  { id: 4, action: "Started new project", time: "2d", type: "project" },
+  { id: 5, action: "Shared results", time: "3d", type: "share" },
+  { id: 6, action: "Downloaded dataset", time: "4d", type: "download" },
+  {
+    id: 7,
+    action: "Collaborated on project",
+    time: "5d",
+    type: "collaboration",
+  },
+  { id: 8, action: "Updated analysis", time: "1w", type: "tool_usage" },
+];
+
+const mockCollections = [
+  { id: 1, name: "Sequence Analysis", tools: 5 },
+  { id: 2, name: "Genomics Essentials", tools: 8 },
+  { id: 3, name: "My Research Tools", tools: 12 },
+];
+
+// Tool categories
 const CATEGORIES = [
   "Sequence Analysis",
   "Genomics",
@@ -40,161 +261,13 @@ const CATEGORIES = [
   "Visualization",
 ];
 
-// Featured playlist categories
-// const TOOL_PLAYLISTS = [
-//   {
-//     title: "Genomics Essentials",
-//     description: "Essential tools for genomics research",
-//     image: TOOL_IMAGES.genomics,
-//     category: "Genomics",
-//     route: "/protected/tools/genomics",
-//   },
-//   {
-//     title: "Transcriptomics Toolkit",
-//     description: "Tools for analyzing gene expression data",
-//     image: TOOL_IMAGES.transcriptomics,
-//     category: "Genomics",
-//     route: "/protected/tools/transcriptomics",
-//   },
-//   {
-//     title: "Variant Analysis Suite",
-//     description: "Tools for identifying genetic variants",
-//     image: TOOL_IMAGES.variantAnalysis,
-//     category: "Genomics",
-//     route: "/protected/tools/variant-analysis",
-//   },
-//   {
-//     title: "Genome Assembly Resources",
-//     description: "Resources for assembling genomes",
-//     image: TOOL_IMAGES.genomeAssembly,
-//     category: "Genomics",
-//     route: "/protected/tools/genome-assembly",
-//   },
-// ];
-
 const Dashboard = () => {
-  const [toolsData, setToolsData] = useState<MarketplaceToolInterface[]>([]);
-  const [displayedTools, setDisplayedTools] = useState<
-    MarketplaceToolInterface[]
-  >([]);
+  const [toolsData, setToolsData] =
+    useState<MarketplaceToolInterface[]>(mockTools);
+  const [displayedTools, setDisplayedTools] =
+    useState<MarketplaceToolInterface[]>(mockTools);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [favorites, setFavorites] = useState<string[]>([]);
-
-  // Fetch tools and add marketplace metadata
-  useEffect(() => {
-    const fetchTools = async () => {
-      try {
-        const response = await tools();
-        const baseTools = response as KaiToolsInterface[];
-
-        // Enhance tools with marketplace metadata
-        const enhancedTools = baseTools.map((tool) => {
-          const category = assignToolCategory(tool.name);
-          const isNew = Math.random() > 0.7; // Random for demo
-          const isTrending = Math.random() > 0.7; // Random for demo
-          const favCount = Math.floor(Math.random() * 100);
-          const imageUrl = getToolImage(tool.name, category);
-
-          return {
-            ...tool,
-            category,
-            trending: isTrending,
-            new: isNew,
-            favorites: favCount,
-            isFavorited: false,
-            usageCount: Math.floor(Math.random() * 1000),
-            dateAdded: getRandomRecentDate(),
-            tags: getToolTags(tool.name),
-            imageUrl,
-          };
-        });
-
-        setToolsData(enhancedTools);
-        setDisplayedTools(enhancedTools);
-
-        // Load favorites from localStorage
-        const savedFavorites = localStorage.getItem("toolFavorites");
-        if (savedFavorites) {
-          const favs = JSON.parse(savedFavorites);
-          setFavorites(favs);
-
-          // Mark favorited tools
-          setToolsData((prevTools) =>
-            prevTools.map((tool) => ({
-              ...tool,
-              isFavorited: favs.includes(tool.name),
-            })),
-          );
-          setDisplayedTools((prevTools) =>
-            prevTools.map((tool) => ({
-              ...tool,
-              isFavorited: favs.includes(tool.name),
-            })),
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching tools:", error);
-      }
-    };
-    fetchTools();
-  }, []);
-
-  // Helper function to assign a category based on tool name
-  const assignToolCategory = (name: string): string => {
-    const nameLC = name.toLowerCase();
-    if (
-      nameLC.includes("sequence") ||
-      nameLC.includes("blast") ||
-      nameLC.includes("search") ||
-      nameLC.includes("mutator")
-    ) {
-      return "Sequence Analysis";
-    } else if (
-      nameLC.includes("gc") ||
-      nameLC.includes("codon") ||
-      nameLC.includes("compression") ||
-      nameLC.includes("variant")
-    ) {
-      return "Genomics";
-    } else if (
-      nameLC.includes("phylogenetic") ||
-      nameLC.includes("alignment") ||
-      nameLC.includes("meta")
-    ) {
-      return "Comparative Genomics";
-    } else {
-      return "Visualization";
-    }
-  };
-
-  // Helper function to generate random date in the last 90 days
-  const getRandomRecentDate = (): string => {
-    const now = new Date();
-    const daysAgo = Math.floor(Math.random() * 90);
-    now.setDate(now.getDate() - daysAgo);
-    return now.toISOString().split("T")[0];
-  };
-
-  // Helper function to assign relevant tags to tools
-  const getToolTags = (name: string): string[] => {
-    const nameLC = name.toLowerCase();
-    const tags: string[] = [];
-
-    if (nameLC.includes("dna") || nameLC.includes("sequence")) tags.push("DNA");
-    if (nameLC.includes("rna")) tags.push("RNA");
-    if (nameLC.includes("protein")) tags.push("Protein");
-    if (nameLC.includes("phylogenetic") || nameLC.includes("tree"))
-      tags.push("Evolution");
-    if (nameLC.includes("visual")) tags.push("Visualization");
-    if (nameLC.includes("align")) tags.push("Alignment");
-    if (nameLC.includes("variant")) tags.push("Genomics");
-
-    // Add at least one tag if none were matched
-    if (tags.length === 0) tags.push("Bioinformatics");
-
-    return tags;
-  };
 
   // Filter tools based on search query and active category
   useEffect(() => {
@@ -219,408 +292,397 @@ const Dashboard = () => {
     setDisplayedTools(filtered);
   }, [searchQuery, activeCategory, toolsData]);
 
-  // Toggle favorite status for a tool
-  const toggleFavorite = (toolName: string) => {
-    let newFavorites: string[];
-
-    if (favorites.includes(toolName)) {
-      newFavorites = favorites.filter((name) => name !== toolName);
-    } else {
-      newFavorites = [...favorites, toolName];
-    }
-
-    setFavorites(newFavorites);
-    localStorage.setItem("toolFavorites", JSON.stringify(newFavorites));
-
-    // Update tools data
-    setToolsData((prevTools) =>
-      prevTools.map((tool) => ({
-        ...tool,
-        isFavorited: newFavorites.includes(tool.name),
-      })),
-    );
-    setDisplayedTools((prevTools) =>
-      prevTools.map((tool) => ({
-        ...tool,
-        isFavorited: newFavorites.includes(tool.name),
-      })),
-    );
-  };
-
-  // Filter functions for different tabs
-  const getTrendingTools = () => displayedTools.filter((tool) => tool.trending);
-  const getNewTools = () => displayedTools.filter((tool) => tool.new);
-  const getFavoritedTools = () =>
-    displayedTools.filter((tool) => tool.isFavorited);
-  const getPopularTools = () =>
-    [...displayedTools]
-      .sort((a, b) => (b.favorites || 0) - (a.favorites || 0))
-      .slice(0, 6);
-
-  // Reset all filters
   const resetFilters = () => {
     setActiveCategory(null);
     setSearchQuery("");
   };
 
+  // Filter functions for different sections
+  const getRecommendedTools = () =>
+    displayedTools.filter((tool) => tool.trending);
+  const getNewTools = () => displayedTools.filter((tool) => tool.new);
+
   return (
-    <div className="w-full max-w-6xl px-2 py-8 mx-auto md:px-8">
-      {/* Header */}
-      <div className="relative w-full mb-10">
-        <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search tools"
-          className="pl-9"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+    <div className="flex h-screen bg-background text-foreground p-4 gap-4">
+      {/* Left Sidebar - Minimized */}
+      <div className="w-60 bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:shadow-md hover:border-border/80 hover:bg-card/95">
+        {/* Library Header */}
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center space-x-2">
+              <Library className="w-4 h-4" />
+              <h2 className="font-medium text-sm">Your Library</h2>
+            </div>
+            <Button variant="ghost" size="icon" className="w-6 h-6">
+              <PlusCircle className="w-3 h-3" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Library Content */}
+        <ScrollArea className="flex-1">
+          {/* Collections */}
+          <div className="px-4 pb-4">
+            <h3 className="text-xs font-medium text-muted-foreground mb-2">
+              COLLECTIONS
+            </h3>
+            <div className="space-y-1">
+              {mockCollections.map((collection) => (
+                <div
+                  key={collection.id}
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-all duration-200 cursor-pointer group hover:shadow-sm"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                    <BookOpen className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium truncate">
+                      {collection.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {collection.tools} tools
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Separator className="mx-3" />
+
+          {/* Recent Activity - Minimized */}
+          <div className="p-4">
+            <h3 className="text-xs font-medium text-muted-foreground mb-2">
+              RECENT ACTIVITY
+            </h3>
+            <div className="space-y-2">
+              {mockActivity.slice(0, 6).map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-center space-x-2 p-1 rounded-md hover:bg-accent/50 transition-all duration-200 cursor-pointer"
+                >
+                  <Avatar className="w-5 h-5">
+                    <AvatarFallback className="text-xs">
+                      {activity.type === "tool_usage" ? (
+                        <Zap className="w-2 h-2" />
+                      ) : activity.type === "favorite" ? (
+                        <Heart className="w-2 h-2" />
+                      ) : activity.type === "project" ? (
+                        <GitBranch className="w-2 h-2" />
+                      ) : activity.type === "share" ? (
+                        <Share className="w-2 h-2" />
+                      ) : activity.type === "download" ? (
+                        <Download className="w-2 h-2" />
+                      ) : (
+                        <Users className="w-2 h-2" />
+                      )}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs truncate">{activity.action}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {activity.time}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScrollArea>
       </div>
 
-      {/* Featured Tool Playlists Section */}
-      {/* <section className="mb-12">
-        <div className="flex items-center justify-between pb-3 mb-6 border-b border-border/40">
-          <div>
-            <h2 className="text-3xl font-bold">Featured Tools</h2>
-            <p className="text-muted-foreground">
-              Essential tools and collections for your research
-            </p>
-          </div>
-          <Button variant="outline" className="gap-2">
-            Explore All Collections <ArrowRight className="w-4 h-4" />
-          </Button>
-        </div>
-        <div>
-          <ToolPlaylists playlists={TOOL_PLAYLISTS} />
-        </div>
-      </section> */}
-
-      {/* New Tools Section */}
-      <section className="mb-10">
-        <div className="flex items-center justify-between pb-2 mb-6 border-b">
-          <div>
-            <h2 className="text-2xl font-semibold">New Tools</h2>
-            <p className="text-sm text-muted-foreground">
-              Recently added to our platform
-            </p>
-          </div>
-          <Button variant="link" className="text-primary" onClick={() => {}}>
-            View all <ArrowRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {getNewTools()
-            .slice(0, 3)
-            .map((tool) => (
-              <ToolCard
-                key={tool.name}
-                tool={tool}
-                onFavoriteToggle={toggleFavorite}
-              />
-            ))}
-        </div>
-      </section>
-
-      {/* Recommended Tools Section */}
-      <section className="mb-10">
-        <div className="flex items-center justify-between pb-2 mb-6 border-b border-border/40">
-          <div>
-            <h2 className="text-2xl font-semibold">Recommended Tools</h2>
-            <p className="text-sm text-muted-foreground">
-              Popular tools you might find useful
-            </p>
-          </div>
-          <Button variant="link" className="text-primary" onClick={() => {}}>
-            View all <ArrowRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {getPopularTools()
-            .slice(0, 3)
-            .map((tool) => (
-              <ToolCard
-                key={tool.name}
-                tool={tool}
-                onFavoriteToggle={toggleFavorite}
-              />
-            ))}
-        </div>
-      </section>
-
-      {/* All Tools Section */}
-      <section className="pt-4 mt-10 border-t border-border/50">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-semibold">All Tools</h2>
-            <p className="text-sm text-muted-foreground">
-              Browse the complete collection
-            </p>
-          </div>
-
-          {/* Category pills */}
-          <div className="flex-wrap hidden gap-2 md:flex">
-            {CATEGORIES.map((category) => (
-              <Badge
-                key={category}
-                variant={activeCategory === category ? "default" : "outline"}
-                className="cursor-pointer"
-                onClick={() =>
-                  setActiveCategory(
-                    activeCategory === category ? null : category,
-                  )
-                }
-              >
-                {category}
-              </Badge>
-            ))}
-
-            {(activeCategory || searchQuery) && (
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden bg-card border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:border-border/80 hover:bg-card/98">
+        {/* Top Navigation */}
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <div className="flex items-center justify-center flex-1">
+            <div className="flex items-center space-x-6">
               <Button
                 variant="ghost"
-                size="sm"
-                className="flex-shrink-0"
-                onClick={resetFilters}
+                size="icon"
+                className="w-8 h-8 hover:scale-105 transition-transform duration-200"
               >
-                <FilterX className="w-4 h-4 mr-1" />
-                Reset
+                <Home className="w-4 h-4" />
               </Button>
-            )}
+
+              <div className="relative w-80">
+                <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="What do you want to analyze?"
+                  className="pl-9 bg-background/60 transition-all duration-200 focus:bg-background focus:shadow-sm"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:scale-105 transition-transform duration-200"
+            >
+              <Bell className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:scale-105 transition-transform duration-200"
+            >
+              <UserCircle className="w-4 h-4" />
+            </Button>
           </div>
         </div>
 
-        <Tabs defaultValue="all" className="mt-6">
-          <TabsList className="flex flex-wrap justify-end p-1 px-0 mb-6 ml-auto space-x-2 w-fit h-fit">
-            <TabsTrigger value="all">All Tools</TabsTrigger>
-            <TabsTrigger value="trending">
-              <TrendingUp className="w-4 h-4 mr-1" />
-              Trending
-            </TabsTrigger>
-            <TabsTrigger value="new">
-              <Sparkles className="w-4 h-4 mr-1" />
-              New
-            </TabsTrigger>
-            <TabsTrigger value="favorites">
-              <Star className="w-4 h-4 mr-1" />
-              Favorites
-            </TabsTrigger>
-          </TabsList>
-
-          {/* All tools */}
-          <TabsContent value="all">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {displayedTools.length > 0 ? (
-                displayedTools.map((tool) => (
-                  <ToolCard
-                    key={tool.name}
-                    tool={tool}
-                    onFavoriteToggle={toggleFavorite}
-                  />
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">
-                    No tools found matching your search criteria.
+        {/* Main Content Area */}
+        <ScrollArea className="flex-1">
+          <div className="p-4 space-y-6">
+            {/* Featured Tools Section */}
+            <section>
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold">Featured Tools</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Explore tools by research area
                   </p>
-                  <Button variant="link" onClick={resetFilters}>
+                </div>
+                {(activeCategory || searchQuery) && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={resetFilters}
+                    className="hover:scale-105 transition-transform duration-200"
+                  >
+                    <FilterX className="w-4 h-4 mr-1" />
                     Reset filters
+                  </Button>
+                )}
+              </div>
+
+              {/* Category pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {CATEGORIES.map((category) => (
+                  <Badge
+                    key={category}
+                    variant={
+                      activeCategory === category ? "default" : "outline"
+                    }
+                    className="cursor-pointer px-3 py-1 text-xs rounded-full transition-all duration-200 hover:scale-105 hover:shadow-sm"
+                    onClick={() =>
+                      setActiveCategory(
+                        activeCategory === category ? null : category,
+                      )
+                    }
+                  >
+                    <Folder className="w-3 h-3 mr-1" />
+                    {category}
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Tools grid based on active category or all tools */}
+              <div className="grid grid-cols-4 gap-3">
+                {displayedTools.slice(0, 8).map((tool) => (
+                  <ToolCard key={tool.name} tool={tool} variant="minimal" />
+                ))}
+              </div>
+
+              {displayedTools.length > 10 && (
+                <div className="text-center mt-6">
+                  <Button
+                    variant="outline"
+                    className="hover:scale-105 transition-transform duration-200"
+                  >
+                    Load more tools
+                    <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
               )}
-            </div>
-          </TabsContent>
+            </section>
 
-          {/* Trending tools */}
-          <TabsContent value="trending">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {getTrendingTools().length > 0 ? (
-                getTrendingTools().map((tool) => (
-                  <ToolCard
-                    key={tool.name}
-                    tool={tool}
-                    onFavoriteToggle={toggleFavorite}
-                  />
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">
-                    No trending tools found.
-                  </p>
-                  {(activeCategory || searchQuery) && (
-                    <Button variant="link" onClick={resetFilters}>
-                      Reset filters
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
-          </TabsContent>
-
-          {/* New tools */}
-          <TabsContent value="new">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {getNewTools().length > 0 ? (
-                getNewTools().map((tool) => (
-                  <ToolCard
-                    key={tool.name}
-                    tool={tool}
-                    onFavoriteToggle={toggleFavorite}
-                  />
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">No new tools found.</p>
-                  {(activeCategory || searchQuery) && (
-                    <Button variant="link" onClick={resetFilters}>
-                      Reset filters
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
-          </TabsContent>
-
-          {/* Favorite tools */}
-          <TabsContent value="favorites">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {getFavoritedTools().length > 0 ? (
-                getFavoritedTools().map((tool) => (
-                  <ToolCard
-                    key={tool.name}
-                    tool={tool}
-                    onFavoriteToggle={toggleFavorite}
-                  />
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-center col-span-4 py-12 text-center">
-                  <p className="text-muted-foreground">
-                    No favorite tools yet. Mark tools as favorites to see them
-                    here.
+            {/* New Releases */}
+            <section>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-2xl font-bold">New releases</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Fresh tools for your research
                   </p>
                 </div>
-              )}
+                <Button
+                  variant="ghost"
+                  className="text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-200"
+                >
+                  Show all
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {getNewTools()
+                  .slice(0, 5)
+                  .map((tool) => (
+                    <ToolCard key={tool.name} tool={tool} />
+                  ))}
+              </div>
+            </section>
+
+            {/* Trending */}
+            <section>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold">Recommended for you</h2>
+                <Button
+                  variant="ghost"
+                  className="text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-200"
+                >
+                  Show all
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {getRecommendedTools()
+                  .slice(0, 5)
+                  .map((tool) => (
+                    <ToolCard key={tool.name} tool={tool} />
+                  ))}
+              </div>
+            </section>
+          </div>
+        </ScrollArea>
+      </div>
+
+      {/* Right Sidebar - Minimized Projects */}
+      <div className="w-60 bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:shadow-md hover:border-border/80 hover:bg-card/95">
+        {/* Projects Header */}
+        <div className="p-4 border-b border-border">
+          <div className="flex items-center justify-between">
+            <h3 className="font-medium text-sm">Your Projects</h3>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="w-6 h-6 hover:scale-105 transition-transform duration-200"
+            >
+              <Plus className="w-3 h-3" />
+            </Button>
+          </div>
+        </div>
+
+        <ScrollArea className="flex-1">
+          {/* Minimal Projects */}
+          <div className="p-4">
+            <div className="space-y-2">
+              {mockProjects.map((project) => (
+                <div
+                  key={project.id}
+                  className="p-2 rounded-md hover:bg-accent/50 transition-all duration-200 cursor-pointer hover:shadow-sm hover:scale-[1.02]"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-xs font-medium truncate flex-1">
+                      {project.name}
+                    </h4>
+                    <Badge
+                      variant={
+                        project.status === "active"
+                          ? "default"
+                          : project.status === "completed"
+                            ? "secondary"
+                            : "outline"
+                      }
+                      className="text-xs ml-1 transition-all duration-200 hover:scale-105"
+                    >
+                      {project.status}
+                    </Badge>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-1 overflow-hidden">
+                    <div
+                      className="bg-primary h-1 rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${project.progress}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {project.progress}%
+                  </p>
+                </div>
+              ))}
             </div>
-          </TabsContent>
-        </Tabs>
-      </section>
+
+            <Button
+              variant="outline"
+              className="w-full mt-3 hover:scale-105 transition-transform duration-200"
+              size="sm"
+            >
+              <Folder className="w-3 h-3 mr-1" />
+              View all
+            </Button>
+
+            <Button
+              className="w-full mt-2 hover:scale-105 transition-transform duration-200"
+              size="sm"
+            >
+              <Plus className="w-3 h-3 mr-1" />
+              New project
+            </Button>
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 };
 
-// Enhanced tool card with favorite button, metadata, and image
+// Enhanced tool card component
 const ToolCard = ({
   tool,
-  onFavoriteToggle,
-  showFavorite = true,
+  variant = "default",
 }: {
   tool: MarketplaceToolInterface;
-  onFavoriteToggle: (name: string) => void;
-  showFavorite?: boolean;
+  variant?: "minimal" | "default";
 }) => {
+  if (variant === "minimal") {
+    return (
+      <div className="group flex items-center space-x-3 bg-card hover:bg-accent/50 rounded-md p-2 transition-all duration-200 cursor-pointer hover:shadow-sm hover:scale-[1.02]">
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+          <div className="text-white text-sm font-bold">
+            {tool.name.charAt(0)}
+          </div>
+        </div>
+        <div className="space-y-0.5">
+          <h3 className="font-medium text-sm truncate group-hover:text-primary transition-colors duration-200">
+            {tool.name}
+          </h3>
+          <p className="text-xs text-muted-foreground truncate">
+            {tool.category}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <Link
-      to={`tools${tool.frontend_url}`}
-      className={cn("h-full flex flex-col space-y-4")}
-    >
-      {/* Image section */}
-      <div
-        className="relative overflow-hidden rounded-lg h-52"
-        style={{
-          background: "linear-gradient(to bottom, #1a1a1a, #0a0a0a)",
-        }}
-      >
+    <div className="group bg-card hover:bg-accent/50 rounded-lg p-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.02] hover:-translate-y-1">
+      <div className="relative mb-3 overflow-hidden rounded-md">
         <img
-          src={tool.imageUrl || getToolImage(tool.name, tool.category)}
+          src={tool.imageUrl || "/placeholder.svg"}
           alt={tool.name}
-          className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+          className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
         />
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-800/50 to-transparent" /> */}
-        {showFavorite && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "absolute top-2 right-2 rounded-full bg-background/70 text-foreground",
-              "hover:bg-background/90",
-            )}
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              onFavoriteToggle(tool.name);
-            }}
-            title={
-              tool.isFavorited ? "Remove from favorites" : "Add to favorites"
-            }
-          >
-            {tool.isFavorited ? (
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-            ) : (
-              <Star className="w-4 h-4" />
-            )}
-            <span className="sr-only">Toggle favorite</span>
-          </Button>
-        )}
 
-        {/* Category label */}
-        {/* <div
-          className={cn(
-            "absolute top-2 left-2 px-2 py-1 text-xs font-medium rounded text-white",
-            tool.category?.toLowerCase().includes("genom")
-              ? isDark
-                ? "bg-genomics-dark"
-                : "bg-genomics"
-              : tool.category?.toLowerCase().includes("proteo")
-              ? isDark
-                ? "bg-proteomics-dark"
-                : "bg-proteomics"
-              : isDark
-              ? "bg-metabolomics-dark"
-              : "bg-metabolomics"
-          )}
-        >
-          {tool.category}
-        </div> */}
-
-        {/* New/Trending badges */}
-        {/* <div className="absolute flex gap-1 bottom-2 left-2">
+        {/* Badges */}
+        <div className="absolute bottom-2 left-2 flex gap-1">
           {tool.new && (
-            <Badge className="text-white bg-emerald-500 hover:bg-emerald-500/90">
+            <Badge className="text-xs bg-green-500 hover:bg-green-500 transition-all duration-200 group-hover:scale-105">
               New
             </Badge>
           )}
-          {tool.trending && (
-            <Badge className="text-white bg-amber-500 hover:bg-amber-500/90">
-              Trending
-            </Badge>
-          )}
-        </div> */}
-      </div>
-
-      <div className="flex flex-col flex-grow">
-        <div className="pb-2">
-          <div className="text-lg font-medium">{tool.name}</div>
-        </div>
-
-        <div className="flex-grow">
-          <p className="text-sm text-muted-foreground line-clamp-2">
-            {tool.description}
-          </p>
-
-          {tool.tags && tool.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-3">
-              {tool.tags.slice(0, 2).map((tag) => (
-                <Badge key={tag} variant="secondary" className="text-xs">
-                  {tag}
-                </Badge>
-              ))}
-              {tool.tags.length > 2 && (
-                <Badge variant="outline" className="text-xs">
-                  +{tool.tags.length - 2}
-                </Badge>
-              )}
-            </div>
-          )}
         </div>
       </div>
-    </Link>
+
+      <div className="space-y-1">
+        <h3 className="font-medium text-sm truncate group-hover:text-primary transition-colors duration-200">
+          {tool.name}
+        </h3>
+        <p className="text-xs text-muted-foreground line-clamp-1">
+          {tool.description}
+        </p>
+      </div>
+    </div>
   );
 };
 
