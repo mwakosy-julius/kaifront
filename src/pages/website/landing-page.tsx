@@ -38,7 +38,7 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (isAuthenticated && location.pathname === "/") navigate("dashboard")
+  if (isAuthenticated && location.pathname === "/") navigate("dashboard");
 
   // Tool categories
   const toolCategories = [
@@ -200,35 +200,35 @@ const LandingPage: React.FC = () => {
   ];
 
   // Research publications using Kaidoku
-  const publications = [
-    {
-      title:
-        "Comparative genomic analysis reveals novel insights into the evolution of SARS-CoV-2 variants",
-      authors: "Martinez et al.",
-      journal: "Nature Genetics",
-      year: "2024",
-      doi: "10.1038/s41588-024-1234-5",
-      toolsUsed: ["Multiple Alignment", "Phylogenetic Tree", "Variant Calling"],
-    },
-    {
-      title:
-        "Metagenomic characterization of microbial communities in deep-sea hydrothermal vents",
-      authors: "Johnson et al.",
-      journal: "Science Advances",
-      year: "2024",
-      doi: "10.1126/sciadv.abc1234",
-      toolsUsed: ["Metagenomics", "Sequence Search", "GC Content"],
-    },
-    {
-      title:
-        "Novel algorithms for efficient compression of large-scale genomic datasets",
-      authors: "Williams et al.",
-      journal: "Bioinformatics",
-      year: "2023",
-      doi: "10.1093/bioinformatics/btad123",
-      toolsUsed: ["Data Compression"],
-    },
-  ];
+  // const publications = [
+  //   {
+  //     title:
+  //       "Comparative genomic analysis reveals novel insights into the evolution of SARS-CoV-2 variants",
+  //     authors: "Martinez et al.",
+  //     journal: "Nature Genetics",
+  //     year: "2024",
+  //     doi: "10.1038/s41588-024-1234-5",
+  //     toolsUsed: ["Multiple Alignment", "Phylogenetic Tree", "Variant Calling"],
+  //   },
+  //   {
+  //     title:
+  //       "Metagenomic characterization of microbial communities in deep-sea hydrothermal vents",
+  //     authors: "Johnson et al.",
+  //     journal: "Science Advances",
+  //     year: "2024",
+  //     doi: "10.1126/sciadv.abc1234",
+  //     toolsUsed: ["Metagenomics", "Sequence Search", "GC Content"],
+  //   },
+  //   {
+  //     title:
+  //       "Novel algorithms for efficient compression of large-scale genomic datasets",
+  //     authors: "Williams et al.",
+  //     journal: "Bioinformatics",
+  //     year: "2023",
+  //     doi: "10.1093/bioinformatics/btad123",
+  //     toolsUsed: ["Data Compression"],
+  //   },
+  // ];
 
   // Platform advantages
   const advantages = [

@@ -20,7 +20,8 @@ import {
   UserCircle,
   FilterX,
 } from "lucide-react";
-
+import { tools } from "@/lib/services/tools";
+import { KaiToolsInterface } from "@/lib/services/tools/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -28,13 +29,7 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Mock interfaces since we don't have access to the actual types
-interface KaiToolsInterface {
-  name: string;
-  description: string;
-  frontend_url: string;
-}
-
+// Extended tool interface with additional marketplace metadata
 interface MarketplaceToolInterface extends KaiToolsInterface {
   category: string;
   trending?: boolean;
@@ -45,151 +40,125 @@ interface MarketplaceToolInterface extends KaiToolsInterface {
   dateAdded?: string;
   tags?: string[];
   imageUrl?: string;
-  rating?: number;
-  downloads?: number;
-  lastUsed?: string;
 }
 
-// Mock data for tools (since we can't access the actual API)
-const mockTools: MarketplaceToolInterface[] = [
-  {
-    name: "BLAST Search",
-    description:
-      "Basic Local Alignment Search Tool for sequence similarity searching",
-    frontend_url: "/blast-search",
-    category: "Sequence Analysis",
-    trending: true,
-    new: false,
-    favorites: 245,
-    isFavorited: false,
-    usageCount: 1250,
-    dateAdded: "2024-01-15",
-    tags: ["DNA", "Protein", "Alignment"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.8,
-    downloads: 5420,
-    lastUsed: "2 hours ago",
-  },
-  {
-    name: "GC Content Calculator",
-    description: "Calculate GC content percentage in DNA sequences",
-    frontend_url: "/gc-calculator",
-    category: "Genomics",
-    trending: false,
-    new: true,
-    favorites: 89,
-    isFavorited: true,
-    usageCount: 567,
-    dateAdded: "2024-06-10",
-    tags: ["DNA", "Statistics"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.5,
-    downloads: 1230,
-    lastUsed: "1 day ago",
-  },
-  {
-    name: "Phylogenetic Tree Builder",
-    description: "Construct phylogenetic trees from sequence alignments",
-    frontend_url: "/phylo-tree",
-    category: "Comparative Genomics",
-    trending: true,
-    new: false,
-    favorites: 156,
-    isFavorited: false,
-    usageCount: 890,
-    dateAdded: "2024-03-22",
-    tags: ["Evolution", "Tree", "Alignment"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.7,
-    downloads: 2340,
-    lastUsed: "3 days ago",
-  },
-  {
-    name: "Genome Visualizer",
-    description: "Interactive genome browser and visualization tool",
-    frontend_url: "/genome-viz",
-    category: "Visualization",
-    trending: false,
-    new: true,
-    favorites: 203,
-    isFavorited: true,
-    usageCount: 1100,
-    dateAdded: "2024-06-05",
-    tags: ["Visualization", "Browser", "Interactive"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.9,
-    downloads: 3450,
-    lastUsed: "5 hours ago",
-  },
-  {
-    name: "Protein Structure Predictor",
-    description: "Predict protein secondary and tertiary structures",
-    frontend_url: "/protein-structure",
-    category: "Genomics",
-    trending: true,
-    new: false,
-    favorites: 178,
-    isFavorited: false,
-    usageCount: 723,
-    dateAdded: "2024-02-18",
-    tags: ["Protein", "Structure", "Prediction"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.6,
-    downloads: 2890,
-    lastUsed: "1 week ago",
-  },
-  {
-    name: "RNA-Seq Analyzer",
-    description: "Comprehensive RNA sequencing data analysis pipeline",
-    frontend_url: "/rna-seq",
-    category: "Sequence Analysis",
-    trending: false,
-    new: true,
-    favorites: 134,
-    isFavorited: true,
-    usageCount: 445,
-    dateAdded: "2024-06-08",
-    tags: ["RNA", "Sequencing", "Pipeline"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.4,
-    downloads: 1670,
-    lastUsed: "4 hours ago",
-  },
-  {
-    name: "Variant Caller",
-    description: "Identify genetic variants from sequencing data",
-    frontend_url: "/variant-caller",
-    category: "Genomics",
-    trending: true,
-    new: false,
-    favorites: 267,
-    isFavorited: false,
-    usageCount: 1340,
-    dateAdded: "2024-01-30",
-    tags: ["Variants", "SNP", "Genomics"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.8,
-    downloads: 4120,
-    lastUsed: "6 hours ago",
-  },
-  {
-    name: "Codon Usage Analyzer",
-    description: "Analyze codon usage bias in protein-coding sequences",
-    frontend_url: "/codon-usage",
-    category: "Sequence Analysis",
-    trending: false,
-    new: false,
-    favorites: 92,
-    isFavorited: false,
-    usageCount: 334,
-    dateAdded: "2024-04-12",
-    tags: ["Codon", "Bias", "Analysis"],
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    rating: 4.3,
-    downloads: 890,
-    lastUsed: "2 weeks ago",
-  },
-];
+// // Mock data for tools (since we can't access the actual API)
+// const mockTools: MarketplaceToolInterface[] = [
+//   {
+//     name: "BLAST Search",
+//     description:
+//       "Basic Local Alignment Search Tool for sequence similarity searching",
+//     frontend_url: "/blast-search",
+//     category: "Sequence Analysis",
+//     trending: true,
+//     new: false,
+//     favorites: 245,
+//     isFavorited: false,
+//     usageCount: 1250,
+//     dateAdded: "2024-01-15",
+//     tags: ["DNA", "Protein", "Alignment"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//     lastUsed: "2 hours ago",
+//   },
+//   {
+//     name: "GC Content Calculator",
+//     description: "Calculate GC content percentage in DNA sequences",
+//     frontend_url: "/gc-calculator",
+//     category: "Genomics",
+//     trending: false,
+//     new: true,
+//     favorites: 89,
+//     isFavorited: true,
+//     usageCount: 567,
+//     dateAdded: "2024-06-10",
+//     tags: ["DNA", "Statistics"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//   },
+//   {
+//     name: "Phylogenetic Tree Builder",
+//     description: "Construct phylogenetic trees from sequence alignments",
+//     frontend_url: "/phylo-tree",
+//     category: "Comparative Genomics",
+//     trending: true,
+//     new: false,
+//     favorites: 156,
+//     isFavorited: false,
+//     usageCount: 890,
+//     dateAdded: "2024-03-22",
+//     tags: ["Evolution", "Tree", "Alignment"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//   },
+//   {
+//     name: "Genome Visualizer",
+//     description: "Interactive genome browser and visualization tool",
+//     frontend_url: "/genome-viz",
+//     category: "Visualization",
+//     trending: false,
+//     new: true,
+//     favorites: 203,
+//     isFavorited: true,
+//     usageCount: 1100,
+//     dateAdded: "2024-06-05",
+//     tags: ["Visualization", "Browser", "Interactive"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//   },
+//   {
+//     name: "Protein Structure Predictor",
+//     description: "Predict protein secondary and tertiary structures",
+//     frontend_url: "/protein-structure",
+//     category: "Genomics",
+//     trending: true,
+//     new: false,
+//     favorites: 178,
+//     isFavorited: false,
+//     usageCount: 723,
+//     dateAdded: "2024-02-18",
+//     tags: ["Protein", "Structure", "Prediction"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//   },
+//   {
+//     name: "RNA-Seq Analyzer",
+//     description: "Comprehensive RNA sequencing data analysis pipeline",
+//     frontend_url: "/rna-seq",
+//     category: "Sequence Analysis",
+//     trending: false,
+//     new: true,
+//     favorites: 134,
+//     isFavorited: true,
+//     usageCount: 445,
+//     dateAdded: "2024-06-08",
+//     tags: ["RNA", "Sequencing", "Pipeline"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//   },
+//   {
+//     name: "Variant Caller",
+//     description: "Identify genetic variants from sequencing data",
+//     frontend_url: "/variant-caller",
+//     category: "Genomics",
+//     trending: true,
+//     new: false,
+//     favorites: 267,
+//     isFavorited: false,
+//     usageCount: 1340,
+//     dateAdded: "2024-01-30",
+//     tags: ["Variants", "SNP", "Genomics"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//   },
+//   {
+//     name: "Codon Usage Analyzer",
+//     description: "Analyze codon usage bias in protein-coding sequences",
+//     frontend_url: "/codon-usage",
+//     category: "Sequence Analysis",
+//     trending: false,
+//     new: false,
+//     favorites: 92,
+//     isFavorited: false,
+//     usageCount: 334,
+//     dateAdded: "2024-04-12",
+//     tags: ["Codon", "Bias", "Analysis"],
+//     imageUrl: "/placeholder.svg?height=200&width=300",
+//   },
+// ];
 
 // Mock data for projects and activity
 const mockProjects = [
@@ -262,12 +231,128 @@ const CATEGORIES = [
 ];
 
 const Dashboard = () => {
-  const [toolsData, setToolsData] =
-    useState<MarketplaceToolInterface[]>(mockTools);
-  const [displayedTools, setDisplayedTools] =
-    useState<MarketplaceToolInterface[]>(mockTools);
+  const [toolsData, setToolsData] = useState<MarketplaceToolInterface[]>([]);
+  const [displayedTools, setDisplayedTools] = useState<
+    MarketplaceToolInterface[]
+  >([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  // Fetch tools and add marketplace metadata
+  useEffect(() => {
+    const fetchTools = async () => {
+      try {
+        const response = await tools();
+        const baseTools = response as KaiToolsInterface[];
+
+        // Enhance tools with marketplace metadata
+        const enhancedTools = baseTools.map((tool) => {
+          const category = assignToolCategory(tool.name);
+          const isNew = Math.random() > 0.7; // Random for demo
+          const isTrending = Math.random() > 0.7; // Random for demo
+          const favCount = Math.floor(Math.random() * 100);
+          // const imageUrl = getToolImage(tool.name, category);
+
+          return {
+            ...tool,
+            category,
+            trending: isTrending,
+            new: isNew,
+            favorites: favCount,
+            isFavorited: false,
+            usageCount: Math.floor(Math.random() * 1000),
+            dateAdded: getRandomRecentDate(),
+            tags: getToolTags(tool.name),
+            // imageUrl,
+          };
+        });
+
+        setToolsData(enhancedTools);
+        setDisplayedTools(enhancedTools);
+
+        // Load favorites from localStorage
+        const savedFavorites = localStorage.getItem("toolFavorites");
+        if (savedFavorites) {
+          const favs = JSON.parse(savedFavorites);
+          setFavorites(favs);
+
+          // Mark favorited tools
+          setToolsData((prevTools) =>
+            prevTools.map((tool) => ({
+              ...tool,
+              isFavorited: favs.includes(tool.name),
+            })),
+          );
+          setDisplayedTools((prevTools) =>
+            prevTools.map((tool) => ({
+              ...tool,
+              isFavorited: favs.includes(tool.name),
+            })),
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching tools:", error);
+      }
+    };
+    fetchTools();
+  }, []);
+
+  // Helper function to assign a category based on tool name
+  const assignToolCategory = (name: string): string => {
+    const nameLC = name.toLowerCase();
+    if (
+      nameLC.includes("sequence") ||
+      nameLC.includes("blast") ||
+      nameLC.includes("search") ||
+      nameLC.includes("mutator")
+    ) {
+      return "Sequence Analysis";
+    } else if (
+      nameLC.includes("gc") ||
+      nameLC.includes("codon") ||
+      nameLC.includes("compression") ||
+      nameLC.includes("variant")
+    ) {
+      return "Genomics";
+    } else if (
+      nameLC.includes("phylogenetic") ||
+      nameLC.includes("alignment") ||
+      nameLC.includes("meta")
+    ) {
+      return "Comparative Genomics";
+    } else {
+      return "Visualization";
+    }
+  };
+
+  // Helper function to generate random date in the last 90 days
+  const getRandomRecentDate = (): string => {
+    const now = new Date();
+    const daysAgo = Math.floor(Math.random() * 90);
+    now.setDate(now.getDate() - daysAgo);
+    return now.toISOString().split("T")[0];
+  };
+
+  // Helper function to assign relevant tags to tools
+  const getToolTags = (name: string): string[] => {
+    const nameLC = name.toLowerCase();
+    const tags: string[] = [];
+
+    if (nameLC.includes("dna") || nameLC.includes("sequence")) tags.push("DNA");
+    if (nameLC.includes("rna")) tags.push("RNA");
+    if (nameLC.includes("protein")) tags.push("Protein");
+    if (nameLC.includes("phylogenetic") || nameLC.includes("tree"))
+      tags.push("Evolution");
+    if (nameLC.includes("visual")) tags.push("Visualization");
+    if (nameLC.includes("align")) tags.push("Alignment");
+    if (nameLC.includes("variant")) tags.push("Genomics");
+
+    // Add at least one tag if none were matched
+    if (tags.length === 0) tags.push("Bioinformatics");
+
+    return tags;
+  };
 
   // Filter tools based on search query and active category
   useEffect(() => {
@@ -292,16 +377,42 @@ const Dashboard = () => {
     setDisplayedTools(filtered);
   }, [searchQuery, activeCategory, toolsData]);
 
+  // Toggle favorite status for a tool
+  const toggleFavorite = (toolName: string) => {
+    let newFavorites: string[];
+
+    if (favorites.includes(toolName)) {
+      newFavorites = favorites.filter((name) => name !== toolName);
+    } else {
+      newFavorites = [...favorites, toolName];
+    }
+
+    setFavorites(newFavorites);
+    localStorage.setItem("toolFavorites", JSON.stringify(newFavorites));
+
+    // Update tools data
+    setToolsData((prevTools) =>
+      prevTools.map((tool) => ({
+        ...tool,
+        isFavorited: newFavorites.includes(tool.name),
+      })),
+    );
+    setDisplayedTools((prevTools) =>
+      prevTools.map((tool) => ({
+        ...tool,
+        isFavorited: newFavorites.includes(tool.name),
+      })),
+    );
+  };
+
+  // Filter functions for different tabs
+  const getNewTools = () => displayedTools.filter((tool) => tool.new);
+
+  // Reset all filters
   const resetFilters = () => {
     setActiveCategory(null);
     setSearchQuery("");
   };
-
-  // Filter functions for different sections
-  const getRecommendedTools = () =>
-    displayedTools.filter((tool) => tool.trending);
-  const getNewTools = () => displayedTools.filter((tool) => tool.new);
-
   return (
     <div className="flex h-screen bg-background text-foreground p-4 gap-4">
       {/* Left Sidebar - Minimized */}
