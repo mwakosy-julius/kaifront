@@ -28,6 +28,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { DashboardNavbar } from "@/components/dashboard/navbar";
 
 // Extended tool interface with additional marketplace metadata
 interface MarketplaceToolInterface extends KaiToolsInterface {
@@ -230,6 +231,19 @@ const CATEGORIES = [
   "Visualization",
 ];
 
+function getRandomItems(array: any[], count: number) {
+  // Make a copy of the array to avoid mutating the original
+  const shuffled = array.slice();
+
+  // Fisher-Yates shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled.slice(0, count);
+}
+
 const Dashboard = () => {
   const [toolsData, setToolsData] = useState<MarketplaceToolInterface[]>([]);
   const [displayedTools, setDisplayedTools] = useState<
@@ -408,6 +422,12 @@ const Dashboard = () => {
   // Filter functions for different tabs
   const getNewTools = () => displayedTools.filter((tool) => tool.new);
 
+  const getRecommendedTools = () => {
+    // choose random tools
+    const recommendedTools = getRandomItems(displayedTools, 4);
+    return recommendedTools.length > 0 ? recommendedTools : displayedTools;
+  };
+
   // Reset all filters
   const resetFilters = () => {
     setActiveCategory(null);
@@ -508,11 +528,7 @@ const Dashboard = () => {
         <div className="flex items-center justify-between p-4 border-b border-border">
           <div className="flex items-center justify-center flex-1">
             <div className="flex items-center space-x-6">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="w-8 h-8 hover:scale-105 transition-transform duration-200"
-              >
+              <Button variant="ghost" size="icon" className="w-8 h-8">
                 <Home className="w-4 h-4" />
               </Button>
 
@@ -528,21 +544,11 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:scale-105 transition-transform duration-200"
-            >
+          <div className="flex items-center">
+            <Button variant="ghost" size="icon">
               <Bell className="w-4 h-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:scale-105 transition-transform duration-200"
-            >
-              <UserCircle className="w-4 h-4" />
-            </Button>
+            <DashboardNavbar />
           </div>
         </div>
 
@@ -559,12 +565,7 @@ const Dashboard = () => {
                   </p>
                 </div>
                 {(activeCategory || searchQuery) && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={resetFilters}
-                    className="hover:scale-105 transition-transform duration-200"
-                  >
+                  <Button variant="ghost" size="sm" onClick={resetFilters}>
                     <FilterX className="w-4 h-4 mr-1" />
                     Reset filters
                   </Button>
@@ -579,7 +580,7 @@ const Dashboard = () => {
                     variant={
                       activeCategory === category ? "default" : "outline"
                     }
-                    className="cursor-pointer px-3 py-1 text-xs rounded-full transition-all duration-200 hover:scale-105 hover:shadow-sm"
+                    className="cursor-pointer px-3 py-1 text-xs rounded-full transition-all duration-200 hover:shadow-sm"
                     onClick={() =>
                       setActiveCategory(
                         activeCategory === category ? null : category,
@@ -601,10 +602,7 @@ const Dashboard = () => {
 
               {displayedTools.length > 10 && (
                 <div className="text-center mt-6">
-                  <Button
-                    variant="outline"
-                    className="hover:scale-105 transition-transform duration-200"
-                  >
+                  <Button variant="outline">
                     Load more tools
                     <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -623,7 +621,7 @@ const Dashboard = () => {
                 </div>
                 <Button
                   variant="ghost"
-                  className="text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-200"
+                  className="text-muted-foreground hover:text-foreground transition-all duration-200"
                 >
                   Show all
                 </Button>
@@ -643,7 +641,7 @@ const Dashboard = () => {
                 <h2 className="text-2xl font-bold">Recommended for you</h2>
                 <Button
                   variant="ghost"
-                  className="text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-200"
+                  className="text-muted-foreground hover:text-foreground transition-all duration-200"
                 >
                   Show all
                 </Button>
@@ -715,19 +713,12 @@ const Dashboard = () => {
               ))}
             </div>
 
-            <Button
-              variant="outline"
-              className="w-full mt-3 hover:scale-105 transition-transform duration-200"
-              size="sm"
-            >
+            <Button variant="outline" className="w-full mt-3" size="sm">
               <Folder className="w-3 h-3 mr-1" />
               View all
             </Button>
 
-            <Button
-              className="w-full mt-2 hover:scale-105 transition-transform duration-200"
-              size="sm"
-            >
+            <Button className="w-full mt-2" size="sm">
               <Plus className="w-3 h-3 mr-1" />
               New project
             </Button>
@@ -748,8 +739,8 @@ const ToolCard = ({
 }) => {
   if (variant === "minimal") {
     return (
-      <div className="group flex items-center space-x-3 bg-card hover:bg-accent/50 rounded-md p-2 transition-all duration-200 cursor-pointer hover:shadow-sm hover:scale-[1.02]">
-        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+      <div className="group flex items-center space-x-3 bg-card hover:bg-accent/50 rounded-md p-2 transition-all duration-200 cursor-pointer hover:shadow-sm">
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded flex items-center justify-center transition-transform duration-200">
           <div className="text-white text-sm font-bold">
             {tool.name.charAt(0)}
           </div>
@@ -767,18 +758,18 @@ const ToolCard = ({
   }
 
   return (
-    <div className="group bg-card hover:bg-accent/50 rounded-lg p-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.02] hover:-translate-y-1">
+    <div className="group bg-card hover:bg-accent/50 rounded-lg p-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-1">
       <div className="relative mb-3 overflow-hidden rounded-md">
         <img
           src={tool.imageUrl || "/placeholder.svg"}
           alt={tool.name}
-          className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+          className="w-full aspect-square object-cover transition-transform duration-300"
         />
 
         {/* Badges */}
         <div className="absolute bottom-2 left-2 flex gap-1">
           {tool.new && (
-            <Badge className="text-xs bg-green-500 hover:bg-green-500 transition-all duration-200 group-hover:scale-105">
+            <Badge className="text-xs bg-green-500 hover:bg-green-500 transition-all duration-200">
               New
             </Badge>
           )}
