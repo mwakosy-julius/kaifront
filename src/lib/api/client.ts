@@ -91,7 +91,7 @@ axiosInstance.interceptors.response.use(
     const newAccessToken = response.headers["x-access-token"];
     const newRefreshToken = response.headers["x-refresh-token"];
 
-    console.log(response);
+    // console.log(response);
     if (newAccessToken) {
       Cookies.set(ACCESS_TOKEN_COOKIE, newAccessToken, COOKIE_CONFIG);
     }
@@ -114,42 +114,42 @@ axiosInstance.interceptors.response.use(
 
     // Handle 401 Unauthorized errors (token expired)
     if (error.response?.status === 401 && originalRequest) {
-      try {
-        apiLogger.info("Token expired, attempting to refresh...");
+      // try {
+      //   apiLogger.info("Token expired, attempting to refresh...");
 
-        const refreshToken = Cookies.get(REFRESH_TOKEN_COOKIE);
-        if (refreshToken) {
-          const response = await axiosInstance.post("/auth/refresh/", {
-            refreshToken,
-          });
+      //   // const refreshToken = Cookies.get(REFRESH_TOKEN_COOKIE);
+      //   // if (refreshToken) {
+      //   //   const response = await axiosInstance.post("/auth/refresh", {
+      //   //     refreshToken,
+      //   //   });
 
-          // The new tokens should be set by the server in HTTP-only cookies
-          // But if they're in the response body for some reason, we'll handle that too
-          const { accessToken } = response.data;
-          if (accessToken) {
-            Cookies.set(ACCESS_TOKEN_COOKIE, accessToken, COOKIE_CONFIG);
-          }
+      //   //   // The new tokens should be set by the server in HTTP-only cookies
+      //   //   // But if they're in the response body for some reason, we'll handle that too
+      //   //   const { accessToken } = response.data;
+      //   //   if (accessToken) {
+      //   //     Cookies.set(ACCESS_TOKEN_COOKIE, accessToken, COOKIE_CONFIG);
+      //   //   }
 
-          apiLogger.info("Token refreshed successfully");
+      //   //   apiLogger.info("Token refreshed successfully");
 
-          // Update the authorization header with the new token
-          originalRequest.headers.Authorization = `Bearer ${
-            accessToken || Cookies.get(ACCESS_TOKEN_COOKIE)
-          }`;
-          return axiosInstance(originalRequest);
-        }
-      } catch (refreshError) {
-        apiLogger.error(
-          "REFRESH",
-          "/auth/refresh/",
-          refreshError as AxiosError<{
-            message?: string;
-            code?: string;
-            detail: string;
-          }>,
-        );
-        handleAuthError();
-      }
+      //   //   // Update the authorization header with the new token
+      //   //   originalRequest.headers.Authorization = `Bearer ${
+      //   //     accessToken || Cookies.get(ACCESS_TOKEN_COOKIE)
+      //   //   }`;
+      //   //   return axiosInstance(originalRequest);
+      //   // }
+      // } catch (refreshError) {
+      // }
+      // apiLogger.error(
+      //   "REFRESH",
+      //   "/auth/refresh/",
+      //   refreshError as AxiosError<{
+      //     message?: string;
+      //     code?: string;
+      //     detail: string;
+      //   }>,
+      // );
+      handleAuthError();
     }
 
     return Promise.reject(handleError(error));
