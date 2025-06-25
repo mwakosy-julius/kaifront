@@ -2,10 +2,10 @@ import { Navigate, Outlet } from "react-router-dom";
 
 // local imports
 import { Page } from "../core/page";
-import { Sidebar } from "../dashboard/sidebar";
+import { RightSidebar, Sidebar } from "../dashboard/sidebar";
 import { useAuth } from "../../context/AuthContext";
-import { DashboardNavbar } from "../dashboard/navbar";
 import { SidebarProvider } from "@/context/SidebarContext";
+import { DashboardNavbar } from "../dashboard/navbar";
 
 const ProtectedLayoutContent = () => {
   const { isAuthenticated } = useAuth();
@@ -15,23 +15,14 @@ const ProtectedLayoutContent = () => {
   }
 
   return (
-    <Outlet />
-    // <Page
-    //   overflowHidden
-    //   className="flex !flex-row bg-background text-foreground"
-    // >
-    //   <Sidebar />
-    //   <Page
-    //     overflowHidden
-    //     className="flex flex-col flex-1 border-l border-border"
-    //   >
-    //     <DashboardNavbar />
-    //     <div className="relative flex-1 overflow-auto">
-    //       <main className="min-h-full my-6">
-    //       </main>
-    //     </div>
-    //   </Page>
-    // </Page>
+    <Page className="h-screen bg-background flex flex-col text-foreground p-4 gap-4">
+      <DashboardNavbar />
+      <Page className="flex gap-4">
+        <Sidebar />
+        <Outlet />
+        <RightSidebar />
+      </Page>
+    </Page>
   );
 };
 

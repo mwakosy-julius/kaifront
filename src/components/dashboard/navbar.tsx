@@ -1,6 +1,6 @@
 import { useUser } from "@/context/AuthContext";
 import AvatarBubble from "./avatar";
-// import BBreadcrumb from "./bread-crumb";
+import BBreadcrumb from "./bread-crumb";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,7 +25,7 @@ export const DashboardNavbar = () => {
         "flex items-center justify-between",
       )}
     >
-      {/* <BBreadcrumb /> */}
+      <BBreadcrumb />
 
       <div className="flex items-center gap-4">
         <DropdownMenu>

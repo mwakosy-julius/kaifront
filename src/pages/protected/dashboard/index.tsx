@@ -1,34 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  SearchIcon,
-  Plus,
-  Folder,
-  BookOpen,
-  Heart,
-  Library,
-  ChevronRight,
-  GitBranch,
-  Download,
-  Share,
-  Zap,
-  Users,
-  Bell,
-  Home,
-  PlusCircle,
-  UserCircle,
-  FilterX,
-} from "lucide-react";
+import { SearchIcon, Folder, Bell, Home, FilterX } from "lucide-react";
 import { tools } from "@/lib/services/tools";
 import { KaiToolsInterface } from "@/lib/services/tools/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { DashboardNavbar } from "@/components/dashboard/navbar";
+import { getToolImage } from "@/lib/constants/tool-images";
+import { Link } from "react-router-dom";
 
 // Extended tool interface with additional marketplace metadata
 interface MarketplaceToolInterface extends KaiToolsInterface {
@@ -161,68 +143,6 @@ interface MarketplaceToolInterface extends KaiToolsInterface {
 //   },
 // ];
 
-// Mock data for projects and activity
-const mockProjects = [
-  {
-    id: 1,
-    name: "COVID-19 Genome Analysis",
-    status: "active",
-    progress: 75,
-  },
-  {
-    id: 2,
-    name: "Plant Genomics Study",
-    status: "completed",
-    progress: 100,
-  },
-  {
-    id: 3,
-    name: "Protein Folding Research",
-    status: "draft",
-    progress: 30,
-  },
-  {
-    id: 4,
-    name: "Cancer Genomics Pipeline",
-    status: "active",
-    progress: 60,
-  },
-  {
-    id: 5,
-    name: "RNA Expression Analysis",
-    status: "active",
-    progress: 45,
-  },
-  {
-    id: 6,
-    name: "Microbiome Study",
-    status: "draft",
-    progress: 15,
-  },
-];
-
-const mockActivity = [
-  { id: 1, action: "Used BLAST Search", time: "2h", type: "tool_usage" },
-  { id: 2, action: "Favorited GC Calculator", time: "5h", type: "favorite" },
-  { id: 3, action: "Completed analysis", time: "1d", type: "project" },
-  { id: 4, action: "Started new project", time: "2d", type: "project" },
-  { id: 5, action: "Shared results", time: "3d", type: "share" },
-  { id: 6, action: "Downloaded dataset", time: "4d", type: "download" },
-  {
-    id: 7,
-    action: "Collaborated on project",
-    time: "5d",
-    type: "collaboration",
-  },
-  { id: 8, action: "Updated analysis", time: "1w", type: "tool_usage" },
-];
-
-const mockCollections = [
-  { id: 1, name: "Sequence Analysis", tools: 5 },
-  { id: 2, name: "Genomics Essentials", tools: 8 },
-  { id: 3, name: "My Research Tools", tools: 12 },
-];
-
 // Tool categories
 const CATEGORIES = [
   "Sequence Analysis",
@@ -266,7 +186,7 @@ const Dashboard = () => {
           const isNew = Math.random() > 0.7; // Random for demo
           const isTrending = Math.random() > 0.7; // Random for demo
           const favCount = Math.floor(Math.random() * 100);
-          // const imageUrl = getToolImage(tool.name, category);
+          const imageUrl = getToolImage(tool.name, category);
 
           return {
             ...tool,
@@ -278,7 +198,7 @@ const Dashboard = () => {
             usageCount: Math.floor(Math.random() * 1000),
             dateAdded: getRandomRecentDate(),
             tags: getToolTags(tool.name),
-            // imageUrl,
+            imageUrl,
           };
         });
 
@@ -434,297 +354,138 @@ const Dashboard = () => {
     setSearchQuery("");
   };
   return (
-    <div className="flex h-screen bg-background text-foreground p-4 gap-4">
-      {/* Left Sidebar - Minimized */}
-      <div className="w-60 bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:shadow-md hover:border-border/80 hover:bg-card/95">
-        {/* Library Header */}
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center space-x-2">
-              <Library className="w-4 h-4" />
-              <h2 className="font-medium text-sm">Your Library</h2>
-            </div>
-            <Button variant="ghost" size="icon" className="w-6 h-6">
-              <PlusCircle className="w-3 h-3" />
+    // {/* Main Content */}
+    <div className="flex-1 flex flex-col overflow-hidden bg-card border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:border-border/80 hover:bg-card/98">
+      {/* Top Navigation */}
+      {/* <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className="flex items-center justify-center flex-1">
+          <div className="flex items-center space-x-6">
+            <Button variant="ghost" size="icon" className="w-8 h-8">
+              <Home className="w-4 h-4" />
             </Button>
+
+            <div className="relative w-80">
+              <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="What do you want to analyze?"
+                className="pl-9 bg-background/60 transition-all duration-200 focus:bg-background focus:shadow-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
         </div>
 
-        {/* Library Content */}
-        <ScrollArea className="flex-1">
-          {/* Collections */}
-          <div className="px-4 pb-4">
-            <h3 className="text-xs font-medium text-muted-foreground mb-2">
-              COLLECTIONS
-            </h3>
-            <div className="space-y-1">
-              {mockCollections.map((collection) => (
-                <div
-                  key={collection.id}
-                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-all duration-200 cursor-pointer group hover:shadow-sm"
-                >
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                    <BookOpen className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium truncate">
-                      {collection.name}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {collection.tools} tools
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <Separator className="mx-3" />
-
-          {/* Recent Activity - Minimized */}
-          <div className="p-4">
-            <h3 className="text-xs font-medium text-muted-foreground mb-2">
-              RECENT ACTIVITY
-            </h3>
-            <div className="space-y-2">
-              {mockActivity.slice(0, 6).map((activity) => (
-                <div
-                  key={activity.id}
-                  className="flex items-center space-x-2 p-1 rounded-md hover:bg-accent/50 transition-all duration-200 cursor-pointer"
-                >
-                  <Avatar className="w-5 h-5">
-                    <AvatarFallback className="text-xs">
-                      {activity.type === "tool_usage" ? (
-                        <Zap className="w-2 h-2" />
-                      ) : activity.type === "favorite" ? (
-                        <Heart className="w-2 h-2" />
-                      ) : activity.type === "project" ? (
-                        <GitBranch className="w-2 h-2" />
-                      ) : activity.type === "share" ? (
-                        <Share className="w-2 h-2" />
-                      ) : activity.type === "download" ? (
-                        <Download className="w-2 h-2" />
-                      ) : (
-                        <Users className="w-2 h-2" />
-                      )}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs truncate">{activity.action}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {activity.time}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </ScrollArea>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-card border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:border-border/80 hover:bg-card/98">
-        {/* Top Navigation */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <div className="flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-6">
-              <Button variant="ghost" size="icon" className="w-8 h-8">
-                <Home className="w-4 h-4" />
-              </Button>
-
-              <div className="relative w-80">
-                <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="What do you want to analyze?"
-                  className="pl-9 bg-background/60 transition-all duration-200 focus:bg-background focus:shadow-sm"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center">
-            <Button variant="ghost" size="icon">
-              <Bell className="w-4 h-4" />
-            </Button>
-            <DashboardNavbar />
-          </div>
+        <div className="flex items-center">
+          <Button variant="ghost" size="icon">
+            <Bell className="w-4 h-4" />
+          </Button>
+          <DashboardNavbar />
         </div>
+      </div> */}
 
-        {/* Main Content Area */}
-        <ScrollArea className="flex-1">
-          <div className="p-4 space-y-6">
-            {/* Featured Tools Section */}
-            <section>
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold">Featured Tools</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Explore tools by research area
-                  </p>
-                </div>
-                {(activeCategory || searchQuery) && (
-                  <Button variant="ghost" size="sm" onClick={resetFilters}>
-                    <FilterX className="w-4 h-4 mr-1" />
-                    Reset filters
-                  </Button>
-                )}
+      {/* Main Content Area */}
+      <ScrollArea className="flex-1">
+        <div className="p-4 space-y-6">
+          {/* Featured Tools Section */}
+          <section>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-bold">Featured Tools</h2>
+                <p className="text-sm text-muted-foreground">
+                  Explore tools by research area
+                </p>
               </div>
+              {(activeCategory || searchQuery) && (
+                <Button variant="ghost" size="sm" onClick={resetFilters}>
+                  <FilterX className="w-4 h-4 mr-1" />
+                  Reset filters
+                </Button>
+              )}
+            </div>
 
-              {/* Category pills */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {CATEGORIES.map((category) => (
-                  <Badge
-                    key={category}
-                    variant={
-                      activeCategory === category ? "default" : "outline"
-                    }
-                    className="cursor-pointer px-3 py-1 text-xs rounded-full transition-all duration-200 hover:shadow-sm"
-                    onClick={() =>
-                      setActiveCategory(
-                        activeCategory === category ? null : category,
-                      )
-                    }
-                  >
-                    <Folder className="w-3 h-3 mr-1" />
-                    {category}
-                  </Badge>
-                ))}
-              </div>
+            {/* Category pills */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {CATEGORIES.map((category) => (
+                <Badge
+                  key={category}
+                  variant={activeCategory === category ? "default" : "outline"}
+                  className="cursor-pointer px-3 py-1 text-xs rounded-full transition-all duration-200 hover:shadow-sm"
+                  onClick={() =>
+                    setActiveCategory(
+                      activeCategory === category ? null : category,
+                    )
+                  }
+                >
+                  <Folder className="w-3 h-3 mr-1" />
+                  {category}
+                </Badge>
+              ))}
+            </div>
 
-              {/* Tools grid based on active category or all tools */}
-              <div className="grid grid-cols-4 gap-3">
-                {displayedTools.slice(0, 8).map((tool) => (
-                  <ToolCard key={tool.name} tool={tool} variant="minimal" />
-                ))}
-              </div>
+            {/* Tools grid based on active category or all tools */}
+            <div className="grid grid-cols-4 gap-3">
+              {displayedTools.slice(0, 8).map((tool) => (
+                <ToolCard key={tool.name} tool={tool} variant="minimal" />
+              ))}
+            </div>
 
-              {displayedTools.length > 10 && (
+            {/* {displayedTools.length > 10 && (
                 <div className="text-center mt-6">
                   <Button variant="outline">
                     Load more tools
                     <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
-              )}
-            </section>
+              )} */}
+          </section>
 
-            {/* New Releases */}
-            <section>
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-2xl font-bold">New releases</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Fresh tools for your research
-                  </p>
-                </div>
-                <Button
-                  variant="ghost"
-                  className="text-muted-foreground hover:text-foreground transition-all duration-200"
-                >
-                  Show all
-                </Button>
+          {/* New Releases */}
+          <section>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-2xl font-bold">New releases</h2>
+                <p className="text-sm text-muted-foreground">
+                  Fresh tools for your research
+                </p>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                {getNewTools()
-                  .slice(0, 5)
-                  .map((tool) => (
-                    <ToolCard key={tool.name} tool={tool} />
-                  ))}
-              </div>
-            </section>
-
-            {/* Trending */}
-            <section>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold">Recommended for you</h2>
-                <Button
-                  variant="ghost"
-                  className="text-muted-foreground hover:text-foreground transition-all duration-200"
-                >
-                  Show all
-                </Button>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                {getRecommendedTools()
-                  .slice(0, 5)
-                  .map((tool) => (
-                    <ToolCard key={tool.name} tool={tool} />
-                  ))}
-              </div>
-            </section>
-          </div>
-        </ScrollArea>
-      </div>
-
-      {/* Right Sidebar - Minimized Projects */}
-      <div className="w-60 bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:shadow-md hover:border-border/80 hover:bg-card/95">
-        {/* Projects Header */}
-        <div className="p-4 border-b border-border">
-          <div className="flex items-center justify-between">
-            <h3 className="font-medium text-sm">Your Projects</h3>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="w-6 h-6 hover:scale-105 transition-transform duration-200"
-            >
-              <Plus className="w-3 h-3" />
-            </Button>
-          </div>
-        </div>
-
-        <ScrollArea className="flex-1">
-          {/* Minimal Projects */}
-          <div className="p-4">
-            <div className="space-y-2">
-              {mockProjects.map((project) => (
-                <div
-                  key={project.id}
-                  className="p-2 rounded-md hover:bg-accent/50 transition-all duration-200 cursor-pointer hover:shadow-sm hover:scale-[1.02]"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-xs font-medium truncate flex-1">
-                      {project.name}
-                    </h4>
-                    <Badge
-                      variant={
-                        project.status === "active"
-                          ? "default"
-                          : project.status === "completed"
-                            ? "secondary"
-                            : "outline"
-                      }
-                      className="text-xs ml-1 transition-all duration-200 hover:scale-105"
-                    >
-                      {project.status}
-                    </Badge>
-                  </div>
-                  <div className="w-full bg-secondary rounded-full h-1 overflow-hidden">
-                    <div
-                      className="bg-primary h-1 rounded-full transition-all duration-500 ease-out"
-                      style={{ width: `${project.progress}%` }}
-                    />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {project.progress}%
-                  </p>
-                </div>
-              ))}
+              <Button
+                variant="ghost"
+                className="text-muted-foreground hover:text-foreground transition-all duration-200"
+              >
+                Show all
+              </Button>
             </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {getNewTools()
+                .slice(0, 5)
+                .map((tool) => (
+                  <ToolCard key={tool.name} tool={tool} />
+                ))}
+            </div>
+          </section>
 
-            <Button variant="outline" className="w-full mt-3" size="sm">
-              <Folder className="w-3 h-3 mr-1" />
-              View all
-            </Button>
-
-            <Button className="w-full mt-2" size="sm">
-              <Plus className="w-3 h-3 mr-1" />
-              New project
-            </Button>
-          </div>
-        </ScrollArea>
-      </div>
+          {/* Trending */}
+          <section>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-bold">Recommended for you</h2>
+              <Button
+                variant="ghost"
+                className="text-muted-foreground hover:text-foreground transition-all duration-200"
+              >
+                Show all
+              </Button>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {getRecommendedTools()
+                .slice(0, 5)
+                .map((tool) => (
+                  <ToolCard key={tool.name} tool={tool} />
+                ))}
+            </div>
+          </section>
+        </div>
+      </ScrollArea>
     </div>
   );
 };
@@ -739,7 +500,10 @@ const ToolCard = ({
 }) => {
   if (variant === "minimal") {
     return (
-      <div className="group flex items-center space-x-3 bg-card hover:bg-accent/50 rounded-md p-2 transition-all duration-200 cursor-pointer hover:shadow-sm">
+      <Link
+        to={`/dashboard/tools${tool.frontend_url}`}
+        className="group flex items-center space-x-3 bg-card hover:bg-accent/50 rounded-md p-2 transition-all duration-200 cursor-pointer hover:shadow-sm"
+      >
         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded flex items-center justify-center transition-transform duration-200">
           <div className="text-white text-sm font-bold">
             {tool.name.charAt(0)}
@@ -753,12 +517,15 @@ const ToolCard = ({
             {tool.category}
           </p>
         </div>
-      </div>
+      </Link>
     );
   }
 
   return (
-    <div className="group bg-card hover:bg-accent/50 rounded-lg p-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-1">
+    <Link
+      to={`/dashboard/tools${tool.frontend_url}`}
+      className=" block group bg-card hover:bg-accent/50 rounded-lg p-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-1"
+    >
       <div className="relative mb-3 overflow-hidden rounded-md">
         <img
           src={tool.imageUrl || "/placeholder.svg"}
@@ -784,7 +551,7 @@ const ToolCard = ({
           {tool.description}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

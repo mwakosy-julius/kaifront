@@ -3,10 +3,11 @@ import { KaiToolsInterface } from "./types";
 
 export const tools = async () => {
   try {
-    const response = await api.client.get<KaiToolsInterface[]>(
+    const response = await api.client.get<{ tools: KaiToolsInterface[] }>(
       api.endpoints.tools.list,
     );
-    return response;
+    // @ts-ignore
+    return response?.tools || [];
   } catch (error) {
     apiLogger.error(
       "GET",

@@ -11,17 +11,18 @@ interface PageProps {
 export const Page: React.FC<PageProps> = ({
   children,
   className = "",
-  overflowHidden = false,
-  container = false,
-  isInnerPage = false,
+  // overflowHidden = false,
+  // container = false,
+  // isInnerPage = false,
 }) => {
   return (
     <div
       className={cn(
-        `bg-backgorund w-full h-svh ${className} flex flex-col`,
-        overflowHidden ? "overflow-hidden" : "overflow-auto",
-        container ? "container mx-auto" : "",
-        isInnerPage ? "h-[calc(100vh-70px)]:" : ""
+        // `bg-backgorund w-full h-svh flex flex-col`,
+        // overflowHidden ? "overflow-hidden" : "overflow-auto",
+        // container ? "container mx-auto" : "",
+        // isInnerPage ? "h-[calc(100vh-70px)]:" : "",
+        className,
       )}
     >
       {children}
