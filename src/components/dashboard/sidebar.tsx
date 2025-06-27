@@ -188,7 +188,7 @@ export const Sidebar = () => {
       {/* Left Sidebar */}
       <div
         className={cn(
-          "bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95",
+          "h-full bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95",
           isExpanded ? "w-60" : "w-16",
         )}
       >
@@ -317,7 +317,7 @@ export const Sidebar = () => {
 export const RightSidebar = () => {
   return (
     // {/* Right Sidebar - Minimized Projects */}
-    <div className="w-60 bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95">
+    <div className="w-60 h-full bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95">
       {/* Projects Header */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between">

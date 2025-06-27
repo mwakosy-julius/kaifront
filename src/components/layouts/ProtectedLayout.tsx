@@ -26,9 +26,11 @@ const ProtectedLayoutContent = () => {
       <DashboardNavbar
         containerClassName={!showSidebars ? "border-b border-border pb-4" : ""}
       />
-      <Page className="flex gap-4">
+      <Page className="flex gap-4 flex-1 min-h-0">
         {showSidebars && <Sidebar />}
-        <Outlet />
+        <div className="flex-1 min-h-0 overflow-auto">
+          <Outlet />
+        </div>
         {showSidebars && <RightSidebar />}
       </Page>
     </Page>
