@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AxiosError } from "axios";
 import {
+  Primer,
   primerDesign,
   PrimerRequest,
-  // Primer,
 } from "@/lib/services/tools/primer_design";
 import {
   Card,
@@ -42,13 +42,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-interface Primer {
-  sequence: string;
-  tm: number;
-  gc: number;
-  length: number;
-}
 
 const PrimerDesigner: React.FC = () => {
   const [sequence, setSequence] = useState<string>(
@@ -141,8 +134,8 @@ const PrimerDesigner: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto p-4">
-      <Card className="border-none shadow-lg bg-background/80 backdrop-blur-md">
+    <div className="container mx-auto p-4">
+      <Card className="border-none shadow-none">
         <CardHeader>
           <div className="flex items-start justify-between w-full gap-4">
             <div className="flex flex-col gap-3">
@@ -224,7 +217,7 @@ const PrimerDesigner: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="flex justify-center gap-4">
+          <div className="flex gap-4">
             <Button
               onClick={handlePrimerDesign}
               disabled={loading || !sequence}
@@ -275,7 +268,7 @@ const PrimerDesigner: React.FC = () => {
             transition={{ duration: 0.5 }}
             className="mt-10"
           >
-            <Card className="shadow-lg">
+            <Card className="shadow-none">
               <CardHeader>
                 <CardTitle className="text-2xl">Designed Primers</CardTitle>
                 <CardDescription>
@@ -305,7 +298,8 @@ const PrimerDesigner: React.FC = () => {
                               >
                                 {base}
                               </span>
-                            ))}
+                            ))}{" "}
+                            ({primer.type})
                           </div>
                         </TableCell>
                         <TableCell>{primer.tm.toFixed(1)}</TableCell>
