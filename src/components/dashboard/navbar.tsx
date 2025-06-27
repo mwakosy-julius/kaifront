@@ -7,14 +7,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User } from "lucide-react";
+import { LogOut, SearchIcon, User } from "lucide-react";
 import { logout } from "@/lib/services/auth";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "../shared/theme-toggler-button";
 import { Link } from "react-router-dom";
+import { Input } from "../ui/input";
+import { useState } from "react";
 
-export const DashboardNavbar = () => {
+export const DashboardNavbar = ({
+  containerClassName,
+}: {
+  containerClassName?: string;
+}) => {
   const user = useUser();
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div
@@ -23,9 +30,20 @@ export const DashboardNavbar = () => {
         // "border-b border-border",
         "bg-background",
         "flex items-center justify-between",
+        containerClassName,
       )}
     >
       <BBreadcrumb />
+
+      <div className="relative w-80">
+        <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="What do you want to analyze?"
+          className="pl-9 bg-background/60 transition-all duration-200 focus:bg-background focus:shadow-sm"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
 
       <div className="flex items-center gap-4">
         <DropdownMenu>

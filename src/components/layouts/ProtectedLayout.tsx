@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 // local imports
 import { Page } from "../core/page";
@@ -7,8 +7,15 @@ import { useAuth } from "../../context/AuthContext";
 import { SidebarProvider } from "@/context/SidebarContext";
 import { DashboardNavbar } from "../dashboard/navbar";
 
+const pathsToHideSidebars: string[] = ["/tools"];
+
 const ProtectedLayoutContent = () => {
   const { isAuthenticated } = useAuth();
+  const { pathname } = useLocation();
+
+  const showSidebars = !pathsToHideSidebars.some((path) =>
+    pathname.includes(path),
+  );
 
   if (!isAuthenticated) {
     return <Navigate to="/sign-in" />;
@@ -16,11 +23,13 @@ const ProtectedLayoutContent = () => {
 
   return (
     <Page className="h-screen bg-background flex flex-col text-foreground p-4 gap-4">
-      <DashboardNavbar />
+      <DashboardNavbar
+        containerClassName={!showSidebars ? "border-b border-border pb-4" : ""}
+      />
       <Page className="flex gap-4">
-        <Sidebar />
+        {showSidebars && <Sidebar />}
         <Outlet />
-        <RightSidebar />
+        {showSidebars && <RightSidebar />}
       </Page>
     </Page>
   );

@@ -355,7 +355,7 @@ const Dashboard = () => {
   };
   return (
     // {/* Main Content */}
-    <div className="flex-1 flex flex-col overflow-hidden bg-card border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:border-border/80 hover:bg-card/98">
+    <div className="flex-1 flex flex-col overflow-hidden bg-card border border-border rounded-lg transition-all duration-300 hover:border-border/80 hover:bg-card/98">
       {/* Top Navigation */}
       {/* <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center justify-center flex-1">
