@@ -26,7 +26,7 @@ export const DashboardNavbar = ({
   return (
     <div
       className={cn(
-        "px-8",
+        // "px-8",
         // "border-b border-border",
         "bg-background",
         "flex items-center justify-between",
