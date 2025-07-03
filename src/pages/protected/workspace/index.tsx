@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { MessageCircle, Settings, MoreHorizontal, Plus } from "lucide-react";
 

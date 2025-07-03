@@ -33,6 +33,7 @@ const ProtectedLayoutContent = () => {
         </div>
         {showSidebars && <RightSidebar />}
       </Page>
+      {/* <Outlet /> */}
     </Page>
   );
 };

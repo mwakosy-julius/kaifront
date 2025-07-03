@@ -317,7 +317,7 @@ export const Sidebar = () => {
 export const RightSidebar = () => {
   return (
     // {/* Right Sidebar - Minimized Projects */}
-    <div className="w-60 h-full bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95">
+    <div className="w-72 h-full bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95">
       {/* Projects Header */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between">
@@ -325,6 +325,7 @@ export const RightSidebar = () => {
           <Button
             variant="ghost"
             size="icon"
+            href="workspace"
             className="w-6 h-6 hover:scale-105 transition-transform duration-200"
           >
             <Plus className="w-3 h-3" />

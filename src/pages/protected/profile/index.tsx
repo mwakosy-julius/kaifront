@@ -477,7 +477,7 @@ const UserProfile = () => {
                       </div>
 
                       <div className="bg-card p-4 rounded-lg border overflow-x-auto">
-                        <div className="grid grid-cols-53 gap-1 min-w-[800px]">
+                        <div className="grid grid-cols-[repeat(53,minmax(0,1fr))] gap-1 min-w-[800px]">
                           {contributionData.map((day, index) => (
                             <div
                               key={index}

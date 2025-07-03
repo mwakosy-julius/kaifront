@@ -67,3 +67,4 @@ export const LazyQualityControl = lazy(
 export const LazyAssembly = lazy(
   () => import("@/pages/protected/tools/assembly"),
 );
+export const LazyWorkspace = lazy(() => import("@/pages/protected/workspace"));

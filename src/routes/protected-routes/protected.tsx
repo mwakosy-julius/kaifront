@@ -21,6 +21,7 @@ import {
   LazyPrimerDesigner,
   LazyQualityControl,
   LazyAssembly,
+  LazyWorkspace,
 } from "./protected-route-elements";
 
 export const protectedRoutes = [
@@ -111,6 +112,12 @@ export const protectedRoutes = [
       {
         path: "tools/assembly",
         element: <LazyAssembly />,
+      },
+
+      // Workspaces
+      {
+        path: "workspace",
+        element: <LazyWorkspace />,
       },
     ],
   },
