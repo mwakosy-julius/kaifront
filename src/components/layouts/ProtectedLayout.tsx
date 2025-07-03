@@ -31,7 +31,7 @@ const ProtectedLayoutContent = () => {
         <div className="flex-1 min-h-0 overflow-auto">
           <Outlet />
         </div>
-        {showSidebars && <RightSidebar />}
+        {/* {showSidebars && <RightSidebar />} */}
       </Page>
       {/* <Outlet /> */}
     </Page>

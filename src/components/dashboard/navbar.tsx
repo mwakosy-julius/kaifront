@@ -7,13 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, SearchIcon, User } from "lucide-react";
+import { Home, LogOut, SearchIcon, User } from "lucide-react";
 import { logout } from "@/lib/services/auth";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "../shared/theme-toggler-button";
 import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { Button } from "../ui/button";
 
 export const DashboardNavbar = ({
   containerClassName,
@@ -35,14 +36,24 @@ export const DashboardNavbar = ({
     >
       <BBreadcrumb />
 
-      <div className="relative w-80">
-        <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="What do you want to analyze?"
-          className="pl-9 bg-background/60 transition-all duration-200 focus:bg-background focus:shadow-sm"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      <div className="flex items-center space-x-4">
+        <Button
+          href="/dashboard"
+          variant="ghost"
+          size="icon"
+          className="w-8 h-8 bg-neutral-100 border border-border rounded-full text-neutral-500"
+        >
+          <Home className="w-4 h-4" />
+        </Button>
+        <div className="relative w-80">
+          <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="What do you want to analyze?"
+            className="pl-9 bg-background/60 transition-all duration-200 focus:bg-background focus:shadow-sm"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="flex items-center gap-4">
