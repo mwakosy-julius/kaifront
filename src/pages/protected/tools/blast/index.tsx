@@ -1,46 +1,39 @@
 import React, { useState } from "react";
-import { AxiosError } from "axios";
-import {
-  primerDesign,
-  PrimerRequest,
-  Primer,
-} from "@/lib/services/tools/primer_design";
+import { runBlast, BlastResult } from "@/lib/services/tools/blast";
 import SequenceInput from "./components/SequenceInput";
-import PrimerResults from "./components/PrimerResults";
+import BlastResults from "./components/BlastResults";
 
-const PrimerDesignTool: React.FC = () => {
+const BlastTool: React.FC = () => {
   const [sequence, setSequence] = useState("");
-  const [primers, setPrimers] = useState<Primer[]>([]);
+  const [results, setResults] = useState<BlastResult>();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
 
-  const handlePrimerDesign = async () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [seqType, setSeqType] = useState<"dna" | "protein">("dna");
+
+  const handleRunBlast = async () => {
     if (!sequence) {
-      setError("Please provide a DNA sequence.");
+      setError("Please provide a sequence.");
       return;
     }
 
-    const cleanedSequence = sequence.toUpperCase().replace(/[^ATCG]/g, "");
+    // Basic DNA validation
+    const cleanedSequence = sequence.toUpperCase().replace(/[^ACGT]/g, "");
     if (!cleanedSequence) {
-      setError("Invalid DNA sequence. Only A, T, C, G are allowed.");
+      setError("Invalid DNA sequence. Only A, C, G, T are allowed.");
       return;
     }
 
     setLoading(true);
     setError(null);
-    setPrimers([]);
-
-    const request: PrimerRequest = { sequence: cleanedSequence };
 
     try {
-      const data = await primerDesign(request);
-      setPrimers(data.primers);
-    } catch (err: unknown) {
-      const axiosError = err as AxiosError<{ detail: string }>;
-      setError(
-        axiosError.response?.data?.detail || "Failed to design primers.",
-      );
+      const data = await runBlast({ sequence, seqType: seqType });
+      setResults(data);
+    } catch (err) {
+      setError("An error occurred while fetching BLAST results.");
+      console.error("BLAST error:", err);
     } finally {
       setLoading(false);
     }
@@ -50,16 +43,19 @@ const PrimerDesignTool: React.FC = () => {
     <div className="container mx-auto space-y-6">
       <SequenceInput
         sequence={sequence}
-        setSequence={setSequence}
         file={file}
         setFile={setFile}
-        onSubmit={handlePrimerDesign}
+        seqType={seqType}
+        setSeqType={setSeqType}
+        onSubmit={handleRunBlast}
+        setSequence={setSequence}
+        handleRunBlast={handleRunBlast}
         loading={loading}
         error={error}
       />
-      <PrimerResults primers={primers} />
+      <BlastResults results={results?.results!} />
     </div>
   );
 };
 
-export default PrimerDesignTool;
+export default BlastTool;

@@ -36,31 +36,16 @@ const PrimerDesignTool: React.FC = () => {
     setError(null);
     setPrimers([]);
 
-    const request: PrimerRequest = {
-      sequence: cleanedSequence,
-      primer_len: primerLen,
-      tm_min: tmMin,
-      tm_max: tmMax,
-      gc_min: gcMin,
-      gc_max: gcMax,
-    };
-
-    console.log("Sending PrimerRequest:", request);
+    const request: PrimerRequest = { sequence: cleanedSequence };
 
     try {
       const data = await primerDesign(request);
-      console.log("Received PrimerResult:", data);
       setPrimers(data.primers);
-      if (data.primers.length === 0) {
-        setError("No suitable primers found for the given parameters.");
-      }
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ detail: string }>;
-      const errorMessage =
-        axiosError.response?.data?.detail ||
-        "Failed to design primers. Please try different parameters.";
-      setError(errorMessage);
-      console.error("Primer design error:", errorMessage);
+      setError(
+        axiosError.response?.data?.detail || "Failed to design primers.",
+      );
     } finally {
       setLoading(false);
     }
