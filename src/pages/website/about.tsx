@@ -115,7 +115,7 @@ const AboutUs: FC = () => {
       imageUrl: "/placeholder.svg?height=120&width=120",
     },
     {
-      name: "George Kitundu, Ph.D.",
+      name: "Mr. Felix, Ph.D.",
       role: "Chief Scientist",
       bio: "A renowned expert in computational biology, George drives our innovative algorithms and data analysis pipelines.",
       imageUrl: "/placeholder.svg?height=120&width=120",
