@@ -61,10 +61,3 @@ export const LazySequenceMutator = lazy(
 export const LazyPrimerDesigner = lazy(
   () => import("@/pages/protected/tools/primer-design"),
 );
-export const LazyQualityControl = lazy(
-  () => import("@/pages/protected/tools/quality-control"),
-);
-export const LazyAssembly = lazy(
-  () => import("@/pages/protected/tools/assembly"),
-);
-export const LazyWorkspace = lazy(() => import("@/pages/protected/workspace"));

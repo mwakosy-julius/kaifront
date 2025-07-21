@@ -19,9 +19,6 @@ import {
   LazyProteinStructure,
   LazySequenceMutator,
   LazyPrimerDesigner,
-  LazyQualityControl,
-  LazyAssembly,
-  LazyWorkspace,
 } from "./protected-route-elements";
 
 export const protectedRoutes = [
@@ -104,20 +101,6 @@ export const protectedRoutes = [
       {
         path: "tools/primer_design",
         element: <LazyPrimerDesigner />,
-      },
-      {
-        path: "tools/quality_control",
-        element: <LazyQualityControl />,
-      },
-      {
-        path: "tools/assembly",
-        element: <LazyAssembly />,
-      },
-
-      // Workspaces
-      {
-        path: "workspace",
-        element: <LazyWorkspace />,
       },
     ],
   },
