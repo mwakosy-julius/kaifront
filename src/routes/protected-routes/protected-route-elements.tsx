@@ -11,7 +11,7 @@ export const ProtectedRoot = () => (
 
 // export const LazyDashboard = lazy(() => import("@/pages/protected/dashboard"));
 export const LazyDashboard = lazy(
-  () => import("@/pages/protected/dashboard/v2")
+  () => import("@/pages/protected/dashboard/v2"),
 );
 export const ProtectedNotFound = () => <Navigate to="/" replace />;
 export const LazyData = lazy(() => import("@/pages/protected/data-page"));
@@ -22,7 +22,7 @@ export const LazyResults = lazy(() => import("@/pages/protected/results-page"));
 export const LazyCopilot = lazy(() => import("@/pages/protected/copilot-page"));
 export const LazyUpgrade = lazy(() => import("@/pages/protected/upgrade-page"));
 export const LazyWorkflow = lazy(
-  () => import("@/pages/protected/workflow-page")
+  () => import("@/pages/protected/workflow-page"),
 );
 
 // Tools Routes
@@ -74,7 +74,4 @@ export const LazySequenceMutator = lazy(
 );
 export const LazyPrimerDesigner = lazy(
   () => import("@/pages/protected/tools/primer-design"),
-);
-export const LazyPrimerDesigner = lazy(
-  () => import("@/pages/protected/tools/primer-design")
 );
