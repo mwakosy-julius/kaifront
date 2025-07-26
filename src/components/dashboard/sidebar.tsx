@@ -1,8 +1,6 @@
-// import { Settings, ChevronRight, ChevronLeft } from "lucide-react";
-// import { Link } from "react-router-dom";
-// import { cn } from "@/lib/utils";
-// import DashboardLogo from "@/assets/images/logo.png";
-// import { useSidebar } from "@/context/SidebarContext";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useSidebar } from "@/context/SidebarContext";
 import { Button } from "@/components/ui/button";
 
 // new imports
@@ -87,7 +85,7 @@ const mockProjects = [
 ];
 
 export const Sidebar = () => {
-  // const { isExpanded, toggleSidebar } = useSidebar();
+  const { isExpanded, toggleSidebar } = useSidebar();
 
   // const navItems = [{ icon: Settings, label: "Settings", path: "/settings" }];
 
@@ -169,91 +167,149 @@ export const Sidebar = () => {
   // );
   //
   return (
-    // {/* Left Sidebar - Minimized */}
-    <div className="w-60 bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:shadow-md hover:border-border/80 hover:bg-card/95">
-      {/* Library Header */}
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-2">
-            <Library className="w-4 h-4" />
-            <h2 className="font-medium text-sm">Your Library</h2>
-          </div>
-          <Button variant="ghost" size="icon" className="w-6 h-6">
-            <PlusCircle className="w-3 h-3" />
-          </Button>
-        </div>
-      </div>
+    <div className="relative h-full">
+      {/* Toggle Button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={toggleSidebar}
+        className={cn(
+          "absolute -right-3 top-4 z-10 w-6 h-6 bg-background border border-border rounded-full",
+          "hover:bg-accent transition-all duration-200",
+        )}
+      >
+        {isExpanded ? (
+          <ChevronLeft className="w-4 h-4" />
+        ) : (
+          <ChevronRight className="w-4 h-4" />
+        )}
+      </Button>
 
-      {/* Library Content */}
-      <ScrollArea className="flex-1">
-        {/* Collections */}
-        <div className="px-4 pb-4">
-          <h3 className="text-xs font-medium text-muted-foreground mb-2">
-            COLLECTIONS
-          </h3>
-          <div className="space-y-1">
-            {mockCollections.map((collection) => (
-              <div
-                key={collection.id}
-                className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-all duration-200 cursor-pointer group hover:shadow-sm"
-              >
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                  <BookOpen className="w-4 h-4 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium truncate">
-                    {collection.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {collection.tools} tools
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Separator className="mx-3" />
-
-        {/* Recent Activity - Minimized */}
+      {/* Left Sidebar */}
+      <div
+        className={cn(
+          "h-full bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95",
+          isExpanded ? "w-60" : "w-16",
+        )}
+      >
+        {/* Library Header */}
         <div className="p-4">
-          <h3 className="text-xs font-medium text-muted-foreground mb-2">
-            RECENT ACTIVITY
-          </h3>
-          <div className="space-y-2">
-            {mockActivity.slice(0, 6).map((activity) => (
-              <div
-                key={activity.id}
-                className="flex items-center space-x-2 p-1 rounded-md hover:bg-accent/50 transition-all duration-200 cursor-pointer"
-              >
-                <Avatar className="w-5 h-5">
-                  <AvatarFallback className="text-xs">
-                    {activity.type === "tool_usage" ? (
-                      <Zap className="w-2 h-2" />
-                    ) : activity.type === "favorite" ? (
-                      <Heart className="w-2 h-2" />
-                    ) : activity.type === "project" ? (
-                      <GitBranch className="w-2 h-2" />
-                    ) : activity.type === "share" ? (
-                      <Share className="w-2 h-2" />
-                    ) : activity.type === "download" ? (
-                      <Download className="w-2 h-2" />
-                    ) : (
-                      <Users className="w-2 h-2" />
-                    )}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs truncate">{activity.action}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {activity.time}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div
+            className={cn(
+              "flex items-center mb-3 transition-all duration-300",
+              isExpanded ? "justify-between" : "justify-center",
+            )}
+          >
+            <div
+              className={cn(
+                "flex items-center transition-all duration-300",
+                isExpanded ? "space-x-2" : "justify-center",
+              )}
+            >
+              <Library className="w-4 h-4 flex-shrink-0" />
+              {isExpanded && (
+                <h2 className="font-medium text-sm">Your Library</h2>
+              )}
+            </div>
+            {isExpanded && (
+              <Button variant="ghost" size="icon" className="w-6 h-6">
+                <PlusCircle className="w-3 h-3" />
+              </Button>
+            )}
           </div>
         </div>
-      </ScrollArea>
+
+        {/* Library Content */}
+        <ScrollArea className="flex-1">
+          {/* Collections */}
+          <div
+            className={cn("pb-4", {
+              "px-4": isExpanded,
+            })}
+          >
+            {isExpanded && (
+              <h3 className="text-xs font-medium text-muted-foreground mb-2">
+                COLLECTIONS
+              </h3>
+            )}
+            <div className="space-y-1">
+              {mockCollections.map((collection) => (
+                <div
+                  key={collection.id}
+                  className={cn(
+                    "flex items-center p-2 rounded-md hover:bg-accent transition-all duration-200 cursor-pointer group hover:shadow-sm",
+                    isExpanded ? "space-x-2" : "justify-center",
+                  )}
+                  title={!isExpanded ? collection.name : undefined}
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded flex items-center justify-center group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+                    <BookOpen className="w-4 h-4 text-white" />
+                  </div>
+                  {isExpanded && (
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium truncate">
+                        {collection.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {collection.tools} tools
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Separator className={isExpanded ? "mx-3" : ""} />
+
+          {/* Recent Activity - Minimized */}
+          <div className="p-4">
+            {isExpanded && (
+              <h3 className="text-xs font-medium text-muted-foreground mb-2">
+                RECENT ACTIVITY
+              </h3>
+            )}
+            <div className="space-y-2">
+              {mockActivity.slice(0, 6).map((activity) => (
+                <div
+                  key={activity.id}
+                  className={cn(
+                    "flex items-center p-1 rounded-md hover:bg-accent/50 transition-all duration-200 cursor-pointer",
+                    isExpanded ? "space-x-2" : "justify-center",
+                  )}
+                  title={!isExpanded ? activity.action : undefined}
+                >
+                  <Avatar className="w-5 h-5 flex-shrink-0">
+                    <AvatarFallback className="text-xs">
+                      {activity.type === "tool_usage" ? (
+                        <Zap className="w-4 h-4" />
+                      ) : activity.type === "favorite" ? (
+                        <Heart className="w-4 h-4" />
+                      ) : activity.type === "project" ? (
+                        <GitBranch className="w-4 h-4" />
+                      ) : activity.type === "share" ? (
+                        <Share className="w-4 h-4" />
+                      ) : activity.type === "download" ? (
+                        <Download className="w-4 h-4" />
+                      ) : (
+                        <Users className="w-4 h-4" />
+                      )}
+                    </AvatarFallback>
+                  </Avatar>
+                  {isExpanded && (
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs truncate">{activity.action}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {activity.time}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 };
@@ -261,7 +317,7 @@ export const Sidebar = () => {
 export const RightSidebar = () => {
   return (
     // {/* Right Sidebar - Minimized Projects */}
-    <div className="w-60 bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:shadow-md hover:border-border/80 hover:bg-card/95">
+    <div className="w-72 h-full bg-card border border-border rounded-lg flex flex-col transition-all duration-300 hover:border-border/80 hover:bg-card/95">
       {/* Projects Header */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between">
@@ -269,6 +325,7 @@ export const RightSidebar = () => {
           <Button
             variant="ghost"
             size="icon"
+            href="workspace"
             className="w-6 h-6 hover:scale-105 transition-transform duration-200"
           >
             <Plus className="w-3 h-3" />

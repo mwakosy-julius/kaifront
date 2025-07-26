@@ -27,50 +27,53 @@ export const LazyWorkflow = lazy(
 
 // Tools Routes
 export const LazyPairwiseAlignment = lazy(
-  () => import("@/pages/protected/tools/pairwise-alignment")
+  () => import("@/pages/protected/tools/pairwise-alignment"),
 );
 export const LazyGCContent = lazy(
-  () => import("@/pages/protected/tools/gc-content")
+  () => import("@/pages/protected/tools/gc-content"),
 );
 export const LazyVariantCalling = lazy(
-  () => import("@/pages/protected/tools/variant-calling")
+  () => import("@/pages/protected/tools/variant-calling"),
 );
 export const LazyDNAVisualization = lazy(
-  () => import("@/pages/protected/tools/dna-visualization")
+  () => import("@/pages/protected/tools/dna-visualization"),
 );
 export const LazyDataCompression = lazy(
-  () => import("@/pages/protected/tools/data-compression")
+  () => import("@/pages/protected/tools/data-compression"),
 );
 export const LazyConsensusMaker = lazy(
-  () => import("@/pages/protected/tools/consensus-maker")
+  () => import("@/pages/protected/tools/consensus-maker"),
 );
 export const LazyCodonUsage = lazy(
-  () => import("@/pages/protected/tools/codon-usage")
+  () => import("@/pages/protected/tools/codon-usage"),
 );
 export const LazyMotifFinder = lazy(
-  () => import("@/pages/protected/tools/motif-finder")
+  () => import("@/pages/protected/tools/motif-finder"),
 );
 export const LazyMultipleAlignment = lazy(
-  () => import("@/pages/protected/tools/multiple-alignment")
+  () => import("@/pages/protected/tools/multiple-alignment"),
 );
 export const LazyMusicDNA = lazy(
-  () => import("@/pages/protected/tools/musicdna")
+  () => import("@/pages/protected/tools/musicdna"),
 );
 export const LazyMetagenomics = lazy(
-  () => import("@/pages/protected/tools/metagenomics")
+  () => import("@/pages/protected/tools/metagenomics"),
 );
 export const LazyBlast = lazy(() => import("@/pages/protected/tools/blast"));
 export const LazyPhylogeneticTree = lazy(
-  () => import("@/pages/protected/tools/phylogenetic-tree")
+  () => import("@/pages/protected/tools/phylogenetic-tree"),
 );
 export const LazySequenceSearch = lazy(
-  () => import("@/pages/protected/tools/sequence-search")
+  () => import("@/pages/protected/tools/sequence-search"),
 );
 export const LazyProteinStructure = lazy(
-  () => import("@/pages/protected/tools/protein-structure")
+  () => import("@/pages/protected/tools/protein-structure"),
 );
 export const LazySequenceMutator = lazy(
-  () => import("@/pages/protected/tools/sequence-mutator")
+  () => import("@/pages/protected/tools/sequence-mutator"),
+);
+export const LazyPrimerDesigner = lazy(
+  () => import("@/pages/protected/tools/primer-design"),
 );
 export const LazyPrimerDesigner = lazy(
   () => import("@/pages/protected/tools/primer-design")
