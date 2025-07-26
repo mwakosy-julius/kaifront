@@ -1,5 +1,11 @@
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,7 +27,7 @@ import {
   Upload,
   RefreshCcw,
   Code,
-  Zap
+  Zap,
 } from "lucide-react";
 
 interface FastaInputProps {
@@ -41,7 +47,6 @@ interface FastaInputProps {
 export const FastaInput: React.FC<FastaInputProps> = ({
   fasta,
   setFasta,
-  file,
   setFile,
   method,
   setMethod,
@@ -114,7 +119,8 @@ export const FastaInput: React.FC<FastaInputProps> = ({
               </CardTitle>
             </div>
             <CardDescription className="text-base text-muted-foreground">
-              Compress DNA sequences with specialized algorithms for genomic data
+              Compress DNA sequences with specialized algorithms for genomic
+              data
             </CardDescription>
             <div className="flex gap-2 mt-2">
               <Badge variant="outline" className="text-xs">
@@ -175,7 +181,9 @@ export const FastaInput: React.FC<FastaInputProps> = ({
                   <SelectValue placeholder="Select compression method" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="run_length">Run-Length Encoding</SelectItem>
+                  <SelectItem value="run_length">
+                    Run-Length Encoding
+                  </SelectItem>
                   <SelectItem value="delta">Delta Compression</SelectItem>
                 </SelectContent>
               </Select>

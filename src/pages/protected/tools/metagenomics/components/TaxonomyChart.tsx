@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
-import { Taxon } from "../types";
+import { Taxon } from "@/lib/services/tools";
 
 interface TaxonomyChartProps {
   taxa: Taxon[];
@@ -39,25 +39,30 @@ const TaxonomyChart: React.FC<TaxonomyChartProps> = ({ taxa }) => {
     return colors[index % colors.length];
   };
 
-  // Sort taxa by abundance descending
-  const sortedTaxa = [...taxa].sort((a, b) => b.abundance - a.abundance);
+  // Calculate chartData with useMemo to prevent unnecessary re-renders
+  const chartData = useMemo(() => {
+    // Sort taxa by abundance descending
+    const sortedTaxa = [...taxa].sort((a, b) => b.abundance - a.abundance);
 
-  // Group small taxa into "Other" category
-  const threshold = 2.0; // Taxa with less than 2% abundance go into "Other"
-  let chartData: Taxon[] = [];
-  let otherSum = 0;
+    // Group small taxa into "Other" category
+    const threshold = 2.0; // Taxa with less than 2% abundance go into "Other"
+    const result: Taxon[] = [];
+    let otherSum = 0;
 
-  sortedTaxa.forEach((taxon) => {
-    if (taxon.abundance >= threshold) {
-      chartData.push(taxon);
-    } else {
-      otherSum += taxon.abundance;
+    sortedTaxa.forEach((taxon) => {
+      if (taxon.abundance >= threshold) {
+        result.push(taxon);
+      } else {
+        otherSum += taxon.abundance;
+      }
+    });
+
+    if (otherSum > 0) {
+      result.push({ genus: "Other", abundance: otherSum });
     }
-  });
 
-  if (otherSum > 0) {
-    chartData.push({ genus: "Other", abundance: otherSum });
-  }
+    return result;
+  }, [taxa]);
 
   useEffect(() => {
     if (!canvasRef.current || chartData.length === 0) return;
@@ -79,7 +84,7 @@ const TaxonomyChart: React.FC<TaxonomyChartProps> = ({ taxa }) => {
     const radius = Math.min(centerX, centerY) - 40;
 
     let startAngle = 0;
-    let total = chartData.reduce((sum, item) => sum + item.abundance, 0);
+    const total = chartData.reduce((sum, item) => sum + item.abundance, 0);
 
     // Draw pie slices
     chartData.forEach((taxon, index) => {
@@ -168,7 +173,7 @@ const TaxonomyChart: React.FC<TaxonomyChartProps> = ({ taxa }) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex justify-center overflow-auto border rounded p-4 bg-white">
+        <div className="flex justify-center p-4 overflow-auto bg-white border rounded">
           <canvas ref={canvasRef} />
         </div>
         <div className="flex justify-end">

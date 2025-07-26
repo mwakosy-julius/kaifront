@@ -5,7 +5,7 @@ export interface MusicDNARequest {
 }
 
 export interface MusicDNAResponse {
-  melody: string[];
+  melody: number[];
 }
 
 export const generateMelody = async (

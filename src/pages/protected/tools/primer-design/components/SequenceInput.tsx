@@ -61,7 +61,6 @@ const stats = [
 const SequenceInput: React.FC<SequenceInputProps> = ({
   sequence,
   setSequence,
-  file,
   setFile,
   primerLen = 20,
   setPrimerLen,
@@ -130,7 +129,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
   const handleSubmit = () => {
     const paramError = validateParameters();
     if (paramError) {
-      setError(paramError);
+      // setError(paramError);
       return;
     }
     onSubmit();
@@ -149,14 +148,14 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
         <div className="flex gap-2 mt-2">
           <Badge
             variant="outline"
-            className="text-xs hover:bg-primary/10 transition"
+            className="text-xs transition hover:bg-primary/10"
           >
             <BookOpen className="w-3 h-3 mr-1" />
             Documentation
           </Badge>
           <Badge
             variant="outline"
-            className="text-xs hover:bg-primary/10 transition"
+            className="text-xs transition hover:bg-primary/10"
           >
             <Share2 className="w-3 h-3 mr-1" />
             Share Results
@@ -164,7 +163,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-muted/50 shadow-sm">
+        <div className="grid grid-cols-3 gap-4 p-4 rounded-lg shadow-sm bg-muted/50">
           {stats.map((stat, index) => (
             <div key={index} className="flex items-center gap-2">
               <div className="p-3 rounded-full bg-primary/10">
@@ -196,11 +195,11 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="space-y-2">
             <Label
               htmlFor="primer-len"
-              className="text-base font-medium flex items-center gap-2"
+              className="flex items-center gap-2 text-base font-medium"
             >
               <Calculator className="w-4 h-4 text-primary" />
               Primer Length (bases)
@@ -217,7 +216,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
                     max="30"
                     step="1"
                     placeholder="20"
-                    className="font-mono text-sm max-w-xs rounded-lg border border-input bg-background/50 shadow-sm focus:ring-2 focus:ring-primary hover:border-primary/50 transition"
+                    className="max-w-xs font-mono text-sm transition border rounded-lg shadow-sm border-input bg-background/50 focus:ring-2 focus:ring-primary hover:border-primary/50"
                   />
                 </TooltipTrigger>
                 <TooltipContent>
@@ -229,7 +228,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           <div className="space-y-2">
             <Label
               htmlFor="tm-min"
-              className="text-base font-medium flex items-center gap-2"
+              className="flex items-center gap-2 text-base font-medium"
             >
               <Thermometer className="w-4 h-4 text-primary" />
               Melting Temperature (°C)
@@ -247,7 +246,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
                       max="80"
                       step="0.1"
                       placeholder="50"
-                      className="font-mono text-sm max-w-xs rounded-lg border border-input bg-background/50 shadow-sm focus:ring-2 focus:ring-primary hover:border-primary/50 transition"
+                      className="max-w-xs font-mono text-sm transition border rounded-lg shadow-sm border-input bg-background/50 focus:ring-2 focus:ring-primary hover:border-primary/50"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
@@ -267,7 +266,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
                       max="80"
                       step="0.1"
                       placeholder="65"
-                      className="font-mono text-sm max-w-xs rounded-lg border border-input bg-background/50 shadow-sm focus:ring-2 focus:ring-primary hover:border-primary/50 transition"
+                      className="max-w-xs font-mono text-sm transition border rounded-lg shadow-sm border-input bg-background/50 focus:ring-2 focus:ring-primary hover:border-primary/50"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
@@ -280,7 +279,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           <div className="space-y-2">
             <Label
               htmlFor="gc-min"
-              className="text-base font-medium flex items-center gap-2"
+              className="flex items-center gap-2 text-base font-medium"
             >
               <Percent className="w-4 h-4 text-primary" />
               GC Content (%)
@@ -298,7 +297,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
                       max="80"
                       step="0.1"
                       placeholder="40"
-                      className="font-mono text-sm max-w-xs rounded-lg border border-input bg-background/50 shadow-sm focus:ring-2 focus:ring-primary hover:border-primary/50 transition"
+                      className="max-w-xs font-mono text-sm transition border rounded-lg shadow-sm border-input bg-background/50 focus:ring-2 focus:ring-primary hover:border-primary/50"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
@@ -318,7 +317,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
                       max="80"
                       step="0.1"
                       placeholder="60"
-                      className="font-mono text-sm max-w-xs rounded-lg border border-input bg-background/50 shadow-sm focus:ring-2 focus:ring-primary hover:border-primary/50 transition"
+                      className="max-w-xs font-mono text-sm transition border rounded-lg shadow-sm border-input bg-background/50 focus:ring-2 focus:ring-primary hover:border-primary/50"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
@@ -335,7 +334,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
             onClick={handleSubmit}
             disabled={loading || !sequence.trim()}
             variant="primary"
-            className="rounded-lg shadow-md hover:shadow-lg transition"
+            className="transition rounded-lg shadow-md hover:shadow-lg"
           >
             {loading ? (
               <>
@@ -353,7 +352,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           <Button
             variant="outline"
             onClick={handlePaste}
-            className="rounded-lg shadow-sm hover:shadow-md transition"
+            className="transition rounded-lg shadow-sm hover:shadow-md"
           >
             <FileText className="w-4 h-4 mr-2" />
             Paste from Clipboard
@@ -362,7 +361,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           <div className="relative">
             <Button
               variant="outline"
-              className="relative rounded-lg shadow-sm hover:shadow-md transition"
+              className="relative transition rounded-lg shadow-sm hover:shadow-md"
             >
               <Upload className="w-4 h-4 mr-2" />
               Upload FASTA File
@@ -378,7 +377,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
           <Button
             variant="secondary"
             onClick={loadSampleData}
-            className="rounded-lg shadow-sm hover:shadow-md transition"
+            className="transition rounded-lg shadow-sm hover:shadow-md"
           >
             Load Sample
           </Button>

@@ -21,7 +21,7 @@ export const API_ENDPOINTS = {
     motif_finder: "tools/motif_finder",
     multiple_alignment: "tools/multiple_alignment",
     sequence_search: "tools/sequence_search",
-    // musicdna: "tools/musicdna",
+    musicdna: "tools/musicdna",
     metagenomics: "tools/metagenomics",
     phylogenetic_tree: "tools/phylogenetic_trees",
     protein_structure: "tools/protein_structure",

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Stats } from "../types";
+import { Stats } from "@/lib/services/tools";
 
 interface StatsGridProps {
   stats: Stats;
@@ -12,8 +12,8 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => (
       <CardTitle>Analysis Summary</CardTitle>
     </CardHeader>
     <CardContent>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 rounded-lg border bg-card text-center">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="p-4 text-center border rounded-lg bg-card">
           <p className="text-sm font-medium text-muted-foreground">
             Total Reads
           </p>
@@ -21,7 +21,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => (
             {stats.total_reads.toLocaleString()}
           </p>
         </div>
-        <div className="p-4 rounded-lg border bg-card text-center">
+        <div className="p-4 text-center border rounded-lg bg-card">
           <p className="text-sm font-medium text-muted-foreground">
             Classified k-mers
           </p>
@@ -29,7 +29,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => (
             {stats.classified_kmers.toLocaleString()}
           </p>
         </div>
-        <div className="p-4 rounded-lg border bg-card text-center">
+        <div className="p-4 text-center border rounded-lg bg-card">
           <p className="text-sm font-medium text-muted-foreground">
             Unique Genera
           </p>

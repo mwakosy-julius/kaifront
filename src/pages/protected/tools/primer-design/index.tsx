@@ -52,7 +52,7 @@ interface Primer {
 
 const PrimerDesigner: React.FC = () => {
   const [sequence, setSequence] = useState<string>(
-    "ATCGATCGATCGATCGACGATCATGTGCTATCATGTCGATGCTAGTCGTAGTCGATGCTAGTCGATGCTAGCTATCGTAGCTATC",
+    "ATCGATCGATCGATCGACGATCATGTGCTATCATGTCGATGCTAGTCGTAGTCGATGCTAGTCGATGCTAGCTATCGTAGCTATC"
   );
   const [primers, setPrimers] = useState<Primer[]>([]);
   const [error, setError] = useState<string>("");
@@ -141,7 +141,7 @@ const PrimerDesigner: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto p-4">
+    <div className="max-w-5xl p-4 mx-auto">
       <Card className="border-none shadow-lg bg-background/80 backdrop-blur-md">
         <CardHeader>
           <div className="flex items-start justify-between w-full gap-4">
@@ -178,7 +178,7 @@ const PrimerDesigner: React.FC = () => {
 
         <CardContent className="space-y-8">
           {/* Tool Statistics */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 p-6 rounded-lg bg-muted/30">
+          <div className="grid grid-cols-1 gap-6 p-6 rounded-lg sm:grid-cols-3 bg-muted/30">
             {stats.map((stat, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="p-4 rounded-full bg-primary/10">
@@ -203,13 +203,13 @@ const PrimerDesigner: React.FC = () => {
             >
               <label
                 htmlFor="sequence"
-                className="mb-3 block text-base font-medium"
+                className="block mb-3 text-base font-medium"
               >
                 DNA Sequence
               </label>
               <Textarea
                 id="sequence"
-                className="font-mono h-32 rounded-lg border border-input bg-background/50 text-base resize-y"
+                className="h-32 font-mono text-base border rounded-lg resize-y border-input bg-background/50"
                 value={sequence}
                 onChange={(e) => setSequence(e.target.value.toUpperCase())}
                 placeholder="Enter DNA sequence (A, T, C, G only)"
@@ -321,7 +321,9 @@ const PrimerDesigner: React.FC = () => {
                                   onClick={() =>
                                     copyToClipboard(primer.sequence, index)
                                   }
-                                  aria-label={`Copy primer ${index + 1} sequence`}
+                                  aria-label={`Copy primer ${
+                                    index + 1
+                                  } sequence`}
                                 >
                                   {copiedIndex === index ? (
                                     <Check className="w-4 h-4 text-green-500" />

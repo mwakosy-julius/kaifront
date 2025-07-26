@@ -28,7 +28,7 @@ import {
   LazySequenceSearch,
   LazyProteinStructure,
   LazySequenceMutator,
-  // LazyPrimerDesigner,
+  LazyPrimerDesigner,
 } from "./protected-route-elements";
 
 const ToolsRoutes: RouteObject[] = [
@@ -96,10 +96,10 @@ const ToolsRoutes: RouteObject[] = [
     path: "tools/sequence_mutator",
     element: <LazySequenceMutator />,
   },
-  // {
-  //   path: "tools/primer_design",
-  //   element: <LazyPrimerDesigner />,
-  // },
+  {
+    path: "tools/primer_design",
+    element: <LazyPrimerDesigner />,
+  },
 ];
 
 export const protectedRoutes = [

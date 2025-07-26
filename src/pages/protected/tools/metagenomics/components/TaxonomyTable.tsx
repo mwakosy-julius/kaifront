@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FileText, Download, Search } from "lucide-react";
-import { Detail } from "../types";
+import { FileText, Search } from "lucide-react";
+import { Detail } from "@/lib/services/tools";
 
 interface TaxonomyTableProps {
   details: Detail[];
@@ -103,12 +103,12 @@ const TaxonomyTable: React.FC<TaxonomyTableProps> = ({ details }) => {
             />
           </div>
           <Button variant="outline" size="sm" onClick={exportCSV}>
-            <FileText className="mr-2 h-4 w-4" />
+            <FileText className="w-4 h-4 mr-2" />
             Export CSV
           </Button>
         </div>
 
-        <div className="rounded-md border">
+        <div className="border rounded-md">
           <Table>
             <TableHeader>
               <TableRow>
@@ -127,7 +127,7 @@ const TaxonomyTable: React.FC<TaxonomyTableProps> = ({ details }) => {
                   {sortField === "phylum" && (sortOrder === "asc" ? "↑" : "↓")}
                 </TableHead>
                 <TableHead
-                  className="cursor-pointer hover:text-primary text-right"
+                  className="text-right cursor-pointer hover:text-primary"
                   onClick={() => handleSort("kmer_count")}
                 >
                   K-mer Count{" "}
@@ -135,7 +135,7 @@ const TaxonomyTable: React.FC<TaxonomyTableProps> = ({ details }) => {
                     (sortOrder === "asc" ? "↑" : "↓")}
                 </TableHead>
                 <TableHead
-                  className="cursor-pointer hover:text-primary text-right"
+                  className="text-right cursor-pointer hover:text-primary"
                   onClick={() => handleSort("distance")}
                 >
                   Distance{" "}
@@ -143,7 +143,7 @@ const TaxonomyTable: React.FC<TaxonomyTableProps> = ({ details }) => {
                     (sortOrder === "asc" ? "↑" : "↓")}
                 </TableHead>
                 <TableHead
-                  className="cursor-pointer hover:text-primary text-right"
+                  className="text-right cursor-pointer hover:text-primary"
                   onClick={() => handleSort("confidence")}
                 >
                   Confidence{" "}
@@ -155,7 +155,7 @@ const TaxonomyTable: React.FC<TaxonomyTableProps> = ({ details }) => {
             <TableBody>
               {sortedData.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center h-24">
+                  <TableCell colSpan={5} className="h-24 text-center">
                     No results found
                   </TableCell>
                 </TableRow>

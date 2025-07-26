@@ -22,7 +22,7 @@ export interface PrimerResult {
 }
 
 export const primerDesign = async (
-  request: PrimerRequest,
+  request: PrimerRequest
 ): Promise<PrimerResult> => {
   try {
     const response = await api.client.post<{
@@ -44,21 +44,31 @@ export const primerDesign = async (
     console.log("API Response:", response);
 
     const primers: Primer[] = [];
-    if (response.forward_primer && response.forward_tm && response.forward_gc) {
+    if (
+      response?.data &&
+      response.data.forward_primer &&
+      response.data.forward_tm &&
+      response.data.forward_gc
+    ) {
       primers.push({
-        sequence: response.forward_primer,
-        tm: response.forward_tm,
-        gc: response.forward_gc,
-        length: response.forward_primer.length,
+        sequence: response.data.forward_primer,
+        tm: response.data.forward_tm,
+        gc: response.data.forward_gc,
+        length: response.data.forward_primer.length,
         type: "forward",
       });
     }
-    if (response.reverse_primer && response.reverse_tm && response.reverse_gc) {
+    if (
+      response?.data &&
+      response.data.reverse_primer &&
+      response.data.reverse_tm &&
+      response.data.reverse_gc
+    ) {
       primers.push({
-        sequence: response.reverse_primer,
-        tm: response.reverse_tm,
-        gc: response.reverse_gc,
-        length: response.reverse_primer.length,
+        sequence: response.data.reverse_primer,
+        tm: response.data.reverse_tm,
+        gc: response.data.reverse_gc,
+        length: response.data.reverse_primer.length,
         type: "reverse",
       });
     }

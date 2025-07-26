@@ -27,7 +27,7 @@ import MelodyPlayer from "./components/MelodyPlayer";
 
 const MusicDNA: React.FC = () => {
   const [sequence, setSequence] = useState<string>("");
-  const [melody, setMelody] = useState<string[]>([]);
+  const [melody, setMelody] = useState<number[]>([]);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const synth = useRef<Tone.PolySynth | null>(null);
@@ -157,7 +157,7 @@ const MusicDNA: React.FC = () => {
         </CardFooter> */}
       </Card>
 
-      {melody.length > 0 && <MelodyPlayer melody={melody} />}
+      {melody.length > 0 && <MelodyPlayer melodyFreq={melody} />}
     </div>
   );
 };

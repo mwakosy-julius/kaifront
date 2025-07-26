@@ -57,7 +57,6 @@ const stats = [
 const SequenceInput: React.FC<SequenceInputProps> = ({
   sequence,
   setSequence,
-  file,
   setFile,
   sequenceType,
   setSequenceType,
@@ -188,10 +187,10 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
             <div className="space-y-2">
               <Label htmlFor="mutationType">Mutation Type</Label>
               <Select onValueChange={setMutationType} value={mutationType}>
-                <SelectTrigger className="bg-gray-700 text-white border-gray-600">
+                <SelectTrigger className="text-white bg-gray-700 border-gray-600">
                   <SelectValue placeholder="Select mutation type" />
                 </SelectTrigger>
-                <SelectContent className="bg-gray-700 text-white border-gray-600">
+                <SelectContent className="text-white bg-gray-700 border-gray-600">
                   <SelectItem value="substitution">Substitution</SelectItem>
                   <SelectItem value="insertion">Insertion</SelectItem>
                   <SelectItem value="deletion">Deletion</SelectItem>
@@ -209,7 +208,7 @@ const SequenceInput: React.FC<SequenceInputProps> = ({
                 step="0.01"
                 value={mutationRate}
                 onChange={(e) => setMutationRate(Number(e.target.value))}
-                className="w-full bg-gray-700 text-white border-gray-600 rounded-md p-2"
+                className="w-full p-2 text-white bg-gray-700 border-gray-600 rounded-md"
                 disabled={loading}
               />
             </div>

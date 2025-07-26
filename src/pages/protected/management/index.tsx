@@ -98,7 +98,7 @@ export default function BioinformaticsDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
+      <header className="px-6 py-4 bg-white border-b border-gray-200">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
@@ -110,18 +110,18 @@ export default function BioinformaticsDashboard() {
           </div>
           <div className="flex items-center gap-4">
             <Button variant="outline" size="icon">
-              <Bell className="h-4 w-4" />
+              <Bell className="w-4 h-4" />
             </Button>
             <Button variant="outline" size="icon">
-              <Settings className="h-4 w-4" />
+              <Settings className="w-4 h-4" />
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="relative h-8 w-8 rounded-full"
+                  className="relative w-8 h-8 rounded-full"
                 >
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="w-8 h-8">
                     <AvatarImage src="/placeholder-user.jpg" alt="Admin" />
                     <AvatarFallback>AD</AvatarFallback>
                   </Avatar>
@@ -151,24 +151,24 @@ export default function BioinformaticsDashboard() {
 
       <main className="p-6">
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
           {metrics.map((metric, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <Card key={index} className="transition-shadow hover:shadow-md">
+              <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                 <CardTitle className="text-sm font-medium text-gray-600">
                   {metric.title}
                 </CardTitle>
-                <metric.icon className="h-4 w-4 text-gray-400" />
+                <metric.icon className="w-4 h-4 text-gray-400" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-gray-900 mb-1">
+                <div className="mb-1 text-2xl font-bold text-gray-900">
                   {metric.value}
                 </div>
                 <div className="flex items-center text-xs">
                   {metric.changeType === "positive" ? (
-                    <ChevronUp className="h-3 w-3 text-green-500 mr-1" />
+                    <ChevronUp className="w-3 h-3 mr-1 text-green-500" />
                   ) : (
-                    <ChevronDown className="h-3 w-3 text-red-500 mr-1" />
+                    <ChevronDown className="w-3 h-3 mr-1 text-red-500" />
                   )}
                   <span
                     className={
@@ -179,7 +179,7 @@ export default function BioinformaticsDashboard() {
                   >
                     {metric.change}
                   </span>
-                  <span className="text-gray-500 ml-1">
+                  <span className="ml-1 text-gray-500">
                     {metric.description}
                   </span>
                 </div>
@@ -188,14 +188,14 @@ export default function BioinformaticsDashboard() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Popular Tools */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 Popular Tools
                 <Button variant="ghost" size="icon">
-                  <MoreHorizontal className="h-4 w-4" />
+                  <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </CardTitle>
             </CardHeader>
@@ -226,7 +226,7 @@ export default function BioinformaticsDashboard() {
               {recentActivity.map((activity, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  className="flex items-center justify-between p-3 rounded-lg bg-gray-50"
                 >
                   <div>
                     <p className="font-medium text-gray-900">
@@ -252,33 +252,33 @@ export default function BioinformaticsDashboard() {
               <CardTitle>Revenue Breakdown</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600 mb-1">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                <div className="p-4 text-center rounded-lg bg-green-50">
+                  <div className="mb-1 text-2xl font-bold text-green-600">
                     $64,890
                   </div>
                   <div className="text-sm text-green-700">
                     Subscription Revenue
                   </div>
-                  <div className="text-xs text-green-600 mt-1">
+                  <div className="mt-1 text-xs text-green-600">
                     69.5% of total
                   </div>
                 </div>
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600 mb-1">
+                <div className="p-4 text-center rounded-lg bg-blue-50">
+                  <div className="mb-1 text-2xl font-bold text-blue-600">
                     $28,450
                   </div>
                   <div className="text-sm text-blue-700">Data Sales</div>
-                  <div className="text-xs text-blue-600 mt-1">
+                  <div className="mt-1 text-xs text-blue-600">
                     30.5% of total
                   </div>
                 </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-600 mb-1">
+                <div className="p-4 text-center rounded-lg bg-gray-50">
+                  <div className="mb-1 text-2xl font-bold text-gray-600">
                     $93,340
                   </div>
                   <div className="text-sm text-gray-700">Total Revenue</div>
-                  <div className="text-xs text-gray-600 mt-1">This month</div>
+                  <div className="mt-1 text-xs text-gray-600">This month</div>
                 </div>
               </div>
             </CardContent>

@@ -1,16 +1,16 @@
 "use client";
 
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { SearchIcon, Folder, Bell, Home, FilterX } from "lucide-react";
+import { Folder, FilterX } from "lucide-react";
+
+// Local imports
 import { tools } from "@/lib/services/tools";
 import { KaiToolsInterface } from "@/lib/services/tools/types";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { DashboardNavbar } from "@/components/dashboard/navbar";
 import { getToolImage } from "@/lib/constants/tool-images";
-import { Link } from "react-router-dom";
 
 // Extended tool interface with additional marketplace metadata
 interface MarketplaceToolInterface extends KaiToolsInterface {
@@ -171,7 +171,7 @@ const Dashboard = () => {
   >([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [, setFavorites] = useState<string[]>([]);
 
   // Fetch tools and add marketplace metadata
   useEffect(() => {
@@ -524,7 +524,7 @@ const ToolCard = ({
   return (
     <Link
       to={`/dashboard/tools${tool.frontend_url}`}
-      className="block p-3 transition-all duration-200 rounded-lg cursor-pointer  group bg-card hover:bg-accent/50 hover:shadow-md hover:-translate-y-1"
+      className="block p-3 transition-all duration-200 rounded-lg cursor-pointer group bg-card hover:bg-accent/50 hover:shadow-md hover:-translate-y-1"
     >
       <div className="relative mb-3 overflow-hidden rounded-md">
         <img
