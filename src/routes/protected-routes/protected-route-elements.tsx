@@ -9,9 +9,23 @@ export const ProtectedRoot = () => (
   </AuthGuard>
 );
 
-export const LazyDashboard = lazy(() => import("@/pages/protected/dashboard"));
-export const LazyProfile = lazy(() => import("@/pages/protected/profile"));
+// export const LazyDashboard = lazy(() => import("@/pages/protected/dashboard"));
+export const LazyDashboard = lazy(
+  () => import("@/pages/protected/dashboard/v2")
+);
 export const ProtectedNotFound = () => <Navigate to="/" replace />;
+export const LazyData = lazy(() => import("@/pages/protected/data-page"));
+export const LazyProfile = lazy(() => import("@/pages/protected/profile/new"));
+export const LazyProfileEdit = lazy(() => import("@/pages/protected/profile"));
+export const LazyTools = lazy(() => import("@/pages/protected/dashboard"));
+export const LazyResults = lazy(() => import("@/pages/protected/results-page"));
+export const LazyCopilot = lazy(() => import("@/pages/protected/copilot-page"));
+export const LazyUpgrade = lazy(() => import("@/pages/protected/upgrade-page"));
+export const LazyWorkflow = lazy(
+  () => import("@/pages/protected/workflow-page")
+);
+
+// Tools Routes
 export const LazyPairwiseAlignment = lazy(
   () => import("@/pages/protected/tools/pairwise-alignment")
 );
@@ -57,4 +71,7 @@ export const LazyProteinStructure = lazy(
 );
 export const LazySequenceMutator = lazy(
   () => import("@/pages/protected/tools/sequence-mutator")
+);
+export const LazyPrimerDesigner = lazy(
+  () => import("@/pages/protected/tools/primer-design")
 );

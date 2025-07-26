@@ -216,13 +216,13 @@ const Dashboard = () => {
             prevTools.map((tool) => ({
               ...tool,
               isFavorited: favs.includes(tool.name),
-            })),
+            }))
           );
           setDisplayedTools((prevTools) =>
             prevTools.map((tool) => ({
               ...tool,
               isFavorited: favs.includes(tool.name),
-            })),
+            }))
           );
         }
       } catch (error) {
@@ -299,8 +299,8 @@ const Dashboard = () => {
           tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
           (tool.tags &&
             tool.tags.some((tag) =>
-              tag.toLowerCase().includes(searchQuery.toLowerCase()),
-            )),
+              tag.toLowerCase().includes(searchQuery.toLowerCase())
+            ))
       );
     }
 
@@ -312,32 +312,32 @@ const Dashboard = () => {
   }, [searchQuery, activeCategory, toolsData]);
 
   // Toggle favorite status for a tool
-  const toggleFavorite = (toolName: string) => {
-    let newFavorites: string[];
+  // const toggleFavorite = (toolName: string) => {
+  //   let newFavorites: string[];
 
-    if (favorites.includes(toolName)) {
-      newFavorites = favorites.filter((name) => name !== toolName);
-    } else {
-      newFavorites = [...favorites, toolName];
-    }
+  //   if (favorites.includes(toolName)) {
+  //     newFavorites = favorites.filter((name) => name !== toolName);
+  //   } else {
+  //     newFavorites = [...favorites, toolName];
+  //   }
 
-    setFavorites(newFavorites);
-    localStorage.setItem("toolFavorites", JSON.stringify(newFavorites));
+  //   setFavorites(newFavorites);
+  //   localStorage.setItem("toolFavorites", JSON.stringify(newFavorites));
 
-    // Update tools data
-    setToolsData((prevTools) =>
-      prevTools.map((tool) => ({
-        ...tool,
-        isFavorited: newFavorites.includes(tool.name),
-      })),
-    );
-    setDisplayedTools((prevTools) =>
-      prevTools.map((tool) => ({
-        ...tool,
-        isFavorited: newFavorites.includes(tool.name),
-      })),
-    );
-  };
+  //   // Update tools data
+  //   setToolsData((prevTools) =>
+  //     prevTools.map((tool) => ({
+  //       ...tool,
+  //       isFavorited: newFavorites.includes(tool.name),
+  //     })),
+  //   );
+  //   setDisplayedTools((prevTools) =>
+  //     prevTools.map((tool) => ({
+  //       ...tool,
+  //       isFavorited: newFavorites.includes(tool.name),
+  //     })),
+  //   );
+  // };
 
   // Filter functions for different tabs
   const getNewTools = () => displayedTools.filter((tool) => tool.new);
@@ -355,7 +355,7 @@ const Dashboard = () => {
   };
   return (
     // {/* Main Content */}
-    <div className="flex-1 flex flex-col overflow-hidden bg-card border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:border-border/80 hover:bg-card/98">
+    <div className="flex flex-col flex-1 overflow-hidden transition-all duration-300 border rounded-lg bg-card border-border hover:shadow-lg hover:border-border/80 hover:bg-card/98">
       {/* Top Navigation */}
       {/* <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center justify-center flex-1">
@@ -368,7 +368,7 @@ const Dashboard = () => {
               <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="What do you want to analyze?"
-                className="pl-9 bg-background/60 transition-all duration-200 focus:bg-background focus:shadow-sm"
+                className="transition-all duration-200 pl-9 bg-background/60 focus:bg-background focus:shadow-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -410,10 +410,10 @@ const Dashboard = () => {
                 <Badge
                   key={category}
                   variant={activeCategory === category ? "default" : "outline"}
-                  className="cursor-pointer px-3 py-1 text-xs rounded-full transition-all duration-200 hover:shadow-sm"
+                  className="px-3 py-1 text-xs transition-all duration-200 rounded-full cursor-pointer hover:shadow-sm"
                   onClick={() =>
                     setActiveCategory(
-                      activeCategory === category ? null : category,
+                      activeCategory === category ? null : category
                     )
                   }
                 >
@@ -431,7 +431,7 @@ const Dashboard = () => {
             </div>
 
             {/* {displayedTools.length > 10 && (
-                <div className="text-center mt-6">
+                <div className="mt-6 text-center">
                   <Button variant="outline">
                     Load more tools
                     <ChevronRight className="w-4 h-4 ml-2" />
@@ -451,12 +451,12 @@ const Dashboard = () => {
               </div>
               <Button
                 variant="ghost"
-                className="text-muted-foreground hover:text-foreground transition-all duration-200"
+                className="transition-all duration-200 text-muted-foreground hover:text-foreground"
               >
                 Show all
               </Button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {getNewTools()
                 .slice(0, 5)
                 .map((tool) => (
@@ -471,12 +471,12 @@ const Dashboard = () => {
               <h2 className="text-2xl font-bold">Recommended for you</h2>
               <Button
                 variant="ghost"
-                className="text-muted-foreground hover:text-foreground transition-all duration-200"
+                className="transition-all duration-200 text-muted-foreground hover:text-foreground"
               >
                 Show all
               </Button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {getRecommendedTools()
                 .slice(0, 5)
                 .map((tool) => (
@@ -502,18 +502,18 @@ const ToolCard = ({
     return (
       <Link
         to={`/dashboard/tools${tool.frontend_url}`}
-        className="group flex items-center space-x-3 bg-card hover:bg-accent/50 rounded-md p-2 transition-all duration-200 cursor-pointer hover:shadow-sm"
+        className="flex items-center p-2 space-x-3 transition-all duration-200 rounded-md cursor-pointer group bg-card hover:bg-accent/50 hover:shadow-sm"
       >
-        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded flex items-center justify-center transition-transform duration-200">
-          <div className="text-white text-sm font-bold">
+        <div className="flex items-center justify-center w-8 h-8 transition-transform duration-200 rounded bg-gradient-to-br from-blue-500 to-purple-500">
+          <div className="text-sm font-bold text-white">
             {tool.name.charAt(0)}
           </div>
         </div>
         <div className="space-y-0.5">
-          <h3 className="font-medium text-sm truncate group-hover:text-primary transition-colors duration-200">
+          <h3 className="text-sm font-medium truncate transition-colors duration-200 group-hover:text-primary">
             {tool.name}
           </h3>
-          <p className="text-xs text-muted-foreground truncate">
+          <p className="text-xs truncate text-muted-foreground">
             {tool.category}
           </p>
         </div>
@@ -524,19 +524,19 @@ const ToolCard = ({
   return (
     <Link
       to={`/dashboard/tools${tool.frontend_url}`}
-      className=" block group bg-card hover:bg-accent/50 rounded-lg p-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-1"
+      className="block p-3 transition-all duration-200 rounded-lg cursor-pointer  group bg-card hover:bg-accent/50 hover:shadow-md hover:-translate-y-1"
     >
       <div className="relative mb-3 overflow-hidden rounded-md">
         <img
           src={tool.imageUrl || "/placeholder.svg"}
           alt={tool.name}
-          className="w-full aspect-square object-cover transition-transform duration-300"
+          className="object-cover w-full transition-transform duration-300 aspect-square"
         />
 
         {/* Badges */}
-        <div className="absolute bottom-2 left-2 flex gap-1">
+        <div className="absolute flex gap-1 bottom-2 left-2">
           {tool.new && (
-            <Badge className="text-xs bg-green-500 hover:bg-green-500 transition-all duration-200">
+            <Badge className="text-xs transition-all duration-200 bg-green-500 hover:bg-green-500">
               New
             </Badge>
           )}
@@ -544,7 +544,7 @@ const ToolCard = ({
       </div>
 
       <div className="space-y-1">
-        <h3 className="font-medium text-sm truncate group-hover:text-primary transition-colors duration-200">
+        <h3 className="text-sm font-medium truncate transition-colors duration-200 group-hover:text-primary">
           {tool.name}
         </h3>
         <p className="text-xs text-muted-foreground line-clamp-1">
