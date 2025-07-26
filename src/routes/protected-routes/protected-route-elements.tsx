@@ -72,6 +72,6 @@ export const LazyProteinStructure = lazy(
 export const LazySequenceMutator = lazy(
   () => import("@/pages/protected/tools/sequence-mutator"),
 );
-export const LazyPrimerDesigner = lazy(
-  () => import("@/pages/protected/tools/primer-design"),
-);
+// export const LazyPrimerDesigner = lazy(
+//   () => import("@/pages/protected/tools/primer-design"),
+// );
