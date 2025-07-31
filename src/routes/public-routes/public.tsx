@@ -5,6 +5,7 @@ import {
   LazyRegister,
   PublicNotFound,
   LazyAbout,
+  LazyClerkAuth,
 } from "./public-route-elements";
 
 export const publicRoutes = [
@@ -31,6 +32,10 @@ export const publicRoutes = [
       {
         path: "sign-up",
         element: <LazyRegister />,
+      },
+      {
+        path: "clerk",
+        element: <LazyClerkAuth />,
       },
       {
         path: "*",

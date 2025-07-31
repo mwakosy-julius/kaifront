@@ -1,5 +1,4 @@
 import { SignedOut, SignInButton, SignedIn, UserButton } from '@clerk/clerk-react'
-import React from 'react'
 
 const ClerkAuth = () => {
   return (
